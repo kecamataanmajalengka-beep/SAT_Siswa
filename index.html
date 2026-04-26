@@ -327,22 +327,42 @@ function renderStep4(){var h='',rombels=['A','B','C'];for(var i=0;i<rombels.leng
 function selectRombel(r){selectedRombel=r;document.querySelectorAll('[id^="rombel_"]').forEach(function(e){e.classList.remove('selected');});var c=document.getElementById('rombel_'+r);c.classList.add('selected','pop');setTimeout(function(){c.classList.remove('pop');},400);var wali=findWaliKelas(selectedKelas,selectedRombel),box=document.getElementById('rombelInfo');if(wali){box.classList.remove('hidden');box.innerHTML='<div class="info-box info"><div class="info-box-icon bg-primary/30"><i class="fas fa-chalkboard-teacher text-primary"></i></div><div class="flex-1 min-w-0"><p class="text-xs font-semibold text-light">'+escHtml(wali.nama)+'</p><p class="text-xs" style="color:#a5b4fc">Wali Kelas '+selectedKelas.replace('Kelas ','')+' '+r+'</p></div></div>';}else{box.classList.add('hidden');}document.getElementById('btnStep4').disabled=false;}
 function goToStep5(){if(!selectedRombel){showToast('Pilih rombel dulu','error');return;}updateStepUI(5);renderStep5();}
 
-/* ===== STEP 5: MAPEL — tampilkan semua mapel yang punya token dari guru kelas/rombel ini ===== */
+/* ===== STEP 5: MAPEL — FIX: PAI & PJOK SUDAH TERMASUK ===== */
 function hasTokenForMapel(g,mid){var tm=g.tokenMapel||{};return!!tm[mid];}
-function guruTeachInKelasRombel(g,kelas,rombel){var kN=kelas.replace('Kelas ',''),krK=kN+'_'+rombel,kr=g.kelasRombel||{};if(kr[krK])return true;if(g.kelas===kelas&&g.rombel===rombel)return true;return false;}
+
+/* Deteksi apakah guru adalah guru PAI atau PJOK */
+function isGuruSpecialMapel(g,mid){
+  if(!g.guruMapelId)return false;
+  return g.guruMapelId===mid;
+}
+
+/* Cek apakah guru mengajar di kelas & rombel tertentu */
+function guruTeachInKelasRombel(g,kelas,rombel){
+  var kN=kelas.replace('Kelas ',''),krK=kN+'_'+rombel,kr=g.kelasRombel||{};
+  if(kr[krK])return true;
+  if(g.kelas===kelas&&g.rombel===rombel)return true;
+  if(g.guruMapelId&&kr[krK])return true;
+  return false;
+}
 
 function renderStep5(){
   var el=document.getElementById('mapelContainer'),fG=getFilteredGuru();
   if(selectedExamType==='paj'){selectedMapel='paj';el.innerHTML='<div class="info-box info"><div class="info-box-icon" style="background:rgba(248,113,113,0.2)"><i class="fas fa-graduation-cap text-danger"></i></div><div><p class="text-sm font-semibold text-light">Penilaian Akhir Jenjang</p><p class="text-xs" style="color:#a5b4fc">Semua mapel digabung dalam satu sesi</p></div></div>';document.getElementById('btnStep5').disabled=false;return;}
 
-  /* Kumpulkan mapel yang punya token dari guru yang mengajar di kelas+rombel ini */
   var mm={};
   for(var i=0;i<fG.length;i++){
     var g=fG[i],tm=g.tokenMapel||{},ks=Object.keys(tm);
     for(var j=0;j<ks.length;j++){
       var mid=ks[j];
       if(mid==='paj'||!tm[mid])continue;
-      if(!guruTeachInKelasRombel(g,selectedKelas,selectedRombel))continue;
+      var mapelMatch=false;
+      if(isGuruSpecialMapel(g,mid)){
+        var kN=selectedKelas.replace('Kelas ',''),krK=kN+'_'+selectedRombel,kr=g.kelasRombel||{};
+        if(kr[krK])mapelMatch=true;
+      } else {
+        if(guruTeachInKelasRombel(g,selectedKelas,selectedRombel))mapelMatch=true;
+      }
+      if(!mapelMatch)continue;
       if(!mm[mid]){mm[mid]={guruId:g.id,guruNama:g.nama,token:tm[mid],durasi:(g.durasiMapel||{})[mid]||0};}
     }
   }
@@ -353,7 +373,6 @@ function renderStep5(){
     document.getElementById('btnStep5').disabled=true;return;
   }
 
-  /* Urutkan sesuai urutan MAPEL_LIST */
   var ordered=[];
   for(var i=0;i<MAPEL_LIST.length;i++){if(mm[MAPEL_LIST[i].id])ordered.push(MAPEL_LIST[i].id);}
   for(var k in mm){if(ordered.indexOf(k)===-1)ordered.push(k);}
@@ -379,7 +398,7 @@ function selectMapel(id){selectedMapel=id;document.querySelectorAll('.mapel-card
 function goToStep6(){if(!selectedMapel){showToast('Pilih mapel dulu','error');return;}updateStepUI(6);renderStep6();}
 
 /* ===== STEP 6: NAMA ===== */
-function getTokenSource(){var fG=getFilteredGuru();for(var i=0;i<fG.length;i++){var g=fG[i];if(!hasTokenForMapel(g,selectedMapel))continue;if(!guruTeachInKelasRombel(g,selectedKelas,selectedRombel))continue;return{guruId:g.id,guruNama:g.nama,token:(g.tokenMapel||{})[selectedMapel],durasi:(g.durasiMapel||{})[selectedMapel]||0};}return null;}
+function getTokenSource(){var fG=getFilteredGuru();for(var i=0;i<fG.length;i++){var g=fG[i];if(!hasTokenForMapel(g,selectedMapel))continue;var mapelMatch=false;if(isGuruSpecialMapel(g,selectedMapel)){var kN=selectedKelas.replace('Kelas ',''),krK=kN+'_'+selectedRombel,kr=g.kelasRombel||{};if(kr[krK])mapelMatch=true;}else{if(guruTeachInKelasRombel(g,selectedKelas,selectedRombel))mapelMatch=true;}if(!mapelMatch)continue;return{guruId:g.id,guruNama:g.nama,token:(g.tokenMapel||{})[selectedMapel],durasi:(g.durasiMapel||{})[selectedMapel]||0};}return null;}
 function renderStep6(){var info=document.getElementById('summaryInfo'),m=getMapel(selectedMapel),s=getTokenSource(),gN=s?s.guruNama:'-',dB=s&&s.durasi>0?'<span class="badge badge-warning"><i class="fas fa-clock mr-1"></i>'+formatDurasiText(s.durasi)+'</span>':'';info.innerHTML='<div class="flex flex-wrap gap-1.5 text-xs"><span class="badge badge-primary"><i class="fas fa-school mr-1"></i>'+escHtml(selectedSekolah)+'</span><span class="badge" style="background:'+m.color+'30;color:'+m.color+'"><i class="fas '+m.icon+' mr-1"></i>'+escHtml(m.singkat)+'</span><span class="badge badge-info"><i class="fas fa-users mr-1"></i>'+selectedKelas.replace('Kelas ','')+' '+selectedRombel+'</span><span class="badge badge-warning"><i class="fas fa-chalkboard-teacher mr-1"></i>'+escHtml(gN)+'</span>'+dB+'</div>';document.getElementById('namaInput').value=studentName;document.getElementById('btnStep6').disabled=!studentName;document.getElementById('siswaDropdown').classList.add('hidden');setTimeout(function(){document.getElementById('namaInput').focus();},100);}
 function onNamaInput(){studentName=(document.getElementById('namaInput').value||'').trim();document.getElementById('btnStep6').disabled=!studentName;}
 function showSiswaDropdown(){var dd=document.getElementById('siswaDropdown'),key=selectedNpsn+'_'+selectedKelas.replace('Kelas ','')+'_'+selectedRombel,list=siswaList.filter(function(s){return s.guruKey===key;}).sort(function(a,b){return(a.absen||0)-(b.absen||0);});if(!list.length)dd.innerHTML='<div class="dropdown-item" style="color:#a5b4fc;font-size:12px"><i class="fas fa-info-circle mr-2"></i>Belum ada data siswa</div>';else dd.innerHTML=list.map(function(s){return'<div class="dropdown-item" onclick="pickSiswa(\''+escHtml(s.nama).replace(/'/g,"\\'")+'\')"><span style="color:#a5b4fc;font-size:11px;width:20px;flex-shrink:0">'+(s.absen||'-')+'</span><span style="color:#f5f3ff;font-size:13px">'+escHtml(s.nama)+'</span></div>';}).join('');dd.classList.remove('hidden');}
@@ -399,7 +418,6 @@ function startExam(){
   var isP=selectedMapel==='paj',src=isP?pajQuestions:questions;
   var aQ=src.filter(function(q){if(!isP)return q.kelas===selectedKelas&&q.mapel===selectedMapel;return true;});
 
-  /* ===== PESAN JELAS JIKA SOAL BELUM ADA DARI ADMIN ===== */
   if(!aQ.length){
     var m=getMapel(selectedMapel);
     showToast('Soal '+m.singkat+' belum tersedia','warning');
@@ -409,7 +427,6 @@ function startExam(){
   var s=getTokenSource(),gId=s?s.guruId:null,dur=s?s.durasi:0;
   if(!gId){showToast('Guru pengampu tidak ditemukan','error');return;}
 
-  /* Cek duplikat */
   for(var i=0;i<nilaiList.length;i++){var n=nilaiList[i];if(n.mapel===selectedMapel&&n.kelas===selectedKelas&&n.rombel===selectedRombel&&n.nama===studentName&&n.guruId===gId){showToast('Kamu sudah pernah mengerjakan ujian ini!','error');return;}}
 
   var fG=getFilteredGuru(),guruData=null;
@@ -441,7 +458,6 @@ function renderQuestions(){
   if(!aQ.length){document.getElementById('examContent').innerHTML='<div class="text-center py-16 fade-in"><div class="w-16 h-16 mx-auto mb-3 rounded-full bg-warning/20 flex items-center justify-center"><i class="fas fa-clipboard-list text-warning text-2xl"></i></div><h3 class="font-display text-lg text-light mb-1">Belum Ada Soal</h3><p class="text-xs" style="color:#a5b4fc">Admin belum membuat soal untuk ujian ini</p></div>';return;}
 
   var mp=getMapel(m),lt=getOptLetters(k),h='<div class="slide-up">';
-  /* Header info ujian — warna sesuai mapel */
   h+='<div class="info-box info mb-3" style="border-color:'+mp.color+'40;background:'+mp.color+'08"><div class="info-box-icon" style="background:'+mp.color+'30"><i class="fas '+mp.icon+'" style="color:'+mp.color+'"></i></div><div class="flex-1 min-w-0"><p class="text-xs font-semibold text-light">'+escHtml(mp.nama)+'</p><p class="text-xs" style="color:#a5b4fc">'+aQ.length+' soal — '+pgQ.length+' PG'+(urQ.length?' + '+urQ.length+' Uraian':'')+'</p></div></div>';
   h+='<div class="info-box danger mb-3"><div class="info-box-icon bg-danger/30"><i class="fas fa-exclamation-triangle text-danger"></i></div><p class="text-xs text-light"><strong>Penting:</strong> Ujian hanya bisa dikerjakan sekali!</p></div>';
   h+='<div class="mb-3"><div class="flex justify-between text-xs" style="color:#a5b4fc;margin-bottom:4px"><span>Progress</span><span id="progressText">0/'+pgQ.length+'</span></div><div class="progress-container"><div class="progress-bar" id="progressBar" style="width:0%"></div></div></div>';
