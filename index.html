@@ -50,90 +50,91 @@ body{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#4c1d95 100%);colo
 .star{position:absolute;width:4px;height:4px;background:#fbbf24;border-radius:50%;animation:sparkle 2s ease-in-out infinite}
 .star:nth-child(odd){animation-delay:0.5s}
 
-.glass{background:rgba(49,46,129,0.75);backdrop-filter:blur(20px);border:1px solid rgba(99,102,241,0.3);border-radius:24px;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.glass{background:rgba(49,46,129,0.75);backdrop-filter:blur(20px);border:1px solid rgba(99,102,241,0.3);border-radius:20px;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
 
-.btn-primary{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;font-weight:700;padding:14px 28px;border-radius:16px;border:none;cursor:pointer;font-size:16px;font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;transition:all 0.3s;box-shadow:0 8px 25px rgba(99,102,241,0.4);position:relative;overflow:hidden}
+.btn-primary{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;font-weight:700;padding:13px 24px;border-radius:14px;border:none;cursor:pointer;font-size:15px;font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;transition:all 0.3s;box-shadow:0 8px 25px rgba(99,102,241,0.4);position:relative;overflow:hidden;width:100%}
 .btn-primary::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.2),transparent);opacity:0;transition:opacity 0.3s}
 .btn-primary:hover::before{opacity:1}
 .btn-primary:active{transform:scale(0.97)}
 .btn-primary:disabled{opacity:0.5;cursor:not-allowed;transform:none}
-.btn-primary:hover{box-shadow:0 12px 35px rgba(99,102,241,0.5)}
 
-.btn-secondary{background:rgba(99,102,241,0.2);border:2px solid rgba(99,102,241,0.5);color:#f5f3ff;padding:12px 24px;border-radius:16px;cursor:pointer;font-size:14px;font-family:'Nunito',sans-serif;transition:all 0.3s}
+.btn-secondary{background:rgba(99,102,241,0.2);border:2px solid rgba(99,102,241,0.5);color:#f5f3ff;padding:11px 20px;border-radius:14px;cursor:pointer;font-size:13px;font-family:'Nunito',sans-serif;transition:all 0.3s;width:100%;text-align:center}
 .btn-secondary:hover{background:rgba(99,102,241,0.3);border-color:#6366f1}
 
-.input-field{background:rgba(30,27,75,0.8);border:2px solid rgba(99,102,241,0.3);color:#f5f3ff;padding:14px 18px;border-radius:14px;width:100%;font-size:16px;font-family:'Nunito',sans-serif;transition:all 0.3s}
+.input-field{background:rgba(30,27,75,0.8);border:2px solid rgba(99,102,241,0.3);color:#f5f3ff;padding:13px 16px;border-radius:12px;width:100%;font-size:15px;font-family:'Nunito',sans-serif;transition:all 0.3s}
 .input-field:focus{outline:none;border-color:#6366f1;box-shadow:0 0 20px rgba(99,102,241,0.3)}
 .input-field::placeholder{color:#a5b4fc}
 .input-field option{background:#312e81;color:#f5f3ff;padding:10px}
 
-.step-container{display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:20px}
-.step-item{display:flex;flex-direction:column;align-items:center;gap:4px}
-.step-circle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;transition:all 0.4s;position:relative}
-.step-circle.inactive{background:rgba(99,102,241,0.2);color:#a5b4fc}
-.step-circle.active{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;box-shadow:0 0 25px rgba(99,102,241,0.5);animation:pulse 2s ease-in-out infinite}
-.step-circle.done{background:linear-gradient(135deg,#4ade80,#22c55e);color:white}
-.step-circle.done::after{content:'';position:absolute;inset:-3px;border-radius:50%;border:2px solid #4ade80;animation:pulse 1.5s ease-in-out infinite}
-.step-line{width:30px;height:3px;background:rgba(99,102,241,0.3);border-radius:2px;transition:all 0.4s}
-.step-line.done{background:linear-gradient(90deg,#4ade80,#22c55e)}
-.step-label{font-size:9px;font-weight:600;color:#a5b4fc;transition:color 0.3s;text-align:center;max-width:50px}
-.step-label.active{color:#6366f1}
-.step-label.done{color:#4ade80}
+/* STEP INDICATOR - compact horizontal */
+.step-bar{display:flex;align-items:center;gap:0;margin-bottom:18px;overflow-x:auto;padding:4px 0;-ms-overflow-style:none;scrollbar-width:none}
+.step-bar::-webkit-scrollbar{display:none}
+.step-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;flex-shrink:0;transition:all 0.4s;position:relative}
+.step-dot.inactive{background:rgba(99,102,241,0.15);color:#6366f1}
+.step-dot.active{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;box-shadow:0 0 18px rgba(99,102,241,0.5);animation:pulse 2s ease-in-out infinite}
+.step-dot.done{background:linear-gradient(135deg,#4ade80,#22c55e);color:white}
+.step-connector{width:16px;height:2px;background:rgba(99,102,241,0.2);flex-shrink:0;border-radius:1px;transition:background 0.4s}
+.step-connector.done{background:linear-gradient(90deg,#4ade80,#22c55e)}
 
-.mascot{width:100px;height:100px;margin:0 auto;position:relative}
-.mascot-body{width:80px;height:80px;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:50%;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);box-shadow:0 10px 30px rgba(251,191,36,0.4)}
-.mascot-face{position:absolute;left:50%;top:45%;transform:translate(-50%,-50%);width:60px}
-.mascot-eye{width:10px;height:14px;background:#1e1b4b;border-radius:50%;position:absolute;top:0;animation:blink 4s ease-in-out infinite}
-.mascot-eye.left{left:10px}
-.mascot-eye.right{right:10px}
-.mascot-mouth{width:24px;height:12px;border-bottom:3px solid #1e1b4b;border-radius:0 0 24px 24px;position:absolute;top:20px;left:50%;transform:translateX(-50%)}
-.mascot-cheek{width:12px;height:8px;background:#f472b6;opacity:0.6;border-radius:50%;position:absolute;top:12px}
-.mascot-cheek.left{left:2px}
-.mascot-cheek.right{right:2px}
+.step-label-row{display:flex;align-items:flex-start;gap:0;margin-bottom:16px;overflow-x:auto;padding:0 2px;-ms-overflow-style:none;scrollbar-width:none}
+.step-label-row::-webkit-scrollbar{display:none}
+.step-lbl{flex-shrink:0;text-align:center;font-size:8px;font-weight:700;color:#4c4678;transition:color 0.3s;text-transform:uppercase;letter-spacing:0.3px}
+.step-lbl.active{color:#a5b4fc}
+.step-lbl.done{color:#4ade80}
+.step-lbl-spacer{width:16px;flex-shrink:0}
+
+.mascot{width:72px;height:72px;margin:0 auto;position:relative}
+.mascot-body{width:60px;height:60px;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:50%;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);box-shadow:0 8px 24px rgba(251,191,36,0.4)}
+.mascot-face{position:absolute;left:50%;top:45%;transform:translate(-50%,-50%);width:44px}
+.mascot-eye{width:8px;height:11px;background:#1e1b4b;border-radius:50%;position:absolute;top:0;animation:blink 4s ease-in-out infinite}
+.mascot-eye.left{left:7px}
+.mascot-eye.right{right:7px}
+.mascot-mouth{width:18px;height:9px;border-bottom:3px solid #1e1b4b;border-radius:0 0 18px 18px;position:absolute;top:16px;left:50%;transform:translateX(-50%)}
+.mascot-cheek{width:10px;height:6px;background:#f472b6;opacity:0.6;border-radius:50%;position:absolute;top:10px}
+.mascot-cheek.left{left:1px}
+.mascot-cheek.right{right:1px}
 .mascot.happy .mascot-body{animation:bounce 1s ease-in-out infinite}
-.mascot.sad .mascot-mouth{border-radius:24px 24px 0 0;border-bottom:none;border-top:3px solid #1e1b4b}
+.mascot.sad .mascot-mouth{border-radius:18px 18px 0 0;border-bottom:none;border-top:3px solid #1e1b4b}
 .mascot.celebrate .mascot-body{animation:wiggle 0.5s ease-in-out infinite}
 
-.select-card{padding:16px;border-radius:16px;cursor:pointer;transition:all 0.3s;border:2px solid rgba(99,102,241,0.2);background:rgba(49,46,129,0.4);text-align:center;position:relative;overflow:hidden}
+.select-card{padding:12px;border-radius:14px;cursor:pointer;transition:all 0.3s;border:2px solid rgba(99,102,241,0.2);background:rgba(49,46,129,0.4);text-align:center;position:relative;overflow:hidden}
 .select-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.05),transparent);opacity:0;transition:opacity 0.3s}
-.select-card:hover{transform:translateY(-2px);border-color:rgba(99,102,241,0.5);box-shadow:0 8px 20px rgba(99,102,241,0.2)}
+.select-card:hover{transform:translateY(-2px);border-color:rgba(99,102,241,0.5);box-shadow:0 6px 16px rgba(99,102,241,0.2)}
 .select-card:hover::before{opacity:1}
 .select-card:active{transform:scale(0.98)}
-.select-card.selected{border-color:#4ade80;background:rgba(74,222,128,0.1);box-shadow:0 0 20px rgba(74,222,128,0.2)}
+.select-card.selected{border-color:#4ade80;background:rgba(74,222,128,0.1);box-shadow:0 0 18px rgba(74,222,128,0.15)}
 .select-card.selected .card-icon{animation:bounce 0.6s ease-in-out}
 
-.mapel-card{padding:12px;border-radius:14px;cursor:pointer;transition:all 0.3s;border:2px solid rgba(99,102,241,0.2);background:rgba(49,46,129,0.4);display:flex;align-items:center;gap:10px;position:relative;overflow:hidden}
+.mapel-card{padding:10px;border-radius:12px;cursor:pointer;transition:all 0.3s;border:2px solid rgba(99,102,241,0.2);background:rgba(49,46,129,0.4);display:flex;align-items:center;gap:8px;position:relative;overflow:hidden}
 .mapel-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.05),transparent);opacity:0;transition:opacity 0.3s}
 .mapel-card:hover{transform:translateY(-2px);border-color:rgba(99,102,241,0.4)}
 .mapel-card:hover::before{opacity:1}
 .mapel-card:active{transform:scale(0.98)}
 .mapel-card.selected{border-color:#4ade80;background:rgba(74,222,128,0.1)}
 .mapel-card.selected .mapel-icon{animation:heartbeat 0.8s ease-in-out}
-.mapel-card.locked{opacity:0.4;pointer-events:none}
-.mapel-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.mapel-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
 
-.token-input{letter-spacing:6px;font-size:22px;font-weight:800;text-align:center;font-family:'Fredoka One',cursive;padding:14px;text-transform:uppercase}
+.token-input{letter-spacing:5px;font-size:20px;font-weight:800;text-align:center;font-family:'Fredoka One',cursive;padding:13px;text-transform:uppercase}
 
 .progress-container{height:8px;background:rgba(99,102,241,0.2);border-radius:4px;overflow:hidden;position:relative}
 .progress-bar{height:100%;background:linear-gradient(90deg,#6366f1,#8b5cf6,#a855f7);border-radius:4px;transition:width 0.5s;position:relative}
 .progress-bar::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);animation:shimmer 2s infinite}
 
-.question-card{background:rgba(49,46,129,0.5);border-radius:18px;border:2px solid rgba(99,102,241,0.2);padding:18px;margin-bottom:14px;position:relative;overflow:hidden;transition:all 0.3s}
+.question-card{background:rgba(49,46,129,0.5);border-radius:16px;border:2px solid rgba(99,102,241,0.2);padding:14px;margin-bottom:12px;position:relative;overflow:hidden;transition:all 0.3s}
 .question-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(180deg,#6366f1,#a855f7);border-radius:4px 0 0 4px}
 .question-card:hover{border-color:rgba(99,102,241,0.3)}
 
-.question-number{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:linear-gradient(135deg,#6366f1,#8b5cf6);border-radius:8px;font-weight:800;font-size:13px;margin-right:8px}
+.question-number{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;background:linear-gradient(135deg,#6366f1,#8b5cf6);border-radius:7px;font-weight:800;font-size:12px;margin-right:6px}
 
-.option-item{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-radius:12px;cursor:pointer;transition:all 0.2s;border:2px solid rgba(99,102,241,0.15);background:rgba(30,27,75,0.4);position:relative}
+.option-item{display:flex;align-items:flex-start;gap:8px;padding:10px 12px;border-radius:10px;cursor:pointer;transition:all 0.2s;border:2px solid rgba(99,102,241,0.15);background:rgba(30,27,75,0.4)}
 .option-item:hover{background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.3)}
 .option-item:active{transform:scale(0.99)}
 .option-item.selected{background:rgba(74,222,128,0.1);border-color:#4ade80}
 .option-item.selected .option-letter{background:linear-gradient(135deg,#4ade80,#22c55e);color:white}
-.option-letter{width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;background:rgba(99,102,241,0.3);flex-shrink:0;transition:all 0.3s}
-.option-item:hover .option-letter{background:rgba(99,102,241,0.5)}
+.option-letter{width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:10px;background:rgba(99,102,241,0.3);flex-shrink:0;transition:all 0.3s}
 
-.result-card{background:rgba(49,46,129,0.7);border-radius:24px;border:2px solid rgba(99,102,241,0.3);padding:24px;text-align:center}
-.score-display{font-family:'Fredoka One',cursive;font-size:72px;line-height:1;background:linear-gradient(135deg,#fbbf24,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.result-card{background:rgba(49,46,129,0.7);border-radius:20px;border:2px solid rgba(99,102,241,0.3);padding:20px;text-align:center}
+.score-display{font-family:'Fredoka One',cursive;font-size:64px;line-height:1;background:linear-gradient(135deg,#fbbf24,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .score-display.success{background:linear-gradient(135deg,#4ade80,#22c55e);-webkit-background-clip:text;background-clip:text}
 .score-display.fail{background:linear-gradient(135deg,#f87171,#ef4444);-webkit-background-clip:text;background-clip:text}
 
@@ -142,56 +143,70 @@ body{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#4c1d95 100%);colo
 .confetti:nth-child(odd){border-radius:50%}
 .confetti:nth-child(3n){width:8px;height:16px;border-radius:4px}
 
-.toast{position:fixed;top:16px;left:16px;right:16px;z-index:1000;padding:14px 18px;border-radius:14px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:10px;animation:slideUp 0.3s ease;max-width:400px;margin:0 auto}
+.toast{position:fixed;top:12px;left:12px;right:12px;z-index:1000;padding:12px 16px;border-radius:12px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;animation:slideUp 0.3s ease;max-width:380px;margin:0 auto}
 .toast-success{background:linear-gradient(135deg,#059669,#047857);border:2px solid #4ade80}
 .toast-error{background:linear-gradient(135deg,#dc2626,#b91c1c);border:2px solid #f87171}
 .toast-info{background:linear-gradient(135deg,#0891b2,#0e7490);border:2px solid #22d3ee}
 
-.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700}
+.badge{display:inline-flex;align-items:center;gap:3px;padding:3px 10px;border-radius:16px;font-size:10px;font-weight:700;white-space:nowrap}
 .badge-primary{background:rgba(99,102,241,0.3);color:#a5b4fc}
 .badge-success{background:rgba(74,222,128,0.3);color:#4ade80}
 .badge-warning{background:rgba(251,191,36,0.3);color:#fbbf24}
 .badge-danger{background:rgba(248,113,113,0.3);color:#f87171}
 .badge-info{background:rgba(34,211,238,0.3);color:#22d3ee}
 
-.info-box{padding:14px;border-radius:12px;display:flex;align-items:center;gap:12px}
+.info-box{padding:12px;border-radius:12px;display:flex;align-items:center;gap:10px}
 .info-box.success{background:rgba(74,222,128,0.1);border:2px solid rgba(74,222,128,0.3)}
 .info-box.warning{background:rgba(251,191,36,0.1);border:2px solid rgba(251,191,36,0.3)}
 .info-box.info{background:rgba(99,102,241,0.1);border:2px solid rgba(99,102,241,0.3)}
 .info-box.danger{background:rgba(248,113,113,0.1);border:2px solid rgba(248,113,113,0.3)}
-.info-box-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.info-box-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 
-.stat-card{background:rgba(49,46,129,0.5);border-radius:14px;padding:14px;text-align:center;border:2px solid rgba(99,102,241,0.2);transition:all 0.3s}
-.stat-card:hover{transform:translateY(-2px);border-color:rgba(99,102,241,0.3)}
-.stat-value{font-family:'Fredoka One',cursive;font-size:26px}
-.stat-label{font-size:10px;color:#a5b4fc;margin-top:4px}
+.stat-card{background:rgba(49,46,129,0.5);border-radius:12px;padding:12px;text-align:center;border:2px solid rgba(99,102,241,0.2)}
+.stat-value{font-family:'Fredoka One',cursive;font-size:24px}
+.stat-label{font-size:9px;color:#a5b4fc;margin-top:2px}
 
-.dropdown{background:rgba(30,27,75,0.98);border:2px solid rgba(99,102,241,0.3);border-radius:14px;max-height:180px;overflow-y:auto;position:absolute;left:0;right:0;top:100%;margin-top:8px;z-index:20}
-.dropdown-item{padding:12px 14px;border-bottom:1px solid rgba(99,102,241,0.1);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:10px}
+.dropdown{background:rgba(30,27,75,0.98);border:2px solid rgba(99,102,241,0.3);border-radius:12px;max-height:160px;overflow-y:auto;position:absolute;left:0;right:0;top:100%;margin-top:6px;z-index:20}
+.dropdown-item{padding:10px 12px;border-bottom:1px solid rgba(99,102,241,0.1);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:8px}
 .dropdown-item:last-child{border-bottom:none}
 .dropdown-item:hover{background:rgba(99,102,241,0.2)}
-.dropdown-item:active{background:rgba(99,102,241,0.3)}
 
-.teacher-card{display:flex;align-items:center;gap:12px;padding:14px;background:rgba(49,46,129,0.5);border-radius:14px;border:2px solid rgba(99,102,241,0.2)}
-.teacher-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.teacher-card{display:flex;align-items:center;gap:10px;padding:12px;background:rgba(49,46,129,0.5);border-radius:12px;border:2px solid rgba(99,102,241,0.2)}
+.teacher-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
 
-.topbar{background:rgba(30,27,75,0.9);backdrop-filter:blur(15px);border-bottom:1px solid rgba(99,102,241,0.2);position:sticky;top:0;z-index:50;padding:12px 16px}
+.topbar{background:rgba(30,27,75,0.9);backdrop-filter:blur(15px);border-bottom:1px solid rgba(99,102,241,0.2);position:sticky;top:0;z-index:50;padding:10px 14px}
 
-/* TIMER BAR */
-.timer-bar{background:rgba(30,27,75,0.95);backdrop-filter:blur(15px);border-bottom:2px solid rgba(99,102,241,0.3);padding:10px 16px;display:flex;align-items:center;justify-content:center;gap:12px;position:sticky;top:0;z-index:60}
-.timer-display{font-family:'Fredoka One',cursive;font-size:28px;letter-spacing:2px}
+.timer-bar{background:rgba(30,27,75,0.95);backdrop-filter:blur(15px);border-bottom:2px solid rgba(99,102,241,0.3);padding:8px 14px;display:flex;align-items:center;justify-content:center;gap:10px;position:sticky;top:0;z-index:60}
+.timer-display{font-family:'Fredoka One',cursive;font-size:24px;letter-spacing:2px}
 .timer-display.safe{color:#4ade80}
 .timer-display.warn{color:#fbbf24}
 .timer-display.danger{color:#f87171;animation:urgentPulse 1s infinite}
-.timer-label{font-size:11px;color:#a5b4fc;font-weight:600}
+.timer-label{font-size:10px;color:#a5b4fc;font-weight:600}
 .timer-progress{height:4px;background:rgba(99,102,241,0.2);border-radius:2px;flex:1;overflow:hidden}
 .timer-progress-fill{height:100%;border-radius:2px;transition:width 1s linear}
 
-/* LOCK OVERLAY - muncul saat ujian aktif */
-.lock-overlay{position:fixed;inset:0;z-index:9999;background:rgba(30,27,75,0.97);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px}
+.lock-overlay{position:fixed;inset:0;z-index:9999;background:rgba(30,27,75,0.97);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;padding:24px}
 .lock-overlay.hidden{display:none}
 
-@media print{.no-print{display:none!important}}
+.npsn-card{padding:14px;border-radius:14px;cursor:pointer;transition:all 0.3s;border:2px solid rgba(99,102,241,0.2);background:rgba(49,46,129,0.4);display:flex;align-items:center;gap:10px;position:relative;overflow:hidden}
+.npsn-card:hover{transform:translateY(-1px);border-color:rgba(99,102,241,0.4);box-shadow:0 6px 16px rgba(99,102,241,0.15)}
+.npsn-card:active{transform:scale(0.98)}
+.npsn-card.selected{border-color:#4ade80;background:rgba(74,222,128,0.1);box-shadow:0 0 18px rgba(74,222,128,0.15)}
+
+/* Form label style */
+.form-label{font-size:12px;color:#a5b4fc;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.form-label i{font-size:11px;color:#6366f1}
+
+@media(max-width:380px){
+  .step-dot{width:24px;height:24px;font-size:9px}
+  .step-connector{width:10px}
+  .step-lbl{font-size:7px}
+  .step-lbl-spacer{width:10px}
+  .score-display{font-size:52px}
+  .mascot{width:60px;height:60px}
+  .mascot-body{width:50px;height:50px}
+  .mascot-face{width:38px}
+}
 </style>
 </head>
 <body>
@@ -205,21 +220,20 @@ body{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#4c1d95 100%);colo
 <div class="confetti-container" id="confettiContainer"></div>
 <div id="toastContainer"></div>
 
-<!-- LOCK OVERLAY: muncul saat ujian, blokir semua -->
 <div id="lockOverlay" class="lock-overlay hidden">
-  <div style="width:120px;height:120px;border-radius:50%;background:rgba(248,113,113,0.15);display:flex;align-items:center;justify-content:center;animation:pulse 2s infinite">
-    <i class="fas fa-lock" style="font-size:48px;color:#f87171"></i>
+  <div style="width:100px;height:100px;border-radius:50%;background:rgba(248,113,113,0.15);display:flex;align-items:center;justify-content:center;animation:pulse 2s infinite">
+    <i class="fas fa-lock" style="font-size:40px;color:#f87171"></i>
   </div>
-  <h2 style="font-family:'Fredoka One',cursive;font-size:24px;color:#f87171;text-align:center">UJIAN BERLANGSUNG</h2>
-  <p style="color:#a5b4fc;font-size:14px;text-align:center;max-width:300px">Jangan keluar dari halaman ini. Jika Anda keluar, ujian akan otomatis dikirim.</p>
-  <button onclick="cancelLock()" style="margin-top:10px;padding:12px 32px;border-radius:14px;background:rgba(248,113,113,0.2);border:2px solid #f87171;color:#f87171;font-weight:700;font-size:14px;cursor:pointer;font-family:'Nunito',sans-serif">
-    <i class="fas fa-arrow-left" style="margin-right:6px"></i>Kembali ke Ujian
+  <h2 style="font-family:'Fredoka One',cursive;font-size:22px;color:#f87171;text-align:center">UJIAN BERLANGSUNG</h2>
+  <p style="color:#a5b4fc;font-size:13px;text-align:center;max-width:280px">Jangan keluar dari halaman ini. Jika Anda keluar, ujian akan otomatis dikirim.</p>
+  <button onclick="cancelLock()" style="margin-top:8px;padding:11px 28px;border-radius:12px;background:rgba(248,113,113,0.2);border:2px solid #f87171;color:#f87171;font-weight:700;font-size:13px;cursor:pointer;font-family:'Nunito',sans-serif">
+    <i class="fas fa-arrow-left" style="margin-right:5px"></i>Kembali ke Ujian
   </button>
 </div>
 
 <!-- ===== LOGIN PAGE ===== -->
-<div id="loginPage" class="min-h-screen flex items-center justify-content p-4 relative z-10">
-  <div class="glass p-5 w-full max-w-sm slide-up">
+<div id="loginPage" class="min-h-screen flex items-center justify-center p-3 relative z-10">
+  <div class="glass p-4 w-full max-w-sm slide-up" style="max-height:92vh;overflow-y:auto;-webkit-overflow-scrolling:touch">
     <div class="mascot happy" id="loginMascot">
       <div class="mascot-body"><div class="mascot-face">
         <div class="mascot-eye left"></div><div class="mascot-eye right"></div>
@@ -227,89 +241,98 @@ body{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#4c1d95 100%);colo
         <div class="mascot-cheek left"></div><div class="mascot-cheek right"></div>
       </div></div>
     </div>
-    <div class="text-center mb-4">
-      <h1 class="font-display text-xl text-light mb-1">Halo Teman</h1>
-      <p class="text-xs text-a5b4fc">Siap mengerjakan ujian hari ini?</p>
+    <div class="text-center mb-3">
+      <h1 class="font-display text-lg text-light mb-0.5">Halo Teman</h1>
+      <p class="text-xs" style="color:#a5b4fc">Siap mengerjakan ujian hari ini?</p>
     </div>
 
-    <div class="step-container">
-      <div class="step-item"><div class="step-circle active" id="step1Circle">1</div><span class="step-label active" id="step1Label">Kelas</span></div>
-      <div class="step-line" id="line1"></div>
-      <div class="step-item"><div class="step-circle inactive" id="step2Circle">2</div><span class="step-label" id="step2Label">Ujian</span></div>
-      <div class="step-line" id="line2"></div>
-      <div class="step-item"><div class="step-circle inactive" id="step3Circle">3</div><span class="step-label" id="step3Label">Nama</span></div>
-      <div class="step-line" id="line3"></div>
-      <div class="step-item"><div class="step-circle inactive" id="step4Circle">4</div><span class="step-label" id="step4Label">Token</span></div>
-    </div>
+    <!-- COMPACT STEP INDICATOR -->
+    <div class="step-bar" id="stepBar"></div>
+    <div class="step-label-row" id="stepLabelRow"></div>
 
-    <!-- STEP 1: Kelas & Rombel -->
+    <!-- STEP 1: NPSN -->
     <div id="step1Content">
-      <div id="schoolInfoBox" class="info-box info mb-3 hidden">
-        <div class="info-box-icon bg-primary/30"><i class="fas fa-school text-primary"></i></div>
-        <div class="flex-1 min-w-0">
-          <p class="text-sm font-semibold text-light truncate" id="schoolName"></p>
-          <p class="text-xs text-a5b4fc">NPSN: <span id="schoolNpsn"></span></p>
-        </div>
-      </div>
-      <div class="mb-3">
-        <label class="text-xs text-a5b4fc font-semibold mb-2 block">Pilih Kelasmu</label>
-        <div class="grid grid-cols-4 gap-2 mb-3" id="kelasGrid"></div>
-      </div>
-      <div class="mb-3">
-        <label class="text-xs text-a5b4fc font-semibold mb-2 block">Pilih Rombel</label>
-        <div class="grid grid-cols-3 gap-2" id="rombelGrid"></div>
-      </div>
-      <div id="teacherBox" class="hidden mb-3">
-        <label class="text-xs text-a5b4fc font-semibold mb-2 block">Wali Kelasmu</label>
-        <div id="teacherCard" class="teacher-card"></div>
-      </div>
-      <button onclick="goToStep2()" id="btnStep1" class="btn-primary w-full" disabled>
+      <div class="form-label"><i class="fas fa-school"></i>Pilih Sekolah (NPSN)</div>
+      <div id="npsnList" class="space-y-2 mb-3" style="max-height:200px;overflow-y:auto"></div>
+      <div id="schoolInfoBox" class="info-box info mb-3 hidden"></div>
+      <button onclick="goToStep2()" id="btnStep1" class="btn-primary" disabled>
         <span>Lanjut</span><i class="fas fa-arrow-right"></i>
       </button>
     </div>
 
-    <!-- STEP 2: Pilih Ujian -->
+    <!-- STEP 2: Jenis Ujian -->
     <div id="step2Content" class="hidden">
-      <div id="examTypeContainer" class="space-y-3 mb-3"></div>
-      <div id="mapelContainer" class="hidden mb-3"></div>
-      <button onclick="goToStep3()" id="btnStep2" class="btn-primary w-full" disabled>
+      <div class="form-label"><i class="fas fa-file-alt"></i>Pilih Jenis Ujian</div>
+      <div id="examTypeContainer" class="space-y-2 mb-3"></div>
+      <button onclick="goToStep3()" id="btnStep2" class="btn-primary" disabled>
         <span>Lanjut</span><i class="fas fa-arrow-right"></i>
       </button>
-      <button onclick="backToStep(1)" class="btn-secondary w-full mt-2"><i class="fas fa-arrow-left mr-1"></i>Kembali</button>
+      <button onclick="backToStep(1)" class="btn-secondary mt-2"><i class="fas fa-arrow-left mr-1"></i>Kembali</button>
     </div>
 
-    <!-- STEP 3: Nama -->
+    <!-- STEP 3: Mapel -->
     <div id="step3Content" class="hidden">
+      <div class="form-label"><i class="fas fa-book"></i>Pilih Mata Pelajaran</div>
+      <div id="mapelContainer" class="space-y-2 mb-3" style="max-height:220px;overflow-y:auto"></div>
+      <button onclick="goToStep4()" id="btnStep3" class="btn-primary" disabled>
+        <span>Lanjut</span><i class="fas fa-arrow-right"></i>
+      </button>
+      <button onclick="backToStep(2)" class="btn-secondary mt-2"><i class="fas fa-arrow-left mr-1"></i>Kembali</button>
+    </div>
+
+    <!-- STEP 4: Kelas -->
+    <div id="step4Content" class="hidden">
+      <div class="form-label"><i class="fas fa-layer-group"></i>Pilih Kelas</div>
+      <div class="grid grid-cols-3 gap-2 mb-3" id="kelasGrid"></div>
+      <button onclick="goToStep5()" id="btnStep4" class="btn-primary" disabled>
+        <span>Lanjut</span><i class="fas fa-arrow-right"></i>
+      </button>
+      <button onclick="backToStep(3)" class="btn-secondary mt-2"><i class="fas fa-arrow-left mr-1"></i>Kembali</button>
+    </div>
+
+    <!-- STEP 5: Rombel -->
+    <div id="step5Content" class="hidden">
+      <div class="form-label"><i class="fas fa-users"></i>Pilih Rombongan Belajar</div>
+      <div class="grid grid-cols-3 gap-2 mb-3" id="rombelGrid"></div>
+      <div id="teacherBox" class="hidden mb-3"></div>
+      <button onclick="goToStep6()" id="btnStep5" class="btn-primary" disabled>
+        <span>Lanjut</span><i class="fas fa-arrow-right"></i>
+      </button>
+      <button onclick="backToStep(4)" class="btn-secondary mt-2"><i class="fas fa-arrow-left mr-1"></i>Kembali</button>
+    </div>
+
+    <!-- STEP 6: Nama -->
+    <div id="step6Content" class="hidden">
       <div id="summaryInfo" class="info-box info mb-3"></div>
+      <div class="form-label"><i class="fas fa-user"></i>Nama Lengkap Kamu</div>
       <div class="mb-3 relative">
-        <label class="text-xs text-a5b4fc font-semibold mb-2 block">Nama Lengkap Kamu</label>
         <div class="relative">
-          <i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-primary"></i>
-          <input type="text" id="namaInput" class="input-field pl-11 pr-10" placeholder="Ketik namamu..." oninput="onNamaInput()" onkeydown="if(event.key==='Enter')goToStep4()">
-          <button onclick="showSiswaDropdown()" class="absolute right-3 top-1/2 -translate-y-1/2 w-7 h-7 rounded-lg bg-primary/30 flex items-center justify-center text-primary" type="button">
-            <i class="fas fa-list text-xs"></i>
+          <i class="fas fa-user absolute left-3 top-1/2 -translate-y-1/2 text-primary" style="font-size:13px"></i>
+          <input type="text" id="namaInput" class="input-field" style="padding-left:34px;padding-right:38px" placeholder="Ketik namamu..." oninput="onNamaInput()" onkeydown="if(event.key==='Enter')goToStep7()">
+          <button onclick="showSiswaDropdown()" class="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-lg bg-primary/30 flex items-center justify-center text-primary" type="button">
+            <i class="fas fa-list" style="font-size:10px"></i>
           </button>
         </div>
         <div id="siswaDropdown" class="hidden dropdown"></div>
       </div>
-      <button onclick="goToStep4()" id="btnStep3" class="btn-primary w-full" disabled>
+      <button onclick="goToStep7()" id="btnStep6" class="btn-primary" disabled>
         <span>Lanjut</span><i class="fas fa-arrow-right"></i>
       </button>
-      <button onclick="backToStep(2)" class="btn-secondary w-full mt-2"><i class="fas fa-arrow-left mr-1"></i>Kembali</button>
+      <button onclick="backToStep(5)" class="btn-secondary mt-2"><i class="fas fa-arrow-left mr-1"></i>Kembali</button>
     </div>
 
-    <!-- STEP 4: Token -->
-    <div id="step4Content" class="hidden">
+    <!-- STEP 7: Token -->
+    <div id="step7Content" class="hidden">
       <div id="tokenInfo" class="info-box info mb-3"></div>
+      <div class="form-label justify-center"><i class="fas fa-key"></i>Masukkan Token dari Guru</div>
       <div class="mb-3">
-        <label class="text-xs text-a5b4fc font-semibold mb-2 block text-center">Masukkan Token dari Guru</label>
         <input type="text" id="tokenInput" class="input-field token-input" placeholder="XXXXXXXX" maxlength="12" oninput="onTokenInput()" onkeydown="if(event.key==='Enter')startExam()">
       </div>
       <div id="tokenStatus" class="hidden mb-3"></div>
-      <button onclick="startExam()" id="btnStep4" class="btn-primary w-full" disabled>
+      <button onclick="startExam()" id="btnStep7" class="btn-primary" disabled>
         <i class="fas fa-play"></i><span>Mulai Ujian</span>
       </button>
-      <button onclick="backToStep(3)" class="btn-secondary w-full mt-2"><i class="fas fa-arrow-left mr-1"></i>Kembali</button>
+      <button onclick="backToStep(6)" class="btn-secondary mt-2"><i class="fas fa-arrow-left mr-1"></i>Kembali</button>
     </div>
   </div>
 </div>
@@ -318,43 +341,41 @@ body{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#4c1d95 100%);colo
 <div id="examPage" class="hidden min-h-screen relative z-10">
   <header class="topbar no-print" id="examTopbar">
     <div class="flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center">
-          <i class="fas fa-user-graduate text-white text-sm"></i>
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center">
+          <i class="fas fa-user-graduate text-white" style="font-size:12px"></i>
         </div>
         <div class="min-w-0">
-          <p class="text-sm font-bold text-light truncate" id="topNama" style="max-width:120px"></p>
-          <p class="text-xs text-a5b4fc truncate" id="topSekolah" style="max-width:140px"></p>
+          <p class="text-xs font-bold text-light truncate" id="topNama" style="max-width:110px"></p>
+          <p class="text-xs text-a5b4fc truncate" id="topSekolah" style="max-width:130px;font-size:10px"></p>
         </div>
       </div>
-      <div class="flex items-center gap-2">
-        <span class="badge badge-primary" id="topMapel"></span>
-      </div>
+      <span class="badge badge-primary" id="topMapel"></span>
     </div>
   </header>
   <div id="timerBarContainer" class="hidden no-print"></div>
-  <div class="p-4" id="examContent"></div>
+  <div class="p-3" id="examContent"></div>
 </div>
 
 <script>
 /* ================================================================
    FIREBASE CONFIG
    ================================================================ */
-var firebaseConfig = {
-  apiKey: "AIzaSyC0Hs7SUgPAeQ_JaotHUJL5m6nIhCRif-8",
-  authDomain: "pembuatan-soal.firebaseapp.com",
-  projectId: "pembuatan-soal",
-  storageBucket: "pembuatan-soal.firebasestorage.app",
-  messagingSenderId: "56200686194",
-  appId: "1:56200686194:web:eb2de00c9d152d87bcf0eb"
+var firebaseConfig={
+  apiKey:"AIzaSyC0Hs7SUgPAeQ_JaotHUJL5m6nIhCRif-8",
+  authDomain:"pembuatan-soal.firebaseapp.com",
+  projectId:"pembuatan-soal",
+  storageBucket:"pembuatan-soal.firebasestorage.app",
+  messagingSenderId:"56200686194",
+  appId:"1:56200686194:web:eb2de00c9d152d87bcf0eb"
 };
 firebase.initializeApp(firebaseConfig);
-var db = firebase.firestore();
+var db=firebase.firestore();
 
 /* ================================================================
    DATA MAPEL
    ================================================================ */
-var MAPEL_LIST = [
+var MAPEL_LIST=[
   {id:'ppkn',nama:'Pendidikan Pancasila',singkat:'PPKn',icon:'fa-balance-scale',color:'#6366f1'},
   {id:'mat',nama:'Matematika',singkat:'MTK',icon:'fa-calculator',color:'#8b5cf6'},
   {id:'bin',nama:'Bahasa Indonesia',singkat:'B.Indo',icon:'fa-book',color:'#ec4899'},
@@ -365,1018 +386,994 @@ var MAPEL_LIST = [
   {id:'pai',nama:'PAI',singkat:'PAI',icon:'fa-mosque',color:'#a78bfa'},
   {id:'pjok',nama:'PJOK',singkat:'PJOK',icon:'fa-running',color:'#f87171'}
 ];
-var PAJ_M = {id:'paj',nama:'Penilaian Akhir Jenjang',singkat:'PAJ',icon:'fa-graduation-cap',color:'#f87171'};
+var PAJ_M={id:'paj',nama:'Penilaian Akhir Jenjang',singkat:'PAJ',icon:'fa-graduation-cap',color:'#f87171'};
 
 /* ================================================================
-   STATE GLOBAL
+   STEP DEFINITIONS
    ================================================================ */
-var guruList = [];
-var siswaList = [];
-var questions = [];
-var pajQuestions = [];
-var nilaiList = [];
-var currentStep = 1;
-var selectedKelas = null;
-var selectedRombel = null;
-var selectedGuru = null;
-var selectedMapel = null;
-var selectedExamType = null;
-var tokenValidated = false;
-var sessionData = null;
-var studentName = "";
-var examTimerInterval = null;
-var examDurationSeconds = 0;
-var examRemainingSeconds = 0;
-var examActive = false;
+var STEP_DEFS=[
+  {label:'NPSN',icon:'fa-school'},
+  {label:'Ujian',icon:'fa-file-alt'},
+  {label:'Mapel',icon:'fa-book'},
+  {label:'Kelas',icon:'fa-layer-group'},
+  {label:'Rombel',icon:'fa-users'},
+  {label:'Nama',icon:'fa-user'},
+  {label:'Token',icon:'fa-key'}
+];
+
+/* ================================================================
+   STATE
+   ================================================================ */
+var guruList=[];
+var siswaList=[];
+var questions=[];
+var pajQuestions=[];
+var nilaiList=[];
+var currentStep=1;
+var selectedNpsn=null;
+var selectedSekolah=null;
+var selectedExamType=null;
+var selectedMapel=null;
+var selectedKelas=null;
+var selectedRombel=null;
+var selectedGuru=null;
+var tokenValidated=false;
+var sessionData=null;
+var studentName="";
+var examTimerInterval=null;
+var examDurationSeconds=0;
+var examRemainingSeconds=0;
+var examActive=false;
 
 /* ================================================================
    UTILITAS
    ================================================================ */
-function getMapel(id) {
-  if (id === 'paj') return PAJ_M;
-  for (var i = 0; i < MAPEL_LIST.length; i++) {
-    if (MAPEL_LIST[i].id === id) return MAPEL_LIST[i];
-  }
-  return {id:id, nama:id, singkat:id, icon:'fa-book', color:'#6366f1'};
+function getMapel(id){
+  if(id==='paj')return PAJ_M;
+  for(var i=0;i<MAPEL_LIST.length;i++){if(MAPEL_LIST[i].id===id)return MAPEL_LIST[i];}
+  return{id:id,nama:id,singkat:id,icon:'fa-book',color:'#6366f1'};
+}
+function escHtml(s){if(!s)return '';var d=document.createElement('div');d.textContent=String(s);return d.innerHTML;}
+function getOptLetters(k){var n=parseInt((k||'').replace('Kelas ',''))||4;if(n<=2)return['a','b','c'];if(n===6)return['a','b','c','d','e'];return['a','b','c','d'];}
+
+function showToast(msg,type){
+  type=type||'success';
+  var c=document.getElementById('toastContainer');
+  var t=document.createElement('div');
+  var ic=type==='success'?'fa-check-circle':type==='error'?'fa-times-circle':'fa-info-circle';
+  t.className='toast toast-'+type;
+  t.innerHTML='<i class="fas '+ic+'"></i><span>'+msg+'</span>';
+  c.appendChild(t);
+  setTimeout(function(){if(t.parentNode)t.remove();},3500);
 }
 
-function escHtml(s) {
-  if (!s) return '';
-  var d = document.createElement('div');
-  d.textContent = String(s);
-  return d.innerHTML;
-}
-
-function getOptLetters(kelas) {
-  var n = parseInt((kelas || '').replace('Kelas ', '')) || 4;
-  if (n <= 2) return ['a','b','c'];
-  if (n === 6) return ['a','b','c','d','e'];
-  return ['a','b','c','d'];
-}
-
-function showToast(msg, type) {
-  type = type || 'success';
-  var container = document.getElementById('toastContainer');
-  var toast = document.createElement('div');
-  var icon = type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-times-circle' : 'fa-info-circle';
-  toast.className = 'toast toast-' + type;
-  toast.innerHTML = '<i class="fas ' + icon + '"></i><span>' + msg + '</span>';
-  container.appendChild(toast);
-  setTimeout(function() { if (toast.parentNode) toast.remove(); }, 3500);
-}
+function formatDurasiText(m){if(!m)return '';var h=Math.floor(m/60),mm=m%60;if(h>0&&mm>0)return h+' jam '+mm+' menit';if(h>0)return h+' jam';return mm+' menit';}
 
 /* ================================================================
-   SUPERKETAT: Blokir semua cara keluar saat ujian
+   BLOKIR SUPERKETAT
    ================================================================ */
-function activateLock(){
-  examActive = true;
-  document.getElementById('lockOverlay').classList.remove('hidden');
-}
+function activateLock(){examActive=true;document.getElementById('lockOverlay').classList.remove('hidden');}
+function cancelLock(){document.getElementById('lockOverlay').classList.add('hidden');}
 
-function cancelLock(){
-  document.getElementById('lockOverlay').classList.add('hidden');
-}
-
-/* Blokir tombol back */
-history.pushState(null, null, location.href);
-history.pushState(null, null, location.href);
-window.addEventListener('popstate', function(e){
-  if(examActive){
-    history.pushState(null, null, location.href);
-    activateLock();
-  }
-});
-
-/* Blokir keyboard shortcut */
-document.addEventListener('keydown', function(e){
-  if(!examActive) return;
-  /* Blokir Ctrl+R, F5, Ctrl+W, Ctrl+Shift+I, Ctrl+U, Ctrl+S, Ctrl+P, Ctrl+Shift+J, F12 */
+history.pushState(null,null,location.href);
+history.pushState(null,null,location.href);
+window.addEventListener('popstate',function(e){if(examActive){history.pushState(null,null,location.href);activateLock();}});
+document.addEventListener('keydown',function(e){
+  if(!examActive)return;
   if(e.key==='F5'||e.key==='F12'){e.preventDefault();e.stopPropagation();activateLock();return;}
   if(e.ctrlKey&&e.shiftKey&&(e.key==='I'||e.key==='i'||e.key==='J'||e.key==='j')){e.preventDefault();e.stopPropagation();activateLock();return;}
   if(e.ctrlKey&&(e.key==='r'||e.key==='R'||e.key==='w'||e.key==='W'||e.key==='u'||e.key==='U'||e.key==='s'||e.key==='S'||e.key==='p'||e.key==='P')){e.preventDefault();e.stopPropagation();activateLock();return;}
-  if(e.altKey&&(e.key==='F4'||e.key==='Left')){e.preventDefault();e.stopPropagation();activateLock();return;}
+  if(e.altKey&&(e.key==='F4'||e.key==='Left')){e.preventDefault();e.stopPropagation();activateLock();}
 });
-
-/* Blokir context menu (right-click) */
-document.addEventListener('contextmenu', function(e){
-  if(examActive){e.preventDefault();activateLock();}
-});
-
-/* Blokir copy, cut, paste saat ujian */
-document.addEventListener('copy', function(e){ if(examActive){e.preventDefault();} });
-document.addEventListener('cut', function(e){ if(examActive){e.preventDefault();} });
-document.addEventListener('paste', function(e){ if(examActive){e.preventDefault();} });
-
-/* Deteksi visibility change (tab switch / minimize) */
-document.addEventListener('visibilitychange', function(){
-  if(examActive && document.hidden){
-    activateLock();
-  }
-});
-
-/* Deteksi window blur (klik di luar) */
-window.addEventListener('blur', function(){
-  if(examActive){
-    activateLock();
-  }
-});
-
-/* Deteksi beforeunload (close tab / refresh) */
-window.addEventListener('beforeunload', function(e){
-  if(examActive){
-    e.preventDefault();
-    e.returnValue = 'Ujian sedang berlangsung! Apakah Anda yakin ingin keluar?';
-    return e.returnValue;
-  }
-});
-
-/* Blokir drag */
-document.addEventListener('dragstart', function(e){ if(examActive){e.preventDefault();} });
+document.addEventListener('contextmenu',function(e){if(examActive){e.preventDefault();activateLock();}});
+document.addEventListener('copy',function(e){if(examActive)e.preventDefault();});
+document.addEventListener('cut',function(e){if(examActive)e.preventDefault();});
+document.addEventListener('paste',function(e){if(examActive)e.preventDefault();});
+document.addEventListener('visibilitychange',function(){if(examActive&&document.hidden)activateLock();});
+window.addEventListener('blur',function(){if(examActive)activateLock();});
+window.addEventListener('beforeunload',function(e){if(examActive){e.preventDefault();e.returnValue='Ujian sedang berlangsung!';return e.returnValue;}});
+document.addEventListener('dragstart',function(e){if(examActive)e.preventDefault();});
 
 /* ================================================================
-   UI DECORATIONS
+   DECORATIONS
    ================================================================ */
-function generateStars() {
-  var container = document.getElementById('starsContainer');
-  for (var i = 0; i < 25; i++) {
-    var star = document.createElement('div');
-    star.className = 'star';
-    star.style.left = Math.random() * 100 + '%';
-    star.style.top = Math.random() * 100 + '%';
-    star.style.animationDelay = Math.random() * 2 + 's';
-    container.appendChild(star);
-  }
+function generateStars(){
+  var c=document.getElementById('starsContainer');
+  for(var i=0;i<20;i++){var s=document.createElement('div');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=Math.random()*2+'s';c.appendChild(s);}
 }
-
-function showConfetti() {
-  var container = document.getElementById('confettiContainer');
-  var colors = ['#6366f1','#f472b6','#22d3ee','#4ade80','#fbbf24','#f87171','#a78bfa'];
-  for (var i = 0; i < 50; i++) {
-    var conf = document.createElement('div');
-    conf.className = 'confetti';
-    conf.style.left = Math.random() * 100 + '%';
-    conf.style.bottom = '-10px';
-    conf.style.background = colors[Math.floor(Math.random() * colors.length)];
-    conf.style.animationDelay = Math.random() * 2 + 's';
-    container.appendChild(conf);
-    (function(c){ setTimeout(function(){ c.remove(); }, 3500); })(conf);
-  }
+function showConfetti(){
+  var c=document.getElementById('confettiContainer');
+  var cols=['#6366f1','#f472b6','#22d3ee','#4ade80','#fbbf24','#f87171','#a78bfa'];
+  for(var i=0;i<40;i++){var cf=document.createElement('div');cf.className='confetti';cf.style.left=Math.random()*100+'%';cf.style.bottom='-10px';cf.style.background=cols[Math.floor(Math.random()*cols.length)];cf.style.animationDelay=Math.random()*2+'s';c.appendChild(cf);(function(x){setTimeout(function(){x.remove();},3500);})(cf);}
 }
 
 /* ================================================================
-   STEP NAVIGATION
+   STEP INDICATOR
    ================================================================ */
-function updateStepUI(step) {
-  currentStep = step;
-  for (var i = 1; i <= 4; i++) {
-    var circle = document.getElementById('step' + i + 'Circle');
-    var label = document.getElementById('step' + i + 'Label');
-    var line = document.getElementById('line' + i);
-    circle.className = 'step-circle ' + (i < step ? 'done' : i === step ? 'active' : 'inactive');
-    label.className = 'step-label ' + (i < step ? 'done' : i === step ? 'active' : '');
-    if (i < step) { circle.innerHTML = '<i class="fas fa-check" style="font-size:10px"></i>'; }
-    else { circle.textContent = i; }
-    if (line) { line.className = 'step-line' + (i < step ? ' done' : ''); }
+function buildStepIndicator(){
+  var bar=document.getElementById('stepBar');
+  var row=document.getElementById('stepLabelRow');
+  var bh='',rh='';
+  for(var i=0;i<STEP_DEFS.length;i++){
+    if(i>0)bh+='<div class="step-connector" id="sc_'+i+'"></div>';
+    bh+='<div class="step-dot inactive" id="sd_'+i+'">'+(i+1)+'</div>';
+    if(i>0)rh+='<div class="step-lbl-spacer"></div>';
+    rh+='<div class="step-lbl" id="sl_'+i+'">'+STEP_DEFS[i].label+'</div>';
   }
-  for (var i = 1; i <= 4; i++) {
-    var content = document.getElementById('step' + i + 'Content');
-    if (content) content.classList.toggle('hidden', i !== step);
+  bar.innerHTML=bh;
+  row.innerHTML=rh;
+}
+
+function updateStepUI(step){
+  currentStep=step;
+  for(var i=0;i<STEP_DEFS.length;i++){
+    var dot=document.getElementById('sd_'+i);
+    var lbl=document.getElementById('sl_'+i);
+    dot.className='step-dot '+(i<step-1?'done':i===step-1?'active':'inactive');
+    lbl.className='step-lbl '+(i<step-1?'done':i===step-1?'active':'');
+    if(i<step-1){dot.innerHTML='<i class="fas fa-check" style="font-size:8px"></i>';}else{dot.textContent=(i+1);}
+    if(i>0){
+      var conn=document.getElementById('sc_'+i);
+      conn.className='step-connector'+(i<step-1?' done':'');
+    }
+  }
+  for(var i=1;i<=7;i++){
+    var c=document.getElementById('step'+i+'Content');
+    if(c)c.classList.toggle('hidden',i!==step);
   }
 }
 
 /* ================================================================
    FIREBASE LISTENERS
    ================================================================ */
-function initApp() {
+function initApp(){
   generateStars();
+  buildStepIndicator();
 
-  db.collection('guru_panel').onSnapshot(function(snap) {
-    guruList = snap.docs.map(function(d) { return Object.assign({id: d.id}, d.data()); });
-    renderKelasRombelSelection();
+  db.collection('guru_panel').onSnapshot(function(snap){
+    guruList=snap.docs.map(function(d){return Object.assign({id:d.id},d.data());});
+    renderNpsnList();
   });
-
-  db.collection('siswa_panel').onSnapshot(function(snap) {
-    siswaList = snap.docs.map(function(d) { return Object.assign({id: d.id}, d.data()); });
+  db.collection('siswa_panel').onSnapshot(function(snap){
+    siswaList=snap.docs.map(function(d){return Object.assign({id:d.id},d.data());});
   });
-
-  db.collection('questions').orderBy('createdAt', 'asc').onSnapshot(function(snap) {
-    questions = snap.docs.map(function(d) { return Object.assign({id: d.id}, d.data()); });
+  db.collection('questions').orderBy('createdAt','asc').onSnapshot(function(snap){
+    questions=snap.docs.map(function(d){return Object.assign({id:d.id},d.data());});
   });
-
-  /* FIX: PAJ dari questions_paj */
-  db.collection('questions_paj').orderBy('createdAt', 'asc').onSnapshot(function(snap) {
-    pajQuestions = snap.docs.map(function(d) { return Object.assign({id: d.id}, d.data()); });
+  db.collection('questions_paj').orderBy('createdAt','asc').onSnapshot(function(snap){
+    pajQuestions=snap.docs.map(function(d){return Object.assign({id:d.id},d.data());});
   });
-
-  db.collection('nilai_panel').onSnapshot(function(snap) {
-    nilaiList = snap.docs.map(function(d) { return Object.assign({id: d.id}, d.data()); });
+  db.collection('nilai_panel').onSnapshot(function(snap){
+    nilaiList=snap.docs.map(function(d){return Object.assign({id:d.id},d.data());});
   });
 }
 
 /* ================================================================
-   STEP 1: KELAS & ROMBEL
+   STEP 1: NPSN / SEKOLAH
    ================================================================ */
-function renderKelasRombelSelection() {
-  var kelasGrid = document.getElementById('kelasGrid');
-  var rombelGrid = document.getElementById('rombelGrid');
-
-  var kelasHtml = '';
-  for (var i = 1; i <= 6; i++) {
-    kelasHtml += '<div class="select-card" id="kelas_' + i + '" onclick="selectKelas(' + i + ')">';
-    kelasHtml += '<div class="card-icon" style="width:32px;height:32px;margin:0 auto 4px;background:rgba(99,102,241,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center">';
-    kelasHtml += '<span class="font-bold text-primary">' + i + '</span></div>';
-    kelasHtml += '<span class="text-xs text-a5b4fc">Kelas ' + i + '</span></div>';
+function getUniqueSchools(){
+  var map={};
+  for(var i=0;i<guruList.length;i++){
+    var g=guruList[i];
+    if(!g.npsn||!g.sekolah)continue;
+    if(!map[g.npsn])map[g.npsn]={npsn:g.npsn,nama:g.sekolah};
   }
-  kelasGrid.innerHTML = kelasHtml;
-
-  var rombelHtml = '';
-  ['A','B','C'].forEach(function(r) {
-    rombelHtml += '<div class="select-card" id="rombel_' + r + '" onclick="selectRombel(\'' + r + '\')">';
-    rombelHtml += '<div class="card-icon" style="width:32px;height:32px;margin:0 auto 4px;background:rgba(236,72,153,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center">';
-    rombelHtml += '<span class="font-bold text-secondary">' + r + '</span></div>';
-    rombelHtml += '<span class="text-xs text-a5b4fc">Rombel ' + r + '</span></div>';
-  });
-  rombelGrid.innerHTML = rombelHtml;
-
-  checkStep1Complete();
+  return Object.values(map).sort(function(a,b){return a.npsn.localeCompare(b.npsn);});
 }
 
-function selectKelas(k) {
-  selectedKelas = 'Kelas ' + k;
-  document.querySelectorAll('[id^="kelas_"]').forEach(function(el) { el.classList.remove('selected'); });
-  document.getElementById('kelas_' + k).classList.add('selected','pop');
-  setTimeout(function() { document.getElementById('kelas_' + k).classList.remove('pop'); }, 400);
-  selectedRombel = null;
-  selectedGuru = null;
-  document.querySelectorAll('[id^="rombel_"]').forEach(function(el) { el.classList.remove('selected'); });
-  document.getElementById('teacherBox').classList.add('hidden');
+function renderNpsnList(){
+  var schools=getUniqueSchools();
+  var el=document.getElementById('npsnList');
+  if(!schools.length){
+    el.innerHTML='<div class="text-center py-6"><p class="text-xs" style="color:#a5b4fc"><i class="fas fa-inbox mr-1"></i>Belum ada sekolah terdaftar</p></div>';
+    return;
+  }
+  var h='';
+  for(var i=0;i<schools.length;i++){
+    var s=schools[i];
+    h+='<div class="npsn-card" id="npsn_'+s.npsn+'" onclick="selectNpsn(\''+s.npsn+'\')">';
+    h+='<div style="width:36px;height:36px;border-radius:10px;background:rgba(99,102,241,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0">';
+    h+='<i class="fas fa-school text-primary" style="font-size:14px"></i></div>';
+    h+='<div class="flex-1 min-w-0">';
+    h+='<p class="text-sm font-semibold text-light truncate">'+escHtml(s.nama)+'</p>';
+    h+='<p class="text-xs" style="color:#a5b4fc">NPSN: '+s.npsn+'</p>';
+    h+='</div><i class="fas fa-chevron-right" style="color:#4c4678;font-size:12px;flex-shrink:0"></i></div>';
+  }
+  el.innerHTML=h;
   document.getElementById('schoolInfoBox').classList.add('hidden');
-  document.getElementById('btnStep1').disabled = true;
-  checkStep1Complete();
+  document.getElementById('btnStep1').disabled=true;
 }
 
-function selectRombel(r) {
-  selectedRombel = r;
-  document.querySelectorAll('[id^="rombel_"]').forEach(function(el) { el.classList.remove('selected'); });
-  document.getElementById('rombel_' + r).classList.add('selected','pop');
-  setTimeout(function() { document.getElementById('rombel_' + r).classList.remove('pop'); }, 400);
-  checkStep1Complete();
+function selectNpsn(npsn){
+  selectedNpsn=npsn;
+  document.querySelectorAll('[id^="npsn_"]').forEach(function(e){e.classList.remove('selected');});
+  var card=document.getElementById('npsn_'+npsn);
+  card.classList.add('selected','pop');
+  setTimeout(function(){card.classList.remove('pop');},400);
+
+  var school=guruList.find(function(g){return g.npsn===npsn&&g.sekolah;});
+  selectedSekolah=school?school.sekolah:npsn;
+
+  var box=document.getElementById('schoolInfoBox');
+  box.classList.remove('hidden');
+  box.innerHTML='<div class="info-box-icon bg-primary/30"><i class="fas fa-check-circle text-success"></i></div><div class="flex-1 min-w-0"><p class="text-xs font-semibold text-light truncate">'+escHtml(selectedSekolah)+'</p><p class="text-xs" style="color:#a5b4fc">NPSN: '+npsn+' — Terverifikasi</p></div>';
+  document.getElementById('btnStep1').disabled=false;
 }
 
-function checkStep1Complete() {
-  var btn = document.getElementById('btnStep1');
-  var teacherBox = document.getElementById('teacherBox');
-  var teacherCard = document.getElementById('teacherCard');
-  var schoolInfoBox = document.getElementById('schoolInfoBox');
-  btn.disabled = true;
-  teacherBox.classList.add('hidden');
-  schoolInfoBox.classList.add('hidden');
-  selectedGuru = null;
-
-  if (!selectedKelas || !selectedRombel) return;
-
-  var matchedGuru = null;
-  for (var i = 0; i < guruList.length; i++) {
-    var g = guruList[i];
-    var key = selectedKelas.replace(' ','') + '_' + selectedRombel;
-    if (g.kelasRombel && g.kelasRombel[key] && g.isGuruKelas) {
-      matchedGuru = g;
-      break;
-    }
-    if (g.kelas === selectedKelas && g.rombel === selectedRombel && g.jabatan === 'Guru Kelas') {
-      matchedGuru = g;
-      break;
-    }
-  }
-
-  if (matchedGuru) {
-    selectedGuru = matchedGuru;
-    schoolInfoBox.classList.remove('hidden');
-    document.getElementById('schoolName').textContent = matchedGuru.sekolah;
-    document.getElementById('schoolNpsn').textContent = matchedGuru.npsn;
-    teacherBox.classList.remove('hidden');
-    teacherCard.innerHTML = '<div class="teacher-avatar"><i class="fas fa-chalkboard-teacher text-white"></i></div>';
-    teacherCard.innerHTML += '<div class="flex-1 min-w-0"><p class="text-sm font-semibold text-light">' + escHtml(matchedGuru.nama) + '</p>';
-    teacherCard.innerHTML += '<p class="text-xs text-a5b4fc">Wali Kelas ' + selectedKelas.replace('Kelas ','') + ' ' + selectedRombel + '</p></div>';
-    btn.disabled = false;
-  } else {
-    showToast('Tidak ada wali kelas untuk ' + selectedKelas + ' Rombel ' + selectedRombel, 'error');
-  }
-}
-
-function goToStep2() {
-  if (!selectedGuru) { showToast('Pilih kelas dan rombel dulu','error'); return; }
-  updateStepUI(2);
-  renderStep2();
-}
+function goToStep2(){if(!selectedNpsn){showToast('Pilih sekolah dulu','error');return;}updateStepUI(2);renderStep2();}
 
 /* ================================================================
-   STEP 2: PILIH UJIAN & MAPEL
+   STEP 2: JENIS UJIAN
    ================================================================ */
-function getAllAvailableMapels() {
-  var kelas = selectedKelas;
-  var rombel = selectedRombel;
-  var krKey = kelas.replace(' ','') + '_' + rombel;
-  var mapelSet = {};
-  var tokenSources = {};
-
-  for (var i = 0; i < guruList.length; i++) {
-    var g = guruList[i];
-    var ampus = false;
-    if (g.kelasRombel && g.kelasRombel[krKey]) ampus = true;
-    if (g.kelas === kelas && g.rombel === rombel) ampus = true;
-    if (!ampus) continue;
-
-    var tm = g.tokenMapel || {};
-    Object.keys(tm).forEach(function(mid) {
-      if (!mapelSet[mid]) {
-        mapelSet[mid] = true;
-        tokenSources[mid] = {
-          guruId: g.id,
-          guruNama: g.nama,
-          token: tm[mid],
-          durasi: (g.durasiMapel || {})[mid] || 0
-        };
-      }
-    });
-  }
-
-  return tokenSources;
+function getFilteredGuru(){
+  return guruList.filter(function(g){return g.npsn===selectedNpsn;});
 }
 
-function renderStep2() {
-  var container = document.getElementById('examTypeContainer');
-  var mapelContainer = document.getElementById('mapelContainer');
-  var isKelas6 = selectedKelas === 'Kelas 6';
-  var available = getAllAvailableMapels();
-  var availKeys = Object.keys(available);
+function getExamTypesAvailable(){
+  var fGuru=getFilteredGuru();
+  var hasSAT=false,hasPAJ=false;
 
-  var satMapels = [];
-  var hasPAJ = false;
-
-  for (var i = 0; i < availKeys.length; i++) {
-    var mid = availKeys[i];
-    if (mid === 'paj') { hasPAJ = true; }
-    else { satMapels.push(getMapel(mid)); }
+  /* Cek SAT: guru yang punya tokenMapel (selain paj) */
+  for(var i=0;i<fGuru.length;i++){
+    var g=fGuru[i];
+    var tm=g.tokenMapel||{};
+    var keys=Object.keys(tm);
+    for(var j=0;j<keys.length;j++){
+      if(keys[j]!=='paj'&&tm[keys[j]])hasSAT=true;
+    }
   }
-
-  var html = '';
-
-  if (isKelas6 && hasPAJ) {
-    var pajSrc = available['paj'];
-    var durText = pajSrc.durasi > 0 ? '<p class="text-xs text-warning mt-0.5"><i class="fas fa-clock mr-1"></i>' + formatDurasiText(pajSrc.durasi) + '</p>' : '';
-    html += '<div class="select-card" id="cardPAJ" onclick="selectExam(\'paj\')">';
-    html += '<div class="card-icon" style="width:48px;height:48px;margin:0 auto 8px;background:rgba(248,113,113,0.2);border-radius:14px;display:flex;align-items:center;justify-content:center">';
-    html += '<i class="fas fa-graduation-cap text-danger text-xl"></i></div>';
-    html += '<p class="font-bold text-light text-sm">Penilaian Akhir Jenjang</p>';
-    html += '<p class="text-xs text-a5b4fc mt-1">PAJ — Kelas 6</p>';
-    html += '<p class="text-xs text-a5b4fc mt-0.5" style="font-size:10px">Guru: ' + escHtml(pajSrc.guruNama) + '</p>';
-    html += durText;
-    html += '</div>';
+  /* Cek PAJ: hanya kelas 6 */
+  for(var i=0;i<fGuru.length;i++){
+    var g=fGuru[i];
+    var tm=g.tokenMapel||{};
+    if(tm.paj)hasPAJ=true;
   }
-
-  if (satMapels.length > 0) {
-    html += '<div class="select-card" id="cardSAT" onclick="selectExam(\'sat\')">';
-    html += '<div class="card-icon" style="width:48px;height:48px;margin:0 auto 8px;background:rgba(99,102,241,0.2);border-radius:14px;display:flex;align-items:center;justify-content:center">';
-    html += '<i class="fas fa-file-alt text-primary text-xl"></i></div>';
-    html += '<p class="font-bold text-light text-sm">Sumatif Akhir Tahun</p>';
-    html += '<p class="text-xs text-a5b4fc mt-1">SAT — ' + selectedKelas + ' (' + satMapels.length + ' mapel)</p>';
-    html += '</div>';
-  }
-
-  if (!hasPAJ && satMapels.length === 0) {
-    html += '<div class="text-center py-6"><p class="text-sm text-a5b4fc"><i class="fas fa-inbox mr-2"></i>Belum ada ujian tersedia</p></div>';
-  }
-
-  container.innerHTML = html;
-  mapelContainer.classList.add('hidden');
-  document.getElementById('btnStep2').disabled = true;
-  selectedMapel = null;
-  selectedExamType = null;
+  return{hasSAT:hasSAT,hasPAJ:hasPAJ};
 }
 
-function formatDurasiText(menit) {
-  if (!menit) return '';
-  var h = Math.floor(menit / 60), m = menit % 60;
-  if (h > 0 && m > 0) return h + ' jam ' + m + ' menit';
-  if (h > 0) return h + ' jam';
-  return m + ' menit';
+function renderStep2(){
+  var types=getExamTypesAvailable();
+  var el=document.getElementById('examTypeContainer');
+  var h='';
+
+  if(types.hasSAT){
+    var fGuru=getFilteredGuru();
+    var satCount=0;
+    for(var i=0;i<fGuru.length;i++){
+      var tm=fGuru[i].tokenMapel||{};
+      var keys=Object.keys(tm);
+      for(var j=0;j<keys.length;j++){if(keys[j]!=='paj'&&tm[keys[j]])satCount++;}
+    }
+    h+='<div class="select-card" id="cardSAT" onclick="selectExamType(\'sat\')">';
+    h+='<div class="card-icon" style="width:44px;height:44px;margin:0 auto 6px;background:rgba(99,102,241,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center">';
+    h+='<i class="fas fa-file-alt text-primary" style="font-size:18px"></i></div>';
+    h+='<p class="font-bold text-light text-sm">Sumatif Akhir Tahun</p>';
+    h+='<p class="text-xs" style="color:#a5b4fc">SAT — '+satCount+' mata pelajaran</p>';
+    h+='</div>';
+  }
+
+  if(types.hasPAJ){
+    h+='<div class="select-card" id="cardPAJ" onclick="selectExamType(\'paj\')">';
+    h+='<div class="card-icon" style="width:44px;height:44px;margin:0 auto 6px;background:rgba(248,113,113,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center">';
+    h+='<i class="fas fa-graduation-cap text-danger" style="font-size:18px"></i></div>';
+    h+='<p class="font-bold text-light text-sm">Penilaian Akhir Jenjang</p>';
+    h+='<p class="text-xs" style="color:#a5b4fc">PAJ — Kelas 6</p>';
+    h+='</div>';
+  }
+
+  if(!types.hasSAT&&!types.hasPAJ){
+    h+='<div class="text-center py-6"><p class="text-xs" style="color:#a5b4fc"><i class="fas fa-inbox mr-1"></i>Belum ada ujian tersedia</p></div>';
+  }
+
+  el.innerHTML=h;
+  document.getElementById('btnStep2').disabled=true;
+  selectedExamType=null;
+  selectedMapel=null;
 }
 
-function selectExam(type) {
-  selectedExamType = type;
-  selectedMapel = null;
-  tokenValidated = false;
-
-  document.querySelectorAll('#examTypeContainer .select-card').forEach(function(c) { c.classList.remove('selected'); });
-  document.getElementById('mapelContainer').classList.add('hidden');
-  document.getElementById('btnStep2').disabled = true;
-
-  if (type === 'paj') {
-    selectedMapel = 'paj';
+function selectExamType(type){
+  selectedExamType=type;
+  selectedMapel=null;
+  document.querySelectorAll('#examTypeContainer .select-card').forEach(function(c){c.classList.remove('selected');});
+  if(type==='paj'){
     document.getElementById('cardPAJ').classList.add('selected');
-    document.getElementById('btnStep2').disabled = false;
-  } else {
+  }else{
     document.getElementById('cardSAT').classList.add('selected');
-    renderMapelSelection();
   }
+  document.getElementById('btnStep2').disabled=false;
 }
 
-function renderMapelSelection() {
-  var available = getAllAvailableMapels();
-  var availKeys = Object.keys(available);
-  var mapels = [];
-
-  for (var i = 0; i < availKeys.length; i++) {
-    if (availKeys[i] !== 'paj') mapels.push(getMapel(availKeys[i]));
-  }
-
-  var container = document.getElementById('mapelContainer');
-  var html = '<p class="text-xs text-a5b4fc font-semibold mb-2">Pilih Mata Pelajaran:</p>';
-  html += '<div class="grid grid-cols-2 gap-2">';
-
-  for (var i = 0; i < mapels.length; i++) {
-    var m = mapels[i];
-    var src = available[m.id];
-    var durBadge = src.durasi > 0 ? '<p class="text-xs text-warning" style="font-size:9px"><i class="fas fa-clock mr-1"></i>' + formatDurasiText(src.durasi) + '</p>' : '';
-    html += '<div class="mapel-card" onclick="selectMapel(\'' + m.id + '\')">';
-    html += '<div class="mapel-icon" style="background:' + m.color + '20"><i class="fas ' + m.icon + '" style="color:' + m.color + '"></i></div>';
-    html += '<div class="min-w-0 flex-1">';
-    html += '<p class="text-xs font-semibold text-light truncate">' + escHtml(m.singkat) + '</p>';
-    html += '<p class="text-xs text-a5b4fc" style="font-size:9px">' + escHtml(src.guruNama) + '</p>';
-    html += durBadge;
-    html += '</div></div>';
-  }
-
-  html += '</div>';
-  container.innerHTML = html;
-  container.classList.remove('hidden');
-  document.getElementById('btnStep2').disabled = true;
-}
-
-function selectMapel(id) {
-  selectedMapel = id;
-  document.querySelectorAll('.mapel-card').forEach(function(c) { c.classList.remove('selected'); });
-  event.currentTarget.classList.add('selected');
-  document.getElementById('btnStep2').disabled = false;
-}
-
-function goToStep3() {
-  if (!selectedMapel) { showToast('Pilih ujian terlebih dahulu','error'); return; }
-  updateStepUI(3);
-  renderStep3();
-}
+function goToStep3(){if(!selectedExamType){showToast('Pilih jenis ujian','error');return;}updateStepUI(3);renderStep3();}
 
 /* ================================================================
-   STEP 3: NAMA
+   STEP 3: MAPEL (jika SAT, skip jika PAJ)
    ================================================================ */
-function renderStep3() {
-  var info = document.getElementById('summaryInfo');
-  var m = getMapel(selectedMapel);
-  var available = getAllAvailableMapels();
-  var src = available[selectedMapel] || {};
-  var guruNama = src.guruNama || selectedGuru.nama;
-  var durText = src.durasi > 0 ? '<span class="badge badge-warning"><i class="fas fa-clock mr-1"></i>' + formatDurasiText(src.durasi) + '</span>' : '';
+function renderStep3(){
+  var el=document.getElementById('mapelContainer');
+  var fGuru=getFilteredGuru();
 
-  info.innerHTML = '<div class="flex flex-wrap gap-2 text-xs">';
-  info.innerHTML += '<span class="badge badge-primary"><i class="fas fa-school mr-1"></i>' + escHtml(selectedGuru.sekolah) + '</span>';
-  info.innerHTML += '<span class="badge" style="background:' + m.color + '30;color:' + m.color + '"><i class="fas ' + m.icon + ' mr-1"></i>' + escHtml(m.singkat) + '</span>';
-  info.innerHTML += '<span class="badge badge-info"><i class="fas fa-users mr-1"></i>' + selectedKelas.replace('Kelas ','') + ' ' + selectedRombel + '</span>';
-  info.innerHTML += '<span class="badge badge-warning"><i class="fas fa-chalkboard-teacher mr-1"></i>' + escHtml(guruNama) + '</span>';
-  info.innerHTML += durText;
-  info.innerHTML += '</div>';
+  if(selectedExamType==='paj'){
+    /* PAJ tidak pilih mapel, langsung set dan lanjut */
+    selectedMapel='paj';
+    el.innerHTML='<div class="info-box info"><div class="info-box-icon" style="background:rgba(248,113,113,0.2)"><i class="fas fa-graduation-cap text-danger"></i></div><div><p class="text-sm font-semibold text-light">Penilaian Akhir Jenjang</p><p class="text-xs" style="color:#a5b4fc">Semua mapel digabung dalam satu sesi</p></div></div>';
+    document.getElementById('btnStep3').disabled=false;
+    return;
+  }
 
-  document.getElementById('namaInput').value = studentName;
-  document.getElementById('btnStep3').disabled = !studentName;
+  /* Kumpulkan mapel SAT yang tersedia dari semua guru di NPSN ini */
+  var mapelMap={};
+  for(var i=0;i<fGuru.length;i++){
+    var g=fGuru[i];
+    var tm=g.tokenMapel||{};
+    var keys=Object.keys(tm);
+    for(var j=0;j<keys.length;j++){
+      var mid=keys[j];
+      if(mid==='paj'||!tm[mid])continue;
+      if(!mapelMap[mid]){
+        mapelMap[mid]={guruId:g.id,guruNama:g.nama,token:tm[mid],durasi:(g.durasiMapel||{})[mid]||0};
+      }
+    }
+  }
+
+  var mapelKeys=Object.keys(mapelMap);
+  if(!mapelKeys.length){
+    el.innerHTML='<div class="text-center py-6"><p class="text-xs" style="color:#a5b4fc"><i class="fas fa-inbox mr-1"></i>Belum ada mapel tersedia</p></div>';
+    document.getElementById('btnStep3').disabled=true;
+    return;
+  }
+
+  var h='';
+  for(var i=0;i<mapelKeys.length;i++){
+    var m=getMapel(mapelKeys[i]);
+    var src=mapelMap[mapelKeys[i]];
+    var durB=src.durasi>0?'<span class="badge badge-warning" style="font-size:9px"><i class="fas fa-clock mr-1"></i>'+formatDurasiText(src.durasi)+'</span>':'';
+    h+='<div class="mapel-card" id="mapel_'+mapelKeys[i]+'" onclick="selectMapel(\''+mapelKeys[i]+'\')">';
+    h+='<div class="mapel-icon" style="background:'+m.color+'20"><i class="fas '+m.icon+'" style="color:'+m.color+'"></i></div>';
+    h+='<div class="flex-1 min-w-0">';
+    h+='<p class="text-xs font-semibold text-light">'+escHtml(m.singkat)+'</p>';
+    h+='<p class="text-xs" style="color:#a5b4fc;font-size:9px">'+escHtml(m.nama)+'</p>';
+    h+='<div class="flex items-center gap-2 mt-1">';
+    h+='<span class="text-xs" style="color:#a5b4fc;font-size:9px"><i class="fas fa-chalkboard-teacher mr-1"></i>'+escHtml(src.guruNama)+'</span>'+durB;
+    h+='</div></div>';
+    h+='<i class="fas fa-chevron-right" style="color:#4c4678;font-size:11px;flex-shrink:0"></i>';
+    h+='</div>';
+  }
+  el.innerHTML=h;
+  document.getElementById('btnStep3').disabled=true;
+  selectedMapel=null;
+}
+
+function selectMapel(id){
+  selectedMapel=id;
+  document.querySelectorAll('.mapel-card').forEach(function(c){c.classList.remove('selected');});
+  var card=document.getElementById('mapel_'+id);
+  if(card){card.classList.add('selected','pop');setTimeout(function(){card.classList.remove('pop');},400);}
+  document.getElementById('btnStep3').disabled=false;
+}
+
+function goToStep4(){if(!selectedMapel){showToast('Pilih mapel dulu','error');return;}updateStepUI(4);renderStep4();}
+
+/* ================================================================
+   STEP 4: KELAS
+   ================================================================ */
+function getAvailableKelas(){
+  var fGuru=getFilteredGuru();
+  var kelasSet={};
+
+  for(var i=0;i<fGuru.length;i++){
+    var g=fGuru[i];
+    /* Cek via kelasRombel */
+    var kr=g.kelasRombel||{};
+    var krKeys=Object.keys(kr);
+    for(var j=0;j<krKeys.length;j++){
+      var kelas=krKeys[j].split('_')[0];
+      var kelasLabel='Kelas '+kelas;
+      /* Cek apakah guru ini punya token untuk mapel ini */
+      if(hasTokenForMapel(g,selectedMapel)){
+        kelasSet[kelasLabel]=true;
+      }
+    }
+    /* Cek via kelas field lama */
+    if(g.kelas&&hasTokenForMapel(g,selectedMapel)){
+      kelasSet[g.kelas]=true;
+    }
+  }
+  return Object.keys(kelasSet).sort(function(a,b){return parseInt(a.replace('Kelas ',''))-parseInt(b.replace('Kelas ',''));});
+}
+
+function hasTokenForMapel(guru,mapelId){
+  var tm=guru.tokenMapel||{};
+  return !!tm[mapelId];
+}
+
+function renderStep4(){
+  var kelasArr=getAvailableKelas();
+  var el=document.getElementById('kelasGrid');
+  var h='';
+
+  if(!kelasArr.length){
+    el.innerHTML='<div class="col-span-3 text-center py-4"><p class="text-xs" style="color:#a5b4fc">Tidak ada kelas tersedia</p></div>';
+    document.getElementById('btnStep4').disabled=true;
+    return;
+  }
+
+  for(var i=0;i<kelasArr.length;i++){
+    var num=kelasArr[i].replace('Kelas ','');
+    h+='<div class="select-card" id="kelas_'+num+'" onclick="selectKelas(\''+kelasArr[i]+'\')">';
+    h+='<div class="card-icon" style="width:28px;height:28px;margin:0 auto 3px;background:rgba(99,102,241,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center">';
+    h+='<span class="font-bold text-primary" style="font-size:14px">'+num+'</span></div>';
+    h+='<span class="text-xs" style="color:#a5b4fc">'+kelasArr[i]+'</span></div>';
+  }
+  el.innerHTML=h;
+  selectedKelas=null;
+  selectedRombel=null;
+  selectedGuru=null;
+  document.getElementById('btnStep4').disabled=true;
+}
+
+function selectKelas(k){
+  selectedKelas=k;
+  var num=k.replace('Kelas ','');
+  document.querySelectorAll('[id^="kelas_"]').forEach(function(e){e.classList.remove('selected');});
+  var card=document.getElementById('kelas_'+num);
+  card.classList.add('selected','pop');
+  setTimeout(function(){card.classList.remove('pop');},400);
+  selectedRombel=null;
+  selectedGuru=null;
+  document.getElementById('btnStep4').disabled=false;
+}
+
+function goToStep5(){if(!selectedKelas){showToast('Pilih kelas dulu','error');return;}updateStepUI(5);renderStep5();}
+
+/* ================================================================
+   STEP 5: ROMBEL
+   ================================================================ */
+function getAvailableRombels(){
+  var fGuru=getFilteredGuru();
+  var rombelSet={};
+  var kNum=selectedKelas.replace('Kelas ','');
+
+  for(var i=0;i<fGuru.length;i++){
+    var g=fGuru[i];
+    if(!hasTokenForMapel(g,selectedMapel))continue;
+    var kr=g.kelasRombel||{};
+    var krKeys=Object.keys(kr);
+    for(var j=0;j<krKeys.length;j++){
+      var parts=krKeys[j].split('_');
+      if(parts[0]===kNum){
+        rombelSet[parts[1]]=true;
+      }
+    }
+    if(g.kelas===selectedKelas&&g.rombel){
+      rombelSet[g.rombel]=true;
+    }
+  }
+  return Object.keys(rombelSet).sort();
+}
+
+function findWaliKelas(kelas,rombel){
+  var fGuru=getFilteredGuru();
+  var kNum=kelas.replace('Kelas ','');
+  var krKey=kNum+'_'+rombel;
+
+  for(var i=0;i<fGuru.length;i++){
+    var g=fGuru[i];
+    var kr=g.kelasRombel||{};
+    if(kr[krKey]&&g.isGuruKelas)return g;
+    if(g.kelas===kelas&&g.rombel===rombel&&(g.jabatan==='Guru Kelas'||g.isGuruKelas))return g;
+  }
+  return null;
+}
+
+function renderStep5(){
+  var rombels=getAvailableRombels();
+  var el=document.getElementById('rombelGrid');
+  var h='';
+
+  if(!rombels.length){
+    el.innerHTML='<div class="col-span-3 text-center py-4"><p class="text-xs" style="color:#a5b4fc">Tidak ada rombel tersedia</p></div>';
+    document.getElementById('btnStep5').disabled=true;
+    document.getElementById('teacherBox').classList.add('hidden');
+    return;
+  }
+
+  for(var i=0;i<rombels.length;i++){
+    var r=rombels[i];
+    h+='<div class="select-card" id="rombel_'+r+'" onclick="selectRombel(\''+r+'\')">';
+    h+='<div class="card-icon" style="width:28px;height:28px;margin:0 auto 3px;background:rgba(236,72,153,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center">';
+    h+='<span class="font-bold text-secondary" style="font-size:14px">'+r+'</span></div>';
+    h+='<span class="text-xs" style="color:#a5b4fc">Rombel '+r+'</span></div>';
+  }
+  el.innerHTML=h;
+  selectedRombel=null;
+  selectedGuru=null;
+  document.getElementById('teacherBox').classList.add('hidden');
+  document.getElementById('btnStep5').disabled=true;
+}
+
+function selectRombel(r){
+  selectedRombel=r;
+  document.querySelectorAll('[id^="rombel_"]').forEach(function(e){e.classList.remove('selected');});
+  var card=document.getElementById('rombel_'+r);
+  card.classList.add('selected','pop');
+  setTimeout(function(){card.classList.remove('pop');},400);
+
+  /* Cari wali kelas */
+  var wali=findWaliKelas(selectedKelas,selectedRombel);
+  var box=document.getElementById('teacherBox');
+
+  if(wali){
+    selectedGuru=wali;
+    box.classList.remove('hidden');
+    box.innerHTML='<div class="form-label"><i class="fas fa-chalkboard-teacher"></i>Wali Kelas</div>';
+    box.innerHTML+='<div class="teacher-card"><div class="teacher-avatar"><i class="fas fa-chalkboard-teacher text-white"></i></div>';
+    box.innerHTML+='<div class="flex-1 min-w-0"><p class="text-sm font-semibold text-light">'+escHtml(wali.nama)+'</p>';
+    box.innerHTML+='<p class="text-xs" style="color:#a5b4fc">Wali Kelas '+selectedKelas.replace('Kelas ','')+' '+r+'</p></div></div>';
+    document.getElementById('btnStep5').disabled=false;
+  }else{
+    selectedGuru=null;
+    box.classList.add('hidden');
+    document.getElementById('btnStep5').disabled=true;
+    showToast('Tidak ada wali kelas untuk rombel ini','error');
+  }
+}
+
+function goToStep6(){if(!selectedGuru){showToast('Pilih rombel dulu','error');return;}updateStepUI(6);renderStep6();}
+
+/* ================================================================
+   STEP 6: NAMA
+   ================================================================ */
+function getTokenSource(){
+  /* Cari guru yang punya token untuk mapel+kelas+rombel */
+  var fGuru=getFilteredGuru();
+  var kNum=selectedKelas.replace('Kelas ','');
+  var krKey=kNum+'_'+selectedRombel;
+
+  for(var i=0;i<fGuru.length;i++){
+    var g=fGuru[i];
+    if(!hasTokenForMapel(g,selectedMapel))continue;
+    var kr=g.kelasRombel||{};
+    if(kr[krKey])return{guruId:g.id,guruNama:g.nama,token:(g.tokenMapel||{})[selectedMapel],durasi:(g.durasiMapel||{})[selectedMapel]||0};
+    if(g.kelas===selectedKelas&&g.rombel===selectedRombel)return{guruId:g.id,guruNama:g.nama,token:(g.tokenMapel||{})[selectedMapel],durasi:(g.durasiMapel||{})[selectedMapel]||0};
+  }
+  return null;
+}
+
+function renderStep6(){
+  var info=document.getElementById('summaryInfo');
+  var m=getMapel(selectedMapel);
+  var src=getTokenSource();
+  var guruNama=src?src.guruNama:selectedGuru.nama;
+  var durB=src&&src.durasi>0?'<span class="badge badge-warning"><i class="fas fa-clock mr-1"></i>'+formatDurasiText(src.durasi)+'</span>':'';
+
+  info.innerHTML='<div class="flex flex-wrap gap-1.5 text-xs">';
+  info.innerHTML+='<span class="badge badge-primary"><i class="fas fa-school mr-1"></i>'+escHtml(selectedSekolah)+'</span>';
+  info.innerHTML+='<span class="badge" style="background:'+m.color+'30;color:'+m.color+'"><i class="fas '+m.icon+' mr-1"></i>'+escHtml(m.singkat)+'</span>';
+  info.innerHTML+='<span class="badge badge-info"><i class="fas fa-users mr-1"></i>'+selectedKelas.replace('Kelas ','')+' '+selectedRombel+'</span>';
+  info.innerHTML+='<span class="badge badge-warning"><i class="fas fa-chalkboard-teacher mr-1"></i>'+escHtml(guruNama)+'</span>';
+  info.innerHTML+=durB;
+  info.innerHTML+='</div>';
+
+  document.getElementById('namaInput').value=studentName;
+  document.getElementById('btnStep6').disabled=!studentName;
   document.getElementById('siswaDropdown').classList.add('hidden');
-  setTimeout(function() { document.getElementById('namaInput').focus(); }, 100);
+  setTimeout(function(){document.getElementById('namaInput').focus();},100);
 }
 
-function onNamaInput() {
-  studentName = (document.getElementById('namaInput').value || '').trim();
-  document.getElementById('btnStep3').disabled = !studentName;
+function onNamaInput(){
+  studentName=(document.getElementById('namaInput').value||'').trim();
+  document.getElementById('btnStep6').disabled=!studentName;
 }
 
-function showSiswaDropdown() {
-  var dropdown = document.getElementById('siswaDropdown');
-  var key = selectedGuru.npsn + '_' + selectedKelas.replace(' ','') + '_' + selectedRombel;
-  var list = siswaList.filter(function(s) { return s.guruKey === key; })
-                     .sort(function(a, b) { return (a.absen || 0) - (b.absen || 0); });
+function showSiswaDropdown(){
+  var dd=document.getElementById('siswaDropdown');
+  var key=selectedNpsn+'_'+selectedKelas.replace('Kelas ','')+'_'+selectedRombel;
+  var list=siswaList.filter(function(s){return s.guruKey===key;}).sort(function(a,b){return(a.absen||0)-(b.absen||0);});
 
-  if (!list.length) {
-    dropdown.innerHTML = '<div class="dropdown-item text-a5b4fc text-sm"><i class="fas fa-info-circle mr-2"></i>Belum ada data siswa</div>';
-  } else {
-    dropdown.innerHTML = list.map(function(s) {
-      return '<div class="dropdown-item" onclick="selectSiswa(\'' + escHtml(s.nama).replace(/'/g,"\\'") + '\')">' +
-             '<span class="text-xs text-a5b4fc w-6">' + (s.absen || '-') + '</span>' +
-             '<span class="text-sm text-light">' + escHtml(s.nama) + '</span></div>';
+  if(!list.length){
+    dd.innerHTML='<div class="dropdown-item" style="color:#a5b4fc;font-size:12px"><i class="fas fa-info-circle mr-2"></i>Belum ada data siswa</div>';
+  }else{
+    dd.innerHTML=list.map(function(s){
+      return'<div class="dropdown-item" onclick="pickSiswa(\''+escHtml(s.nama).replace(/'/g,"\\'")+'\')">'+
+        '<span style="color:#a5b4fc;font-size:11px;width:20px;flex-shrink:0">'+(s.absen||'-')+'</span>'+
+        '<span style="color:#f5f3ff;font-size:13px">'+escHtml(s.nama)+'</span></div>';
     }).join('');
   }
-  dropdown.classList.remove('hidden');
+  dd.classList.remove('hidden');
 }
 
-function selectSiswa(nama) {
-  document.getElementById('namaInput').value = nama;
-  studentName = nama;
+function pickSiswa(n){
+  document.getElementById('namaInput').value=n;
+  studentName=n;
   document.getElementById('siswaDropdown').classList.add('hidden');
-  document.getElementById('btnStep3').disabled = false;
+  document.getElementById('btnStep6').disabled=false;
 }
 
-document.addEventListener('click', function(e) {
-  var dd = document.getElementById('siswaDropdown');
-  if (dd && !dd.classList.contains('hidden') && !dd.contains(e.target) && !e.target.closest('[onclick="showSiswaDropdown()"]')) {
-    dd.classList.add('hidden');
-  }
+document.addEventListener('click',function(e){
+  var dd=document.getElementById('siswaDropdown');
+  if(dd&&!dd.classList.contains('hidden')&&!dd.contains(e.target)&&!e.target.closest('[onclick="showSiswaDropdown()"]')){dd.classList.add('hidden');}
 });
 
-function goToStep4() {
-  if (!studentName) { showToast('Masukkan nama dulu','error'); return; }
-  updateStepUI(4);
-  renderStep4();
-}
+function goToStep7(){if(!studentName){showToast('Masukkan nama dulu','error');return;}updateStepUI(7);renderStep7();}
 
 /* ================================================================
-   STEP 4: TOKEN
+   STEP 7: TOKEN
    ================================================================ */
-function renderStep4() {
-  var info = document.getElementById('tokenInfo');
-  var m = getMapel(selectedMapel);
-  var available = getAllAvailableMapels();
-  var src = available[selectedMapel] || {};
-  var guruNama = src.guruNama || selectedGuru.nama;
-  var durText = src.durasi > 0 ? ' — Waktu: ' + formatDurasiText(src.durasi) : '';
+function renderStep7(){
+  var info=document.getElementById('tokenInfo');
+  var m=getMapel(selectedMapel);
+  var src=getTokenSource();
+  var guruNama=src?src.guruNama:selectedGuru.nama;
+  var durText=src&&src.durasi>0?' — Waktu: '+formatDurasiText(src.durasi):'';
 
-  info.innerHTML = '<div class="info-box-icon" style="background:' + m.color + '30"><i class="fas ' + m.icon + '" style="color:' + m.color + '"></i></div>';
-  info.innerHTML += '<div class="flex-1 min-w-0">';
-  info.innerHTML += '<p class="text-sm font-semibold text-light">' + escHtml(m.nama) + '</p>';
-  info.innerHTML += '<p class="text-xs text-a5b4fc">' + selectedKelas + ' ' + selectedRombel + ' — ' + studentName + durText + '</p>';
-  info.innerHTML += '<p class="text-xs text-warning mt-1"><i class="fas fa-key mr-1"></i>Minta token dari <strong>' + escHtml(guruNama) + '</strong></p>';
-  info.innerHTML += '</div>';
+  info.innerHTML='<div class="info-box-icon" style="background:'+m.color+'30"><i class="fas '+m.icon+'" style="color:'+m.color+'"></i></div>';
+  info.innerHTML+='<div class="flex-1 min-w-0">';
+  info.innerHTML+='<p class="text-xs font-semibold text-light">'+escHtml(m.nama)+'</p>';
+  info.innerHTML+='<p class="text-xs" style="color:#a5b4fc">'+selectedKelas+' '+selectedRombel+' — '+studentName+durText+'</p>';
+  info.innerHTML+='<p class="text-xs text-warning mt-0.5"><i class="fas fa-key mr-1"></i>Minta token dari <strong>'+escHtml(guruNama)+'</strong></p>';
+  info.innerHTML+='</div>';
 
-  document.getElementById('tokenInput').value = '';
+  document.getElementById('tokenInput').value='';
   document.getElementById('tokenStatus').classList.add('hidden');
-  document.getElementById('btnStep4').disabled = true;
-  tokenValidated = false;
-  setTimeout(function() { document.getElementById('tokenInput').focus(); }, 100);
+  document.getElementById('btnStep7').disabled=true;
+  tokenValidated=false;
+  setTimeout(function(){document.getElementById('tokenInput').focus();},100);
 }
 
-function onTokenInput() {
-  var token = (document.getElementById('tokenInput').value || '').trim().toUpperCase();
-  document.getElementById('tokenInput').value = token;
+function onTokenInput(){
+  var token=(document.getElementById('tokenInput').value||'').trim().toUpperCase();
+  document.getElementById('tokenInput').value=token;
 
-  var status = document.getElementById('tokenStatus');
-  var btn = document.getElementById('btnStep4');
+  var status=document.getElementById('tokenStatus');
+  var btn=document.getElementById('btnStep7');
   status.classList.add('hidden');
-  btn.disabled = true;
-  tokenValidated = false;
+  btn.disabled=true;
+  tokenValidated=false;
 
-  if (token.length < 4) return;
+  if(token.length<4)return;
 
-  var available = getAllAvailableMapels();
-  var src = available[selectedMapel];
-  var correctToken = src ? src.token : '';
+  var src=getTokenSource();
+  var correctToken=src?src.token:'';
 
-  if (token === correctToken) {
-    tokenValidated = true;
-    status.className = 'info-box success mb-3';
-    status.innerHTML = '<div class="info-box-icon bg-success/30"><i class="fas fa-check-circle text-success"></i></div><p class="text-sm text-success">Token benar!</p>';
+  if(token===correctToken){
+    tokenValidated=true;
+    status.className='info-box success mb-3';
+    status.innerHTML='<div class="info-box-icon bg-success/30"><i class="fas fa-check-circle text-success"></i></div><p class="text-xs text-success font-semibold">Token benar!</p>';
     status.classList.remove('hidden');
-    btn.disabled = false;
-    document.getElementById('step4Circle').className = 'step-circle done';
-    document.getElementById('step4Circle').innerHTML = '<i class="fas fa-check" style="font-size:10px"></i>';
-  } else {
-    status.className = 'info-box danger mb-3';
-    status.innerHTML = '<div class="info-box-icon bg-danger/30"><i class="fas fa-times-circle text-danger"></i></div><p class="text-sm text-danger">Token salah, coba lagi!</p>';
+    btn.disabled=false;
+    document.getElementById('sd_6').className='step-dot done';
+    document.getElementById('sd_6').innerHTML='<i class="fas fa-check" style="font-size:8px"></i>';
+  }else{
+    status.className='info-box danger mb-3';
+    status.innerHTML='<div class="info-box-icon bg-danger/30"><i class="fas fa-times-circle text-danger"></i></div><p class="text-xs text-danger font-semibold">Token salah, coba lagi!</p>';
     status.classList.remove('hidden');
-    document.getElementById('step4Circle').className = 'step-circle active';
-    document.getElementById('tokenInput').style.animation = 'none';
-    void document.getElementById('tokenInput').offsetHeight;
-    document.getElementById('tokenInput').style.animation = 'wiggle 0.3s';
+    var inp=document.getElementById('tokenInput');
+    inp.style.animation='none';void inp.offsetHeight;inp.style.animation='wiggle 0.3s';
   }
 }
 
-function backToStep(step) {
+function backToStep(step){
   updateStepUI(step);
-  if (step === 1) { checkStep1Complete(); }
-  else if (step === 2) { renderStep2(); }
-  else if (step === 3) { renderStep3(); }
-  else if (step === 4) { renderStep4(); }
+  if(step===1){renderNpsnList();}
+  else if(step===2){renderStep2();}
+  else if(step===3){renderStep3();}
+  else if(step===4){renderStep4();}
+  else if(step===5){renderStep5();}
+  else if(step===6){renderStep6();}
+  else if(step===7){renderStep7();}
 }
 
 /* ================================================================
    MULAI UJIAN
    ================================================================ */
-function startExam() {
-  if (!tokenValidated) { showToast('Token belum valid','error'); return; }
+function startExam(){
+  if(!tokenValidated){showToast('Token belum valid','error');return;}
 
-  var isPaj = selectedMapel === 'paj';
-  /* FIX: PAJ dari pajQuestions */
-  var source = isPaj ? pajQuestions : questions;
-  var availableQ = source.filter(function(q) {
-    if (!isPaj) return q.kelas === selectedKelas && q.mapel === selectedMapel;
+  var isPaj=selectedMapel==='paj';
+  var source=isPaj?pajQuestions:questions;
+  var availableQ=source.filter(function(q){
+    if(!isPaj)return q.kelas===selectedKelas&&q.mapel===selectedMapel;
     return true;
   });
 
-  if (!availableQ.length) {
-    showToast('Belum ada soal untuk ujian ini. Hubungi guru.','error');
-    return;
-  }
+  if(!availableQ.length){showToast('Belum ada soal untuk ujian ini. Hubungi guru.','error');return;}
 
-  var available = getAllAvailableMapels();
-  var src = available[selectedMapel];
-  var guruMapelId = src ? src.guruId : selectedGuru.id;
-  var durasiMenit = src ? src.durasi : 0;
+  var src=getTokenSource();
+  var guruMapelId=src?src.guruId:selectedGuru.id;
+  var durasiMenit=src?src.durasi:0;
 
-  var sudahSelesai = false;
-  for (var i = 0; i < nilaiList.length; i++) {
-    var n = nilaiList[i];
-    if (n.mapel === selectedMapel && n.kelas === selectedKelas &&
-        n.rombel === selectedRombel && n.nama === studentName &&
-        n.guruId === guruMapelId) {
-      sudahSelesai = true;
-      break;
+  /* Cek sudah pernah */
+  for(var i=0;i<nilaiList.length;i++){
+    var n=nilaiList[i];
+    if(n.mapel===selectedMapel&&n.kelas===selectedKelas&&n.rombel===selectedRombel&&n.nama===studentName&&n.guruId===guruMapelId){
+      showToast('Kamu sudah pernah mengerjakan ujian ini!','error');return;
     }
   }
 
-  if (sudahSelesai) {
-    showToast('Kamu sudah pernah mengerjakan ujian ini!','error');
-    return;
-  }
-
-  sessionData = {
-    guruId: guruMapelId,
-    guruWali: selectedGuru,
-    mapel: selectedMapel,
-    kelas: selectedKelas,
-    rombel: selectedRombel,
-    nama: studentName,
-    examType: selectedExamType,
-    durasiMenit: durasiMenit
+  sessionData={
+    guruId:guruMapelId,
+    guruWali:selectedGuru,
+    mapel:selectedMapel,
+    kelas:selectedKelas,
+    rombel:selectedRombel,
+    nama:studentName,
+    examType:selectedExamType,
+    durasiMenit:durasiMenit
   };
 
   document.getElementById('loginPage').classList.add('hidden');
   document.getElementById('examPage').classList.remove('hidden');
-
   initExam();
-  showToast('Semangat mengerjakan, ' + studentName + '!');
+  showToast('Semangat mengerjakan, '+studentName+'!');
 }
 
-function logoutExam() {
-  examActive = false;
-  if (examTimerInterval) { clearInterval(examTimerInterval); examTimerInterval = null; }
-  sessionData = null;
-  studentName = "";
+function logoutExam(){
+  examActive=false;
+  if(examTimerInterval){clearInterval(examTimerInterval);examTimerInterval=null;}
+  sessionData=null;studentName="";
   document.getElementById('examPage').classList.add('hidden');
   document.getElementById('loginPage').classList.remove('hidden');
   document.getElementById('lockOverlay').classList.add('hidden');
-  selectedKelas = null;
-  selectedRombel = null;
-  selectedGuru = null;
-  selectedMapel = null;
-  selectedExamType = null;
-  tokenValidated = false;
-  document.querySelectorAll('.select-card, .mapel-card').forEach(function(c) { c.classList.remove('selected'); });
+  selectedNpsn=null;selectedSekolah=null;selectedExamType=null;selectedMapel=null;
+  selectedKelas=null;selectedRombel=null;selectedGuru=null;tokenValidated=false;
+  document.querySelectorAll('.select-card,.mapel-card,.npsn-card').forEach(function(c){c.classList.remove('selected');});
   document.getElementById('teacherBox').classList.add('hidden');
   document.getElementById('schoolInfoBox').classList.add('hidden');
-  document.getElementById('btnStep1').disabled = true;
   updateStepUI(1);
+  renderNpsnList();
 }
 
 /* ================================================================
    HALAMAN UJIAN
    ================================================================ */
-function initExam() {
-  document.getElementById('topNama').textContent = sessionData.nama;
-  document.getElementById('topSekolah').textContent = sessionData.guruWali.sekolah;
-  var mapel = getMapel(sessionData.mapel);
-  document.getElementById('topMapel').innerHTML = '<i class="fas ' + mapel.icon + ' mr-1"></i>' + mapel.singkat;
-
-  /* Setup timer jika ada durasi */
+function initExam(){
+  document.getElementById('topNama').textContent=sessionData.nama;
+  document.getElementById('topSekolah').textContent=sessionData.guruWali.sekolah;
+  var mapel=getMapel(sessionData.mapel);
+  document.getElementById('topMapel').innerHTML='<i class="fas '+mapel.icon+' mr-1"></i>'+mapel.singkat;
   setupTimer();
   renderQuestions();
 }
 
-/* ================================================================
-   TIMER: Baca dari durasiMapel guru
-   ================================================================ */
-function setupTimer() {
-  var container = document.getElementById('timerBarContainer');
-  var durasi = sessionData.durasiMenit || 0;
-
-  if (durasi <= 0) {
-    container.classList.add('hidden');
-    container.innerHTML = '';
-    return;
-  }
-
-  examDurationSeconds = durasi * 60;
-  examRemainingSeconds = examDurationSeconds;
-
-  container.classList.remove('hidden');
-  container.innerHTML = buildTimerHTML(examRemainingSeconds, examDurationSeconds);
-
-  examTimerInterval = setInterval(function() {
+function setupTimer(){
+  var c=document.getElementById('timerBarContainer');
+  var d=sessionData.durasiMenit||0;
+  if(d<=0){c.classList.add('hidden');c.innerHTML='';return;}
+  examDurationSeconds=d*60;
+  examRemainingSeconds=examDurationSeconds;
+  c.classList.remove('hidden');
+  c.innerHTML=buildTimerHTML(examRemainingSeconds,examDurationSeconds);
+  examTimerInterval=setInterval(function(){
     examRemainingSeconds--;
-    if (examRemainingSeconds <= 0) {
-      examRemainingSeconds = 0;
-      clearInterval(examTimerInterval);
-      examTimerInterval = null;
-      container.innerHTML = buildTimerHTML(0, examDurationSeconds);
+    if(examRemainingSeconds<=0){
+      examRemainingSeconds=0;clearInterval(examTimerInterval);examTimerInterval=null;
+      c.innerHTML=buildTimerHTML(0,examDurationSeconds);
       showToast('Waktu habis! Jawaban otomatis dikirim.','error');
-      setTimeout(function() { submitExam(); }, 1000);
-      return;
+      setTimeout(function(){submitExam();},1000);return;
     }
-    container.innerHTML = buildTimerHTML(examRemainingSeconds, examDurationSeconds);
-  }, 1000);
+    c.innerHTML=buildTimerHTML(examRemainingSeconds,examDurationSeconds);
+  },1000);
 }
 
-function buildTimerHTML(remaining, total) {
-  var pct = total > 0 ? (remaining / total * 100) : 0;
-  var m = Math.floor(remaining / 60);
-  var s = remaining % 60;
-  var timeStr = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
-
-  var colorClass = 'safe';
-  if (pct <= 10) colorClass = 'danger';
-  else if (pct <= 25) colorClass = 'warn';
-
-  var barColor = '#4ade80';
-  if (pct <= 10) barColor = '#f87171';
-  else if (pct <= 25) barColor = '#fbbf24';
-
-  return '<div class="timer-bar">' +
-    '<i class="fas fa-clock" style="color:' + barColor + ';font-size:16px"></i>' +
-    '<div class="timer-label">SISA WAKTU</div>' +
-    '<div class="timer-display ' + colorClass + '">' + timeStr + '</div>' +
-    '<div class="timer-progress"><div class="timer-progress-fill" style="width:' + pct + '%;background:' + barColor + '"></div></div>' +
-    '</div>';
+function buildTimerHTML(r,t){
+  var p=t>0?(r/t*100):0;
+  var m=Math.floor(r/60),s=r%60;
+  var ts=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+  var cc='safe',bc='#4ade80';
+  if(p<=10){cc='danger';bc='#f87171';}else if(p<=25){cc='warn';bc='#fbbf24';}
+  return'<div class="timer-bar"><i class="fas fa-clock" style="color:'+bc+';font-size:14px"></i>'+
+    '<div class="timer-label">SISA WAKTU</div>'+
+    '<div class="timer-display '+cc+'">'+ts+'</div>'+
+    '<div class="timer-progress"><div class="timer-progress-fill" style="width:'+p+'%;background:'+bc+'"></div></div></div>';
 }
 
-function renderQuestions() {
-  var m = sessionData.mapel;
-  var k = sessionData.kelas;
-  var isPaj = m === 'paj';
-  /* FIX: PAJ dari pajQuestions */
-  var source = isPaj ? pajQuestions : questions;
+function renderQuestions(){
+  var m=sessionData.mapel,k=sessionData.kelas,isPaj=m==='paj';
+  var source=isPaj?pajQuestions:questions;
+  var allQ=source.filter(function(q){if(!isPaj)return q.kelas===k&&q.mapel===m;return true;});
+  var pgQ=allQ.filter(function(q){return q.type==='pg';});
+  var urQ=allQ.filter(function(q){return q.type==='uraian';});
 
-  var allQ = source.filter(function(q) {
-    if (!isPaj) return q.kelas === k && q.mapel === m;
-    return true;
-  });
-
-  var pgQ = allQ.filter(function(q) { return q.type === 'pg'; });
-  var urQ = allQ.filter(function(q) { return q.type === 'uraian'; });
-
-  if (!allQ.length) {
-    document.getElementById('examContent').innerHTML =
-      '<div class="text-center py-16 fade-in"><div class="w-20 h-20 mx-auto mb-4 rounded-full bg-warning/20 flex items-center justify-center"><i class="fas fa-clipboard-list text-warning text-3xl"></i></div><h3 class="font-display text-xl text-light mb-2">Belum Ada Soal</h3><p class="text-sm text-a5b4fc">Guru belum menambahkan soal</p></div>';
+  if(!allQ.length){
+    document.getElementById('examContent').innerHTML='<div class="text-center py-16 fade-in"><div class="w-16 h-16 mx-auto mb-3 rounded-full bg-warning/20 flex items-center justify-center"><i class="fas fa-clipboard-list text-warning text-2xl"></i></div><h3 class="font-display text-lg text-light mb-1">Belum Ada Soal</h3><p class="text-xs" style="color:#a5b4fc">Guru belum menambahkan soal</p></div>';
     return;
   }
 
-  var mapel = getMapel(m);
-  var letters = getOptLetters(k);
-  var html = '<div class="slide-up">';
+  var mapel=getMapel(m);
+  var letters=getOptLetters(k);
+  var h='<div class="slide-up">';
 
-  html += '<div class="info-box info mb-4">';
-  html += '<div class="info-box-icon" style="background:' + mapel.color + '30"><i class="fas ' + mapel.icon + '" style="color:' + mapel.color + '"></i></div>';
-  html += '<div class="flex-1 min-w-0">';
-  html += '<p class="text-sm font-semibold text-light">' + escHtml(mapel.nama) + '</p>';
-  html += '<p class="text-xs text-a5b4fc">' + allQ.length + ' soal — ' + pgQ.length + ' PG + ' + urQ.length + ' Uraian</p>';
-  html += '</div></div>';
+  h+='<div class="info-box info mb-3"><div class="info-box-icon" style="background:'+mapel.color+'30"><i class="fas '+mapel.icon+'" style="color:'+mapel.color+'"></i></div>';
+  h+='<div class="flex-1 min-w-0"><p class="text-xs font-semibold text-light">'+escHtml(mapel.nama)+'</p>';
+  h+='<p class="text-xs" style="color:#a5b4fc">'+allQ.length+' soal — '+pgQ.length+' PG + '+urQ.length+' Uraian</p></div></div>';
 
-  html += '<div class="info-box danger mb-4">';
-  html += '<div class="info-box-icon bg-danger/30"><i class="fas fa-exclamation-triangle text-danger"></i></div>';
-  html += '<p class="text-xs text-light"><strong>Penting:</strong> Ujian hanya bisa dikerjakan sekali! Jangan keluar dari halaman ini.</p></div>';
+  h+='<div class="info-box danger mb-3"><div class="info-box-icon bg-danger/30"><i class="fas fa-exclamation-triangle text-danger"></i></div>';
+  h+='<p class="text-xs text-light"><strong>Penting:</strong> Ujian hanya bisa dikerjakan sekali! Jangan keluar dari halaman ini.</p></div>';
 
-  html += '<div class="mb-4"><div class="flex justify-between text-xs text-a5b4fc mb-1"><span>Progress</span><span id="progressText">0/' + pgQ.length + '</span></div>';
-  html += '<div class="progress-container"><div class="progress-bar" id="progressBar" style="width:0%"></div></div></div>';
+  h+='<div class="mb-3"><div class="flex justify-between text-xs" style="color:#a5b4fc;margin-bottom:4px"><span>Progress</span><span id="progressText">0/'+pgQ.length+'</span></div>';
+  h+='<div class="progress-container"><div class="progress-bar" id="progressBar" style="width:0%"></div></div></div>';
 
-  html += '<div id="questionsContainer">';
+  h+='<div id="questionsContainer">';
 
-  if (pgQ.length) {
-    html += '<div class="mb-4"><div class="flex items-center gap-2 mb-3"><div class="h-0.5 flex-1 bg-primary rounded"></div>';
-    html += '<span class="text-xs font-bold text-primary px-2">PILIHAN GANDA</span>';
-    html += '<div class="h-0.5 flex-1 bg-primary rounded"></div></div>';
-
-    for (var i = 0; i < pgQ.length; i++) {
-      var q = pgQ[i];
-      html += '<div class="question-card">';
-      html += '<p class="text-sm text-light font-semibold leading-relaxed mb-3"><span class="question-number">' + (i+1) + '</span>' + escHtml(q.text) + '</p>';
-      if (q.image) {
-        html += '<div class="mb-3 ml-10"><img src="' + q.image + '" style="max-height:140px;max-width:100%;object-fit:contain;border-radius:10px;border:2px solid rgba(99,102,241,0.3);pointer-events:none" onerror="this.style.display=\'none\'"></div>';
+  if(pgQ.length){
+    h+='<div class="mb-3"><div class="flex items-center gap-2 mb-2"><div class="h-0.5 flex-1 bg-primary rounded"></div>';
+    h+='<span class="text-xs font-bold text-primary px-2">PILIHAN GANDA</span><div class="h-0.5 flex-1 bg-primary rounded"></div></div>';
+    for(var i=0;i<pgQ.length;i++){
+      var q=pgQ[i];
+      h+='<div class="question-card"><p class="text-xs text-light font-semibold leading-relaxed mb-2"><span class="question-number">'+(i+1)+'</span>'+escHtml(q.text)+'</p>';
+      if(q.image){h+='<div class="mb-2 ml-8"><img src="'+q.image+'" style="max-height:120px;max-width:100%;object-fit:contain;border-radius:8px;border:2px solid rgba(99,102,241,0.3);pointer-events:none" onerror="this.style.display=\'none\'"></div>';}
+      h+='<div class="space-y-1.5 ml-8">';
+      var opts=q.options||[];
+      for(var oi=0;oi<opts.length;oi++){
+        var L=letters[oi]?letters[oi].toUpperCase():'';
+        h+='<div class="option-item" id="opt_'+i+'_'+oi+'" onclick="selectOption('+i+','+oi+')">';
+        h+='<span class="option-letter">'+L+'</span><span class="text-xs text-light flex-1">'+escHtml(opts[oi])+'</span>';
+        if(q.optionImages&&q.optionImages[oi]){h+='<img src="'+q.optionImages[oi]+'" style="max-width:36px;max-height:28px;object-fit:contain;border-radius:4px;border:1px solid rgba(99,102,241,0.3);pointer-events:none" onerror="this.style.display=\'none\'">';}
+        h+='</div>';
       }
-      html += '<div class="space-y-2 ml-10">';
-      var opts = q.options || [];
-      for (var oi = 0; oi < opts.length; oi++) {
-        var L = letters[oi] ? letters[oi].toUpperCase() : '';
-        html += '<div class="option-item" id="opt_' + i + '_' + oi + '" onclick="selectOption(' + i + ',' + oi + ')">';
-        html += '<span class="option-letter">' + L + '</span>';
-        html += '<span class="text-sm text-light flex-1">' + escHtml(opts[oi]) + '</span>';
-        if (q.optionImages && q.optionImages[oi]) {
-          html += '<img src="' + q.optionImages[oi] + '" style="max-width:40px;max-height:30px;object-fit:contain;border-radius:4px;border:1px solid rgba(99,102,241,0.3);pointer-events:none" onerror="this.style.display=\'none\'">';
-        }
-        html += '</div>';
-      }
-      html += '</div></div>';
+      h+='</div></div>';
     }
-    html += '</div>';
+    h+='</div>';
   }
 
-  if (urQ.length) {
-    html += '<div class="mb-4"><div class="flex items-center gap-2 mb-3"><div class="h-0.5 flex-1 bg-accent rounded"></div>';
-    html += '<span class="text-xs font-bold text-accent px-2">URAIAN</span>';
-    html += '<div class="h-0.5 flex-1 bg-accent rounded"></div></div>';
-
-    for (var i = 0; i < urQ.length; i++) {
-      var q = urQ[i];
-      html += '<div class="question-card" style="border-left:4px solid #22d3ee">';
-      html += '<p class="text-sm text-light font-semibold leading-relaxed mb-2"><span class="question-number" style="background:linear-gradient(135deg,#22d3ee,#06b6d4)">' + (pgQ.length+i+1) + '</span>' + escHtml(q.text) + '</p>';
-      if (q.image) {
-        html += '<div class="mb-2 ml-10"><img src="' + q.image + '" style="max-height:140px;max-width:100%;object-fit:contain;border-radius:10px;border:2px solid rgba(34,211,238,0.3);pointer-events:none" onerror="this.style.display=\'none\'"></div>';
-      }
-      html += '<div class="ml-10 p-4 border-2 border-dashed border-a5b4fc/30 rounded-xl text-center bg-dark/30">';
-      html += '<i class="fas fa-pen text-a5b4fc mr-1"></i><span class="text-xs text-a5b4fc">Jawab di kertas ujian</span></div></div>';
+  if(urQ.length){
+    h+='<div class="mb-3"><div class="flex items-center gap-2 mb-2"><div class="h-0.5 flex-1 bg-accent rounded"></div>';
+    h+='<span class="text-xs font-bold text-accent px-2">URAIAN</span><div class="h-0.5 flex-1 bg-accent rounded"></div></div>';
+    for(var i=0;i<urQ.length;i++){
+      var q=urQ[i];
+      h+='<div class="question-card" style="border-left:4px solid #22d3ee">';
+      h+='<p class="text-xs text-light font-semibold leading-relaxed mb-2"><span class="question-number" style="background:linear-gradient(135deg,#22d3ee,#06b6d4)">'+(pgQ.length+i+1)+'</span>'+escHtml(q.text)+'</p>';
+      if(q.image){h+='<div class="mb-2 ml-8"><img src="'+q.image+'" style="max-height:120px;max-width:100%;object-fit:contain;border-radius:8px;border:2px solid rgba(34,211,238,0.3);pointer-events:none" onerror="this.style.display=\'none\'"></div>';}
+      h+='<div class="ml-8 p-3 border-2 border-dashed rounded-xl text-center" style="border-color:rgba(165,180,252,0.3);background:rgba(30,27,75,0.3)">';
+      h+='<i class="fas fa-pen mr-1" style="color:#a5b4fc;font-size:10px"></i><span class="text-xs" style="color:#a5b4fc">Jawab di kertas ujian</span></div></div>';
     }
-    html += '</div>';
+    h+='</div>';
   }
 
-  html += '</div>';
+  h+='</div>';
 
-  html += '<div class="fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-dark via-dark/95 to-transparent no-print" style="padding-bottom:max(16px,env(safe-area-inset-bottom))">';
-  html += '<button onclick="submitExam()" id="submitBtn" class="btn-primary" style="max-width:400px;margin:0 auto">';
-  html += '<i class="fas fa-paper-plane"></i><span>Selesai dan Kirim Nilai</span></button></div>';
-  html += '<div style="height:80px" class="no-print"></div></div>';
+  h+='<div class="fixed bottom-0 left-0 right-0 p-3 no-print" style="background:linear-gradient(to top,#1e1b4b,#1e1b4bee,#1e1b4b00);padding-bottom:max(12px,env(safe-area-inset-bottom))">';
+  h+='<button onclick="submitExam()" id="submitBtn" class="btn-primary" style="max-width:380px;margin:0 auto">';
+  h+='<i class="fas fa-paper-plane"></i><span>Selesai dan Kirim Nilai</span></button></div>';
+  h+='<div style="height:72px" class="no-print"></div></div>';
 
-  document.getElementById('examContent').innerHTML = html;
+  document.getElementById('examContent').innerHTML=h;
 }
 
-function selectOption(qIdx, oIdx) {
-  document.querySelectorAll('[id^="opt_' + qIdx + '_"]').forEach(function(el) { el.classList.remove('selected'); });
-  var opt = document.getElementById('opt_' + qIdx + '_' + oIdx);
-  if (opt) { opt.classList.add('selected','pop'); setTimeout(function(){ opt.classList.remove('pop'); }, 400); }
+function selectOption(qi,oi){
+  document.querySelectorAll('[id^="opt_'+qi+'_"]').forEach(function(e){e.classList.remove('selected');});
+  var o=document.getElementById('opt_'+qi+'_'+oi);
+  if(o){o.classList.add('selected','pop');setTimeout(function(){o.classList.remove('pop');},400);}
   updateProgress();
 }
 
-function updateProgress() {
-  var pgCards = document.querySelectorAll('.question-card:not([style*="border-left:4px solid #22d3ee"])');
-  var total = pgCards.length;
-  var answered = 0;
-  pgCards.forEach(function(card) {
-    if (card.querySelector('.option-item.selected')) answered++;
-  });
-  var bar = document.getElementById('progressBar');
-  var text = document.getElementById('progressText');
-  if (bar) bar.style.width = (total > 0 ? Math.round(answered / total * 100) : 0) + '%';
-  if (text) text.textContent = answered + '/' + total;
+function updateProgress(){
+  var pgC=document.querySelectorAll('.question-card:not([style*="border-left:4px solid #22d3ee"])');
+  var total=pgC.length,ans=0;
+  pgC.forEach(function(c){if(c.querySelector('.option-item.selected'))ans++;});
+  var bar=document.getElementById('progressBar'),txt=document.getElementById('progressText');
+  if(bar)bar.style.width=(total>0?Math.round(ans/total*100):0)+'%';
+  if(txt)txt.textContent=ans+'/'+total;
 }
 
 /* ================================================================
    SUBMIT UJIAN
    ================================================================ */
-function submitExam() {
-  var btn = document.getElementById('submitBtn');
-  if (btn) { btn.disabled = true; btn.innerHTML = '<div class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div><span>Mengirim...</span>'; }
+function submitExam(){
+  var btn=document.getElementById('submitBtn');
+  if(btn){btn.disabled=true;btn.innerHTML='<div class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div><span>Mengirim...</span>';}
 
-  var m = sessionData.mapel;
-  var k = sessionData.kelas;
-  var isPaj = m === 'paj';
-  /* FIX: PAJ dari pajQuestions */
-  var source = isPaj ? pajQuestions : questions;
+  var m=sessionData.mapel,k=sessionData.kelas,isPaj=m==='paj';
+  var source=isPaj?pajQuestions:questions;
+  var allQ=source.filter(function(q){if(!isPaj)return q.kelas===k&&q.mapel===m;return true;});
+  var pgQ=allQ.filter(function(q){return q.type==='pg';});
+  var letters=getOptLetters(k);
 
-  var allQ = source.filter(function(q) {
-    if (!isPaj) return q.kelas === k && q.mapel === m;
-    return true;
-  });
+  var pgMax=0;
+  for(var i=0;i<pgQ.length;i++)pgMax+=(pgQ[i].score||1);
 
-  var pgQ = allQ.filter(function(q) { return q.type === 'pg'; });
-  var letters = getOptLetters(k);
-
-  var pgMax = 0;
-  for (var i = 0; i < pgQ.length; i++) pgMax += (pgQ[i].score || 1);
-
-  var unanswered = [];
-  for (var i = 0; i < pgQ.length; i++) {
-    if (!document.querySelector('[id^="opt_' + i + '_"].selected')) unanswered.push(i + 1);
-  }
-  if (unanswered.length && !confirm('Soal nomor ' + unanswered.join(', ') + ' belum dijawab. Yakin kirim?')) {
-    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i><span>Selesai dan Kirim Nilai</span>'; }
-    return;
+  var unanswered=[];
+  for(var i=0;i<pgQ.length;i++){if(!document.querySelector('[id^="opt_'+i+'_"].selected'))unanswered.push(i+1);}
+  if(unanswered.length&&!confirm('Soal nomor '+unanswered.join(', ')+' belum dijawab. Yakin kirim?')){
+    if(btn){btn.disabled=false;btn.innerHTML='<i class="fas fa-paper-plane"></i><span>Selesai dan Kirim Nilai</span>';}return;
   }
 
-  var pgSkor = 0;
-  var pgDetail = [];
-
-  for (var i = 0; i < pgQ.length; i++) {
-    var q = pgQ[i];
-    var selEl = document.querySelector('[id^="opt_' + i + '_"].selected');
-    var jawaban = '';
-    if (selEl) {
-      var idx = parseInt(selEl.id.split('_')[2]);
-      jawaban = letters[idx] ? letters[idx].toUpperCase() : '';
-    }
-    var kunci = (q.answer || '').toUpperCase();
-    var benar = jawaban === kunci;
-    if (benar) pgSkor += (q.score || 1);
-    pgDetail.push({ no: i+1, kunci: kunci, jawaban: jawaban, benar: benar, soal: q.text });
+  var pgSkor=0,pgDetail=[];
+  for(var i=0;i<pgQ.length;i++){
+    var q=pgQ[i];
+    var selEl=document.querySelector('[id^="opt_'+i+'_"].selected');
+    var jawaban='';
+    if(selEl){var idx=parseInt(selEl.id.split('_')[2]);jawaban=letters[idx]?letters[idx].toUpperCase():'';}
+    var kunci=(q.answer||'').toUpperCase();
+    var benar=jawaban===kunci;
+    if(benar)pgSkor+=(q.score||1);
+    pgDetail.push({no:i+1,kunci:kunci,jawaban:jawaban,benar:benar,soal:q.text});
   }
 
-  var nilaiAkhir = calculateScore(pgSkor, 0, pgMax, 0);
-  var benarCount = 0;
-  for (var i = 0; i < pgDetail.length; i++) { if (pgDetail[i].benar) benarCount++; }
+  var nilaiAkhir=calculateScore(pgSkor,0,pgMax,0);
+  var benarCount=0;for(var i=0;i<pgDetail.length;i++){if(pgDetail[i].benar)benarCount++;}
 
-  var data = {
-    guruId: sessionData.guruId,
-    npsn: sessionData.guruWali.npsn,
-    sekolah: sessionData.guruWali.sekolah,
-    kelas: k,
-    rombel: sessionData.rombel,
-    mapel: m,
-    nama: sessionData.nama,
-    absen: 0,
-    pgSkor: pgSkor,
-    urSkor: 0,
-    pgMax: pgMax,
-    urMax: 0,
-    nilaiAkhir: nilaiAkhir,
-    pgDetail: pgDetail,
-    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-    source: 'siswa_panel'
+  var data={
+    guruId:sessionData.guruId,npsn:sessionData.guruWali.npsn,sekolah:sessionData.guruWali.sekolah,
+    kelas:k,rombel:sessionData.rombel,mapel:m,nama:sessionData.nama,absen:0,
+    pgSkor:pgSkor,urSkor:0,pgMax:pgMax,urMax:0,nilaiAkhir:nilaiAkhir,
+    pgDetail:pgDetail,createdAt:firebase.firestore.FieldValue.serverTimestamp(),source:'siswa_panel'
   };
 
-  db.collection('nilai_panel').add(data).then(function() {
-    examActive = false;
-    if (examTimerInterval) { clearInterval(examTimerInterval); examTimerInterval = null; }
-    showResult(nilaiAkhir, pgSkor, pgMax, benarCount, pgQ.length, pgDetail);
+  db.collection('nilai_panel').add(data).then(function(){
+    examActive=false;
+    if(examTimerInterval){clearInterval(examTimerInterval);examTimerInterval=null;}
+    showResult(nilaiAkhir,pgSkor,pgMax,benarCount,pgQ.length,pgDetail);
     showToast('Nilai berhasil dikirim!');
-    if (nilaiAkhir >= 70) showConfetti();
-  }).catch(function(e) {
-    showToast('Gagal mengirim: ' + (e.message || ''), 'error');
-    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i><span>Selesai dan Kirim Nilai</span>'; }
+    if(nilaiAkhir>=70)showConfetti();
+  }).catch(function(e){
+    showToast('Gagal mengirim: '+(e.message||''),'error');
+    if(btn){btn.disabled=false;btn.innerHTML='<i class="fas fa-paper-plane"></i><span>Selesai dan Kirim Nilai</span>';}
   });
 }
 
-function calculateScore(pg, ur, pm, um) {
-  if (!pm && !um) return 0;
-  if (!pm) return Math.round(ur / um * 100);
-  if (!um) return Math.round(pg / pm * 100);
-  return Math.round((pg / pm * 40) + (ur / um * 60));
+function calculateScore(pg,ur,pm,um){
+  if(!pm&&!um)return 0;
+  if(!pm)return Math.round(ur/um*100);
+  if(!um)return Math.round(pg/pm*100);
+  return Math.round((pg/pm*40)+(ur/um*60));
 }
 
 /* ================================================================
    HASIL UJIAN
    ================================================================ */
-function showResult(nilai, pgSkor, pgMax, benar, total, pgDetail) {
-  var isLulus = nilai >= 70;
-  var predikat = nilai >= 90 ? 'A' : nilai >= 80 ? 'B' : nilai >= 70 ? 'C' : nilai >= 60 ? 'D' : 'E';
-  var pct = pgMax > 0 ? Math.round(pgSkor / pgMax * 100) : 0;
+function showResult(nilai,pgSkor,pgMax,benar,total,pgDetail){
+  var lulus=nilai>=70;
+  var predikat=nilai>=90?'A':nilai>=80?'B':nilai>=70?'C':nilai>=60?'D':'E';
+  var pct=pgMax>0?Math.round(pgSkor/pgMax*100):0;
 
-  document.getElementById('questionsContainer').style.display = 'none';
+  document.getElementById('questionsContainer').style.display='none';
   document.getElementById('timerBarContainer').classList.add('hidden');
-  document.getElementById('examTopbar').style.display = 'none';
-  document.querySelectorAll('.no-print').forEach(function(el) { el.style.display = 'none'; });
+  document.getElementById('examTopbar').style.display='none';
+  document.querySelectorAll('.no-print').forEach(function(e){e.style.display='none';});
 
-  var html = '<div class="slide-up">';
-  html += '<div class="result-card mb-6">';
-  html += '<div class="mascot ' + (isLulus ? 'celebrate' : 'sad') + ' mb-4"><div class="mascot-body"><div class="mascot-face">';
-  html += '<div class="mascot-eye left"></div><div class="mascot-eye right"></div><div class="mascot-mouth"></div>';
-  html += '<div class="mascot-cheek left"></div><div class="mascot-cheek right"></div></div></div></div>';
-  html += '<p class="text-xs text-a5b4fc mb-1">Nilai Kamu</p>';
-  html += '<p class="score-display ' + (isLulus ? 'success' : 'fail') + '">' + nilai + '</p>';
-  html += '<p class="text-lg font-bold mt-2 ' + (isLulus ? 'text-success' : 'text-danger') + '">Predikat ' + predikat + '</p>';
-  html += '<p class="text-sm ' + (isLulus ? 'text-success' : 'text-danger') + ' mt-1">';
-  html += isLulus ? '<i class="fas fa-trophy mr-1"></i>Hebat! Kamu tuntas!' : '<i class="fas fa-heart mr-1"></i>Tetap semangat!</p></div>';
+  var h='<div class="slide-up">';
+  h+='<div class="result-card mb-4">';
+  h+='<div class="mascot '+(lulus?'celebrate':'sad')+' mb-3"><div class="mascot-body"><div class="mascot-face">';
+  h+='<div class="mascot-eye left"></div><div class="mascot-eye right"></div><div class="mascot-mouth"></div>';
+  h+='<div class="mascot-cheek left"></div><div class="mascot-cheek right"></div></div></div></div>';
+  h+='<p class="text-xs" style="color:#a5b4fc;margin-bottom:4px">Nilai Kamu</p>';
+  h+='<p class="score-display '+(lulus?'success':'fail')+'">'+nilai+'</p>';
+  h+='<p class="text-base font-bold mt-1 '+(lulus?'text-success':'text-danger')+'">Predikat '+predikat+'</p>';
+  h+='<p class="text-xs '+(lulus?'text-success':'text-danger')+' mt-0.5">';
+  h+=lulus?'<i class="fas fa-trophy mr-1"></i>Hebat! Kamu tuntas!':'<i class="fas fa-heart mr-1"></i>Tetap semangat!</p></div>';
 
-  html += '<div class="grid grid-cols-3 gap-3 mb-6">';
-  html += '<div class="stat-card"><p class="stat-value text-success">' + benar + '</p><p class="stat-label">Benar</p></div>';
-  html += '<div class="stat-card"><p class="stat-value text-primary">' + pgSkor + '</p><p class="stat-label">Skor (' + pct + '%)</p></div>';
-  html += '<div class="stat-card"><p class="stat-value ' + (isLulus ? 'text-success' : 'text-danger') + '">' + (isLulus ? 'Tuntas' : 'Belum') + '</p><p class="stat-label">Status</p></div></div>';
+  h+='<div class="grid grid-cols-3 gap-2 mb-4">';
+  h+='<div class="stat-card"><p class="stat-value text-success">'+benar+'</p><p class="stat-label">Benar</p></div>';
+  h+='<div class="stat-card"><p class="stat-value text-primary">'+pgSkor+'</p><p class="stat-label">Skor ('+pct+'%)</p></div>';
+  h+='<div class="stat-card"><p class="stat-value '+(lulus?'text-success':'text-danger')+'">'+(lulus?'Tuntas':'Belum')+'</p><p class="stat-label">Status</p></div></div>';
 
-  html += '<div class="info-box success mb-6"><div class="info-box-icon bg-success/30"><i class="fas fa-check-circle text-success"></i></div><p class="text-sm text-success">Nilai sudah terkirim ke guru</p></div>';
+  h+='<div class="info-box success mb-4"><div class="info-box-icon bg-success/30"><i class="fas fa-check-circle text-success"></i></div><p class="text-xs text-success">Nilai sudah terkirim ke guru</p></div>';
 
-  html += '<div class="mb-6"><h4 class="text-sm font-bold text-light mb-3 flex items-center gap-2"><i class="fas fa-book-open text-primary"></i>Pembahasan Jawaban</h4><div class="space-y-2">';
+  h+='<div class="mb-4"><h4 class="text-xs font-bold text-light mb-2 flex items-center gap-2"><i class="fas fa-book-open text-primary"></i>Pembahasan Jawaban</h4><div class="space-y-2">';
 
-  for (var i = 0; i < pgDetail.length; i++) {
-    var d = pgDetail[i];
-    html += '<div class="question-card" style="padding:14px;border-color:' + (d.benar ? 'rgba(74,222,128,0.3)' : 'rgba(248,113,113,0.3)') + '">';
-    html += '<div class="flex items-center gap-2 mb-2"><span class="question-number" style="background:' + (d.benar ? 'linear-gradient(135deg,#4ade80,#22c55e)' : 'linear-gradient(135deg,#f87171,#ef4444)') + '">' + d.no + '</span>';
-    html += '<span class="text-xs font-semibold ' + (d.benar ? 'text-success' : 'text-danger') + '">';
-    html += d.benar ? '<i class="fas fa-check-circle mr-1"></i>Benar' : '<i class="fas fa-times-circle mr-1"></i>Salah</span></div>';
-    html += '<p class="text-xs text-a5b4fc mb-2" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">' + escHtml(d.soal) + '</p>';
-    html += '<div class="flex gap-4 text-xs">';
-    html += '<span class="text-a5b4fc">Jawabmu: <span class="inline-flex items-center justify-center w-6 h-6 rounded-lg ' + (d.benar ? 'bg-success/30 text-success' : 'bg-danger/30 text-danger') + ' font-bold">' + (d.jawaban || '-') + '</span></span>';
-    html += '<span class="text-a5b4fc">Kunci: <span class="inline-flex items-center justify-center w-6 h-6 rounded-lg bg-success/30 text-success font-bold">' + escHtml(d.kunci) + '</span></span></div></div>';
+  for(var i=0;i<pgDetail.length;i++){
+    var d=pgDetail[i];
+    h+='<div class="question-card" style="padding:12px;border-color:'+(d.benar?'rgba(74,222,128,0.3)':'rgba(248,113,113,0.3)')+'">';
+    h+='<div class="flex items-center gap-2 mb-1"><span class="question-number" style="background:'+(d.benar?'linear-gradient(135deg,#4ade80,#22c55e)':'linear-gradient(135deg,#f87171,#ef4444)')+'">'+d.no+'</span>';
+    h+='<span class="text-xs font-semibold '+(d.benar?'text-success':'text-danger')+'">';
+    h+=d.benar?'<i class="fas fa-check-circle mr-1"></i>Benar':'<i class="fas fa-times-circle mr-1"></i>Salah</span></div>';
+    h+='<p class="text-xs mb-1.5" style="color:#a5b4fc;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">'+escHtml(d.soal)+'</p>';
+    h+='<div class="flex gap-3 text-xs" style="color:#a5b4fc">';
+    h+='Jawabmu: <span class="inline-flex items-center justify-center w-5 h-5 rounded-md '+(d.benar?'bg-success/30 text-success':'bg-danger/30 text-danger')+'" style="font-size:10px;font-weight:800">'+(d.jawaban||'-')+'</span>';
+    h+='Kunci: <span class="inline-flex items-center justify-center w-5 h-5 rounded-md bg-success/30 text-success" style="font-size:10px;font-weight:800">'+escHtml(d.kunci)+'</span></div></div>';
   }
-  html += '</div></div>';
-  html += '<button onclick="logoutExam()" class="btn-secondary w-full mb-8"><i class="fas fa-home mr-2"></i>Selesai dan Kembali</button></div>';
+  h+='</div></div>';
+  h+='<button onclick="logoutExam()" class="btn-secondary mb-6"><i class="fas fa-home mr-1"></i>Selesai dan Kembali</button></div>';
 
-  document.getElementById('examContent').innerHTML = html;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById('examContent').innerHTML=h;
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 /* ================================================================
    INIT
    ================================================================ */
-window.onload = initApp;
+window.onload=initApp;
 </script>
 </body>
 </html>
