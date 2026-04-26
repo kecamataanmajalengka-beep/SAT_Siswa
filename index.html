@@ -64,12 +64,13 @@ body{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#4c1d95 100%);colo
 .input-field{background:rgba(30,27,75,0.8);border:2px solid rgba(99,102,241,0.3);color:#f5f3ff;padding:13px 16px;border-radius:12px;width:100%;font-size:15px;font-family:'Nunito',sans-serif;transition:all 0.3s}
 .input-field:focus{outline:none;border-color:#6366f1;box-shadow:0 0 20px rgba(99,102,241,0.3)}
 .input-field::placeholder{color:#a5b4fc}
+.input-field.valid{border-color:#4ade80;box-shadow:0 0 16px rgba(74,222,128,0.2)}
+.input-field.invalid{border-color:#f87171;box-shadow:0 0 16px rgba(248,113,113,0.2)}
 .input-field option{background:#312e81;color:#f5f3ff;padding:10px}
 
-/* STEP INDICATOR - compact horizontal */
-.step-bar{display:flex;align-items:center;gap:0;margin-bottom:18px;overflow-x:auto;padding:4px 0;-ms-overflow-style:none;scrollbar-width:none}
+.step-bar{display:flex;align-items:center;gap:0;margin-bottom:6px;overflow-x:auto;padding:4px 0;-ms-overflow-style:none;scrollbar-width:none}
 .step-bar::-webkit-scrollbar{display:none}
-.step-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;flex-shrink:0;transition:all 0.4s;position:relative}
+.step-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;flex-shrink:0;transition:all 0.4s}
 .step-dot.inactive{background:rgba(99,102,241,0.15);color:#6366f1}
 .step-dot.active{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;box-shadow:0 0 18px rgba(99,102,241,0.5);animation:pulse 2s ease-in-out infinite}
 .step-dot.done{background:linear-gradient(135deg,#4ade80,#22c55e);color:white}
@@ -98,31 +99,26 @@ body{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#4c1d95 100%);colo
 .mascot.celebrate .mascot-body{animation:wiggle 0.5s ease-in-out infinite}
 
 .select-card{padding:12px;border-radius:14px;cursor:pointer;transition:all 0.3s;border:2px solid rgba(99,102,241,0.2);background:rgba(49,46,129,0.4);text-align:center;position:relative;overflow:hidden}
-.select-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.05),transparent);opacity:0;transition:opacity 0.3s}
 .select-card:hover{transform:translateY(-2px);border-color:rgba(99,102,241,0.5);box-shadow:0 6px 16px rgba(99,102,241,0.2)}
-.select-card:hover::before{opacity:1}
 .select-card:active{transform:scale(0.98)}
 .select-card.selected{border-color:#4ade80;background:rgba(74,222,128,0.1);box-shadow:0 0 18px rgba(74,222,128,0.15)}
-.select-card.selected .card-icon{animation:bounce 0.6s ease-in-out}
 
 .mapel-card{padding:10px;border-radius:12px;cursor:pointer;transition:all 0.3s;border:2px solid rgba(99,102,241,0.2);background:rgba(49,46,129,0.4);display:flex;align-items:center;gap:8px;position:relative;overflow:hidden}
-.mapel-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.05),transparent);opacity:0;transition:opacity 0.3s}
 .mapel-card:hover{transform:translateY(-2px);border-color:rgba(99,102,241,0.4)}
-.mapel-card:hover::before{opacity:1}
 .mapel-card:active{transform:scale(0.98)}
 .mapel-card.selected{border-color:#4ade80;background:rgba(74,222,128,0.1)}
 .mapel-card.selected .mapel-icon{animation:heartbeat 0.8s ease-in-out}
 .mapel-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
 
 .token-input{letter-spacing:5px;font-size:20px;font-weight:800;text-align:center;font-family:'Fredoka One',cursive;padding:13px;text-transform:uppercase}
+.npsn-input{letter-spacing:3px;font-size:18px;font-weight:800;text-align:center;font-family:'Fredoka One',cursive;padding:13px}
 
-.progress-container{height:8px;background:rgba(99,102,241,0.2);border-radius:4px;overflow:hidden;position:relative}
+.progress-container{height:8px;background:rgba(99,102,241,0.2);border-radius:4px;overflow:hidden}
 .progress-bar{height:100%;background:linear-gradient(90deg,#6366f1,#8b5cf6,#a855f7);border-radius:4px;transition:width 0.5s;position:relative}
 .progress-bar::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);animation:shimmer 2s infinite}
 
 .question-card{background:rgba(49,46,129,0.5);border-radius:16px;border:2px solid rgba(99,102,241,0.2);padding:14px;margin-bottom:12px;position:relative;overflow:hidden;transition:all 0.3s}
 .question-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(180deg,#6366f1,#a855f7);border-radius:4px 0 0 4px}
-.question-card:hover{border-color:rgba(99,102,241,0.3)}
 
 .question-number{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;background:linear-gradient(135deg,#6366f1,#8b5cf6);border-radius:7px;font-weight:800;font-size:12px;margin-right:6px}
 
@@ -188,14 +184,14 @@ body{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#4c1d95 100%);colo
 .lock-overlay{position:fixed;inset:0;z-index:9999;background:rgba(30,27,75,0.97);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;padding:24px}
 .lock-overlay.hidden{display:none}
 
-.npsn-card{padding:14px;border-radius:14px;cursor:pointer;transition:all 0.3s;border:2px solid rgba(99,102,241,0.2);background:rgba(49,46,129,0.4);display:flex;align-items:center;gap:10px;position:relative;overflow:hidden}
-.npsn-card:hover{transform:translateY(-1px);border-color:rgba(99,102,241,0.4);box-shadow:0 6px 16px rgba(99,102,241,0.15)}
-.npsn-card:active{transform:scale(0.98)}
-.npsn-card.selected{border-color:#4ade80;background:rgba(74,222,128,0.1);box-shadow:0 0 18px rgba(74,222,128,0.15)}
-
-/* Form label style */
 .form-label{font-size:12px;color:#a5b4fc;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
 .form-label i{font-size:11px;color:#6366f1}
+
+/* Status dot untuk input NPSN */
+.input-status{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:16px;transition:all 0.3s}
+.input-status.loading{color:#fbbf24;animation:pulse 1s infinite}
+.input-status.valid{color:#4ade80}
+.input-status.invalid{color:#f87171}
 
 @media(max-width:380px){
   .step-dot{width:24px;height:24px;font-size:9px}
@@ -246,15 +242,20 @@ body{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#4c1d95 100%);colo
       <p class="text-xs" style="color:#a5b4fc">Siap mengerjakan ujian hari ini?</p>
     </div>
 
-    <!-- COMPACT STEP INDICATOR -->
     <div class="step-bar" id="stepBar"></div>
     <div class="step-label-row" id="stepLabelRow"></div>
 
     <!-- STEP 1: NPSN -->
     <div id="step1Content">
-      <div class="form-label"><i class="fas fa-school"></i>Pilih Sekolah (NPSN)</div>
-      <div id="npsnList" class="space-y-2 mb-3" style="max-height:200px;overflow-y:auto"></div>
-      <div id="schoolInfoBox" class="info-box info mb-3 hidden"></div>
+      <div class="form-label"><i class="fas fa-school"></i>Ketik NPSN Sekolahmu</div>
+      <div class="mb-2 relative">
+        <div class="relative">
+          <i class="fas fa-hashtag absolute left-3 top-1/2 -translate-y-1/2 text-primary" style="font-size:14px"></i>
+          <input type="text" id="npsnInput" class="input-field npsn-input" style="padding-left:36px;padding-right:40px" placeholder="Contoh: 20200001" maxlength="10" inputmode="numeric" oninput="onNpsnInput()" onkeydown="if(event.key==='Enter')goToStep2()">
+          <span class="input-status" id="npsnStatus"></span>
+        </div>
+      </div>
+      <div id="npsnResult" class="hidden mb-3"></div>
       <button onclick="goToStep2()" id="btnStep1" class="btn-primary" disabled>
         <span>Lanjut</span><i class="fas fa-arrow-right"></i>
       </button>
@@ -424,6 +425,7 @@ var examTimerInterval=null;
 var examDurationSeconds=0;
 var examRemainingSeconds=0;
 var examActive=false;
+var npsnDebounce=null;
 
 /* ================================================================
    UTILITAS
@@ -512,15 +514,9 @@ function updateStepUI(step){
     dot.className='step-dot '+(i<step-1?'done':i===step-1?'active':'inactive');
     lbl.className='step-lbl '+(i<step-1?'done':i===step-1?'active':'');
     if(i<step-1){dot.innerHTML='<i class="fas fa-check" style="font-size:8px"></i>';}else{dot.textContent=(i+1);}
-    if(i>0){
-      var conn=document.getElementById('sc_'+i);
-      conn.className='step-connector'+(i<step-1?' done':'');
-    }
+    if(i>0){var conn=document.getElementById('sc_'+i);conn.className='step-connector'+(i<step-1?' done':'');}
   }
-  for(var i=1;i<=7;i++){
-    var c=document.getElementById('step'+i+'Content');
-    if(c)c.classList.toggle('hidden',i!==step);
-  }
+  for(var i=1;i<=7;i++){var c=document.getElementById('step'+i+'Content');if(c)c.classList.toggle('hidden',i!==step);}
 }
 
 /* ================================================================
@@ -532,7 +528,6 @@ function initApp(){
 
   db.collection('guru_panel').onSnapshot(function(snap){
     guruList=snap.docs.map(function(d){return Object.assign({id:d.id},d.data());});
-    renderNpsnList();
   });
   db.collection('siswa_panel').onSnapshot(function(snap){
     siswaList=snap.docs.map(function(d){return Object.assign({id:d.id},d.data());});
@@ -549,83 +544,100 @@ function initApp(){
 }
 
 /* ================================================================
-   STEP 1: NPSN / SEKOLAH
+   STEP 1: NPSN (KETIK)
    ================================================================ */
-function getUniqueSchools(){
-  var map={};
+function findSchoolByNpsn(npsn){
   for(var i=0;i<guruList.length;i++){
-    var g=guruList[i];
-    if(!g.npsn||!g.sekolah)continue;
-    if(!map[g.npsn])map[g.npsn]={npsn:g.npsn,nama:g.sekolah};
+    if(guruList[i].npsn===npsn&&guruList[i].sekolah)return guruList[i];
   }
-  return Object.values(map).sort(function(a,b){return a.npsn.localeCompare(b.npsn);});
+  return null;
 }
 
-function renderNpsnList(){
-  var schools=getUniqueSchools();
-  var el=document.getElementById('npsnList');
-  if(!schools.length){
-    el.innerHTML='<div class="text-center py-6"><p class="text-xs" style="color:#a5b4fc"><i class="fas fa-inbox mr-1"></i>Belum ada sekolah terdaftar</p></div>';
+function onNpsnInput(){
+  var inp=document.getElementById('npsnInput');
+  var status=document.getElementById('npsnStatus');
+  var result=document.getElementById('npsnResult');
+  var btn=document.getElementById('btnStep1');
+
+  /* Hanya angka */
+  inp.value=inp.value.replace(/[^0-9]/g,'');
+  var val=inp.value.trim();
+
+  selectedNpsn=null;
+  selectedSekolah=null;
+  btn.disabled=true;
+  result.classList.add('hidden');
+  inp.className='input-field npsn-input';
+  inp.style.paddingLeft='36px';
+  inp.style.paddingRight='40px';
+  status.className='input-status';
+  status.innerHTML='';
+
+  if(!val||val.length<4){
+    status.innerHTML='<i class="fas fa-search" style="font-size:14px;color:#4c4678"></i>';
     return;
   }
-  var h='';
-  for(var i=0;i<schools.length;i++){
-    var s=schools[i];
-    h+='<div class="npsn-card" id="npsn_'+s.npsn+'" onclick="selectNpsn(\''+s.npsn+'\')">';
-    h+='<div style="width:36px;height:36px;border-radius:10px;background:rgba(99,102,241,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0">';
-    h+='<i class="fas fa-school text-primary" style="font-size:14px"></i></div>';
-    h+='<div class="flex-1 min-w-0">';
-    h+='<p class="text-sm font-semibold text-light truncate">'+escHtml(s.nama)+'</p>';
-    h+='<p class="text-xs" style="color:#a5b4fc">NPSN: '+s.npsn+'</p>';
-    h+='</div><i class="fas fa-chevron-right" style="color:#4c4678;font-size:12px;flex-shrink:0"></i></div>';
-  }
-  el.innerHTML=h;
-  document.getElementById('schoolInfoBox').classList.add('hidden');
-  document.getElementById('btnStep1').disabled=true;
+
+  /* Loading state */
+  status.className='input-status loading';
+  status.innerHTML='<i class="fas fa-spinner fa-spin"></i>';
+
+  /* Debounce 400ms */
+  if(npsnDebounce)clearTimeout(npsnDebounce);
+  npsnDebounce=setTimeout(function(){
+    var found=findSchoolByNpsn(val);
+
+    if(found){
+      selectedNpsn=found.npsn;
+      selectedSekolah=found.sekolah;
+      inp.className='input-field npsn-input valid';
+      inp.style.paddingLeft='36px';
+      inp.style.paddingRight='40px';
+      status.className='input-status valid';
+      status.innerHTML='<i class="fas fa-check-circle"></i>';
+
+      result.classList.remove('hidden');
+      result.innerHTML='<div class="info-box success"><div class="info-box-icon bg-success/30"><i class="fas fa-school text-success"></i></div>'+
+        '<div class="flex-1 min-w-0">'+
+        '<p class="text-xs font-semibold text-light truncate">'+escHtml(found.sekolah)+'</p>'+
+        '<p class="text-xs" style="color:#a5b4fc">NPSN: '+found.npsn+' — Terverifikasi</p>'+
+        '</div></div>';
+      btn.disabled=false;
+    }else{
+      inp.className='input-field npsn-input invalid';
+      inp.style.paddingLeft='36px';
+      inp.style.paddingRight='40px';
+      status.className='input-status invalid';
+      status.innerHTML='<i class="fas fa-times-circle"></i>';
+
+      if(val.length>=6){
+        result.classList.remove('hidden');
+        result.innerHTML='<div class="info-box danger"><div class="info-box-icon bg-danger/30"><i class="fas fa-exclamation-triangle text-danger"></i></div>'+
+          '<p class="text-xs text-danger">NPSN <strong>'+val+'</strong> tidak ditemukan</p></div>';
+      }
+      btn.disabled=true;
+    }
+  },400);
 }
 
-function selectNpsn(npsn){
-  selectedNpsn=npsn;
-  document.querySelectorAll('[id^="npsn_"]').forEach(function(e){e.classList.remove('selected');});
-  var card=document.getElementById('npsn_'+npsn);
-  card.classList.add('selected','pop');
-  setTimeout(function(){card.classList.remove('pop');},400);
-
-  var school=guruList.find(function(g){return g.npsn===npsn&&g.sekolah;});
-  selectedSekolah=school?school.sekolah:npsn;
-
-  var box=document.getElementById('schoolInfoBox');
-  box.classList.remove('hidden');
-  box.innerHTML='<div class="info-box-icon bg-primary/30"><i class="fas fa-check-circle text-success"></i></div><div class="flex-1 min-w-0"><p class="text-xs font-semibold text-light truncate">'+escHtml(selectedSekolah)+'</p><p class="text-xs" style="color:#a5b4fc">NPSN: '+npsn+' — Terverifikasi</p></div>';
-  document.getElementById('btnStep1').disabled=false;
+function goToStep2(){
+  if(!selectedNpsn){showToast('NPSN tidak valid','error');return;}
+  updateStepUI(2);
+  renderStep2();
 }
-
-function goToStep2(){if(!selectedNpsn){showToast('Pilih sekolah dulu','error');return;}updateStepUI(2);renderStep2();}
 
 /* ================================================================
    STEP 2: JENIS UJIAN
    ================================================================ */
-function getFilteredGuru(){
-  return guruList.filter(function(g){return g.npsn===selectedNpsn;});
-}
+function getFilteredGuru(){return guruList.filter(function(g){return g.npsn===selectedNpsn;});}
 
 function getExamTypesAvailable(){
   var fGuru=getFilteredGuru();
   var hasSAT=false,hasPAJ=false;
-
-  /* Cek SAT: guru yang punya tokenMapel (selain paj) */
   for(var i=0;i<fGuru.length;i++){
-    var g=fGuru[i];
-    var tm=g.tokenMapel||{};
+    var tm=fGuru[i].tokenMapel||{};
     var keys=Object.keys(tm);
-    for(var j=0;j<keys.length;j++){
-      if(keys[j]!=='paj'&&tm[keys[j]])hasSAT=true;
-    }
-  }
-  /* Cek PAJ: hanya kelas 6 */
-  for(var i=0;i<fGuru.length;i++){
-    var g=fGuru[i];
-    var tm=g.tokenMapel||{};
+    for(var j=0;j<keys.length;j++){if(keys[j]!=='paj'&&tm[keys[j]])hasSAT=true;}
     if(tm.paj)hasPAJ=true;
   }
   return{hasSAT:hasSAT,hasPAJ:hasPAJ};
@@ -645,7 +657,7 @@ function renderStep2(){
       for(var j=0;j<keys.length;j++){if(keys[j]!=='paj'&&tm[keys[j]])satCount++;}
     }
     h+='<div class="select-card" id="cardSAT" onclick="selectExamType(\'sat\')">';
-    h+='<div class="card-icon" style="width:44px;height:44px;margin:0 auto 6px;background:rgba(99,102,241,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center">';
+    h+='<div style="width:44px;height:44px;margin:0 auto 6px;background:rgba(99,102,241,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center">';
     h+='<i class="fas fa-file-alt text-primary" style="font-size:18px"></i></div>';
     h+='<p class="font-bold text-light text-sm">Sumatif Akhir Tahun</p>';
     h+='<p class="text-xs" style="color:#a5b4fc">SAT — '+satCount+' mata pelajaran</p>';
@@ -654,7 +666,7 @@ function renderStep2(){
 
   if(types.hasPAJ){
     h+='<div class="select-card" id="cardPAJ" onclick="selectExamType(\'paj\')">';
-    h+='<div class="card-icon" style="width:44px;height:44px;margin:0 auto 6px;background:rgba(248,113,113,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center">';
+    h+='<div style="width:44px;height:44px;margin:0 auto 6px;background:rgba(248,113,113,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center">';
     h+='<i class="fas fa-graduation-cap text-danger" style="font-size:18px"></i></div>';
     h+='<p class="font-bold text-light text-sm">Penilaian Akhir Jenjang</p>';
     h+='<p class="text-xs" style="color:#a5b4fc">PAJ — Kelas 6</p>';
@@ -662,7 +674,7 @@ function renderStep2(){
   }
 
   if(!types.hasSAT&&!types.hasPAJ){
-    h+='<div class="text-center py-6"><p class="text-xs" style="color:#a5b4fc"><i class="fas fa-inbox mr-1"></i>Belum ada ujian tersedia</p></div>';
+    h+='<div class="text-center py-6"><p class="text-xs" style="color:#a5b4fc"><i class="fas fa-inbox mr-1"></i>Belum ada ujian tersedia di sekolah ini</p></div>';
   }
 
   el.innerHTML=h;
@@ -675,32 +687,28 @@ function selectExamType(type){
   selectedExamType=type;
   selectedMapel=null;
   document.querySelectorAll('#examTypeContainer .select-card').forEach(function(c){c.classList.remove('selected');});
-  if(type==='paj'){
-    document.getElementById('cardPAJ').classList.add('selected');
-  }else{
-    document.getElementById('cardSAT').classList.add('selected');
-  }
+  if(type==='paj'){document.getElementById('cardPAJ').classList.add('selected');}
+  else{document.getElementById('cardSAT').classList.add('selected');}
   document.getElementById('btnStep2').disabled=false;
 }
 
 function goToStep3(){if(!selectedExamType){showToast('Pilih jenis ujian','error');return;}updateStepUI(3);renderStep3();}
 
 /* ================================================================
-   STEP 3: MAPEL (jika SAT, skip jika PAJ)
+   STEP 3: MAPEL
    ================================================================ */
 function renderStep3(){
   var el=document.getElementById('mapelContainer');
   var fGuru=getFilteredGuru();
 
   if(selectedExamType==='paj'){
-    /* PAJ tidak pilih mapel, langsung set dan lanjut */
     selectedMapel='paj';
-    el.innerHTML='<div class="info-box info"><div class="info-box-icon" style="background:rgba(248,113,113,0.2)"><i class="fas fa-graduation-cap text-danger"></i></div><div><p class="text-sm font-semibold text-light">Penilaian Akhir Jenjang</p><p class="text-xs" style="color:#a5b4fc">Semua mapel digabung dalam satu sesi</p></div></div>';
+    el.innerHTML='<div class="info-box info"><div class="info-box-icon" style="background:rgba(248,113,113,0.2)"><i class="fas fa-graduation-cap text-danger"></i></div>'+
+      '<div><p class="text-sm font-semibold text-light">Penilaian Akhir Jenjang</p><p class="text-xs" style="color:#a5b4fc">Semua mapel digabung dalam satu sesi</p></div></div>';
     document.getElementById('btnStep3').disabled=false;
     return;
   }
 
-  /* Kumpulkan mapel SAT yang tersedia dari semua guru di NPSN ini */
   var mapelMap={};
   for(var i=0;i<fGuru.length;i++){
     var g=fGuru[i];
@@ -756,34 +764,23 @@ function goToStep4(){if(!selectedMapel){showToast('Pilih mapel dulu','error');re
 /* ================================================================
    STEP 4: KELAS
    ================================================================ */
+function hasTokenForMapel(guru,mapelId){var tm=guru.tokenMapel||{};return!!tm[mapelId];}
+
 function getAvailableKelas(){
   var fGuru=getFilteredGuru();
   var kelasSet={};
-
   for(var i=0;i<fGuru.length;i++){
     var g=fGuru[i];
-    /* Cek via kelasRombel */
+    if(!hasTokenForMapel(g,selectedMapel))continue;
     var kr=g.kelasRombel||{};
     var krKeys=Object.keys(kr);
     for(var j=0;j<krKeys.length;j++){
-      var kelas=krKeys[j].split('_')[0];
-      var kelasLabel='Kelas '+kelas;
-      /* Cek apakah guru ini punya token untuk mapel ini */
-      if(hasTokenForMapel(g,selectedMapel)){
-        kelasSet[kelasLabel]=true;
-      }
+      var kelas='Kelas '+krKeys[j].split('_')[0];
+      kelasSet[kelas]=true;
     }
-    /* Cek via kelas field lama */
-    if(g.kelas&&hasTokenForMapel(g,selectedMapel)){
-      kelasSet[g.kelas]=true;
-    }
+    if(g.kelas)kelasSet[g.kelas]=true;
   }
   return Object.keys(kelasSet).sort(function(a,b){return parseInt(a.replace('Kelas ',''))-parseInt(b.replace('Kelas ',''));});
-}
-
-function hasTokenForMapel(guru,mapelId){
-  var tm=guru.tokenMapel||{};
-  return !!tm[mapelId];
 }
 
 function renderStep4(){
@@ -800,7 +797,7 @@ function renderStep4(){
   for(var i=0;i<kelasArr.length;i++){
     var num=kelasArr[i].replace('Kelas ','');
     h+='<div class="select-card" id="kelas_'+num+'" onclick="selectKelas(\''+kelasArr[i]+'\')">';
-    h+='<div class="card-icon" style="width:28px;height:28px;margin:0 auto 3px;background:rgba(99,102,241,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center">';
+    h+='<div style="width:28px;height:28px;margin:0 auto 3px;background:rgba(99,102,241,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center">';
     h+='<span class="font-bold text-primary" style="font-size:14px">'+num+'</span></div>';
     h+='<span class="text-xs" style="color:#a5b4fc">'+kelasArr[i]+'</span></div>';
   }
@@ -832,7 +829,6 @@ function getAvailableRombels(){
   var fGuru=getFilteredGuru();
   var rombelSet={};
   var kNum=selectedKelas.replace('Kelas ','');
-
   for(var i=0;i<fGuru.length;i++){
     var g=fGuru[i];
     if(!hasTokenForMapel(g,selectedMapel))continue;
@@ -840,13 +836,9 @@ function getAvailableRombels(){
     var krKeys=Object.keys(kr);
     for(var j=0;j<krKeys.length;j++){
       var parts=krKeys[j].split('_');
-      if(parts[0]===kNum){
-        rombelSet[parts[1]]=true;
-      }
+      if(parts[0]===kNum)rombelSet[parts[1]]=true;
     }
-    if(g.kelas===selectedKelas&&g.rombel){
-      rombelSet[g.rombel]=true;
-    }
+    if(g.kelas===selectedKelas&&g.rombel)rombelSet[g.rombel]=true;
   }
   return Object.keys(rombelSet).sort();
 }
@@ -855,7 +847,6 @@ function findWaliKelas(kelas,rombel){
   var fGuru=getFilteredGuru();
   var kNum=kelas.replace('Kelas ','');
   var krKey=kNum+'_'+rombel;
-
   for(var i=0;i<fGuru.length;i++){
     var g=fGuru[i];
     var kr=g.kelasRombel||{};
@@ -880,7 +871,7 @@ function renderStep5(){
   for(var i=0;i<rombels.length;i++){
     var r=rombels[i];
     h+='<div class="select-card" id="rombel_'+r+'" onclick="selectRombel(\''+r+'\')">';
-    h+='<div class="card-icon" style="width:28px;height:28px;margin:0 auto 3px;background:rgba(236,72,153,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center">';
+    h+='<div style="width:28px;height:28px;margin:0 auto 3px;background:rgba(236,72,153,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center">';
     h+='<span class="font-bold text-secondary" style="font-size:14px">'+r+'</span></div>';
     h+='<span class="text-xs" style="color:#a5b4fc">Rombel '+r+'</span></div>';
   }
@@ -898,7 +889,6 @@ function selectRombel(r){
   card.classList.add('selected','pop');
   setTimeout(function(){card.classList.remove('pop');},400);
 
-  /* Cari wali kelas */
   var wali=findWaliKelas(selectedKelas,selectedRombel);
   var box=document.getElementById('teacherBox');
 
@@ -924,11 +914,9 @@ function goToStep6(){if(!selectedGuru){showToast('Pilih rombel dulu','error');re
    STEP 6: NAMA
    ================================================================ */
 function getTokenSource(){
-  /* Cari guru yang punya token untuk mapel+kelas+rombel */
   var fGuru=getFilteredGuru();
   var kNum=selectedKelas.replace('Kelas ','');
   var krKey=kNum+'_'+selectedRombel;
-
   for(var i=0;i<fGuru.length;i++){
     var g=fGuru[i];
     if(!hasTokenForMapel(g,selectedMapel))continue;
@@ -1054,13 +1042,24 @@ function onTokenInput(){
 
 function backToStep(step){
   updateStepUI(step);
-  if(step===1){renderNpsnList();}
-  else if(step===2){renderStep2();}
-  else if(step===3){renderStep3();}
-  else if(step===4){renderStep4();}
-  else if(step===5){renderStep5();}
-  else if(step===6){renderStep6();}
-  else if(step===7){renderStep7();}
+  if(step===1){/* Reset NPSN input tapi biarkan nilai */
+    var inp=document.getElementById('npsnInput');
+    var status=document.getElementById('npsnStatus');
+    document.getElementById('npsnResult').classList.add('hidden');
+    if(!selectedNpsn){
+      inp.className='input-field npsn-input';
+      inp.style.paddingLeft='36px';
+      inp.style.paddingRight='40px';
+      status.className='input-status';
+      status.innerHTML='<i class="fas fa-search" style="font-size:14px;color:#4c4678"></i>';
+    }
+  }
+  else if(step===2)renderStep2();
+  else if(step===3)renderStep3();
+  else if(step===4)renderStep4();
+  else if(step===5)renderStep5();
+  else if(step===6)renderStep6();
+  else if(step===7)renderStep7();
 }
 
 /* ================================================================
@@ -1082,7 +1081,6 @@ function startExam(){
   var guruMapelId=src?src.guruId:selectedGuru.id;
   var durasiMenit=src?src.durasi:0;
 
-  /* Cek sudah pernah */
   for(var i=0;i<nilaiList.length;i++){
     var n=nilaiList[i];
     if(n.mapel===selectedMapel&&n.kelas===selectedKelas&&n.rombel===selectedRombel&&n.nama===studentName&&n.guruId===guruMapelId){
@@ -1116,11 +1114,16 @@ function logoutExam(){
   document.getElementById('lockOverlay').classList.add('hidden');
   selectedNpsn=null;selectedSekolah=null;selectedExamType=null;selectedMapel=null;
   selectedKelas=null;selectedRombel=null;selectedGuru=null;tokenValidated=false;
-  document.querySelectorAll('.select-card,.mapel-card,.npsn-card').forEach(function(c){c.classList.remove('selected');});
+  document.querySelectorAll('.select-card,.mapel-card').forEach(function(c){c.classList.remove('selected');});
   document.getElementById('teacherBox').classList.add('hidden');
-  document.getElementById('schoolInfoBox').classList.add('hidden');
+  document.getElementById('npsnInput').value='';
+  document.getElementById('npsnInput').className='input-field npsn-input';
+  document.getElementById('npsnInput').style.paddingLeft='36px';
+  document.getElementById('npsnInput').style.paddingRight='40px';
+  document.getElementById('npsnStatus').className='input-status';
+  document.getElementById('npsnStatus').innerHTML='<i class="fas fa-search" style="font-size:14px;color:#4c4678"></i>';
+  document.getElementById('npsnResult').classList.add('hidden');
   updateStepUI(1);
-  renderNpsnList();
 }
 
 /* ================================================================
@@ -1231,7 +1234,6 @@ function renderQuestions(){
   }
 
   h+='</div>';
-
   h+='<div class="fixed bottom-0 left-0 right-0 p-3 no-print" style="background:linear-gradient(to top,#1e1b4b,#1e1b4bee,#1e1b4b00);padding-bottom:max(12px,env(safe-area-inset-bottom))">';
   h+='<button onclick="submitExam()" id="submitBtn" class="btn-primary" style="max-width:380px;margin:0 auto">';
   h+='<i class="fas fa-paper-plane"></i><span>Selesai dan Kirim Nilai</span></button></div>';
@@ -1269,8 +1271,7 @@ function submitExam(){
   var pgQ=allQ.filter(function(q){return q.type==='pg';});
   var letters=getOptLetters(k);
 
-  var pgMax=0;
-  for(var i=0;i<pgQ.length;i++)pgMax+=(pgQ[i].score||1);
+  var pgMax=0;for(var i=0;i<pgQ.length;i++)pgMax+=(pgQ[i].score||1);
 
   var unanswered=[];
   for(var i=0;i<pgQ.length;i++){if(!document.querySelector('[id^="opt_'+i+'_"].selected'))unanswered.push(i+1);}
