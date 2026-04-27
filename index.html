@@ -99,9 +99,11 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
 .petunjuk-box ul{list-style:none;padding:0}
 .petunjuk-box li{font-size:12px;color:#78350f;padding:2px 0;padding-left:16px;position:relative;line-height:1.5}
 .petunjuk-box li::before{content:'\2022';position:absolute;left:0;color:#f59e0b;font-weight:bold}
-.debug-box{background:#fef2f2;border:2px solid #fecaca;border-radius:12px;padding:14px;margin-top:12px;font-size:11px;color:#991b1b;line-height:1.6;display:none}
+.debug-box{background:#fef2f2;border:2px solid #fecaca;border-radius:12px;padding:14px;margin-top:12px;font-size:11px;color:#991b1b;line-height:1.6;display:none;max-height:150px;overflow-y:auto}
 .debug-box.show{display:block}
 .debug-box b{color:#dc2626}
+.status-box{background:#f0fdf4;border:2px solid #bbf7d0;border-radius:12px;padding:12px 14px;margin-top:12px;font-size:12px;color:#065f46;line-height:1.6;display:none}
+.status-box.show{display:block}
 @media(min-width:480px){
 .opsi-grid{grid-template-columns:1fr 1fr;gap:10px}
 .exam-body{padding:20px 24px;padding-bottom:110px}
@@ -151,16 +153,17 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
         </div>
         <div style="margin-bottom:14px">
             <div class="field-label">Mata Pelajaran</div>
-            <select id="inputMapel" class="field-input" style="font-size:14px">
-                <option value="">-- Pilih Mapel --</option>
+            <!-- Dropdown kosong, akan diisi DINAMIS setelah token valid -->
+            <select id="inputMapel" class="field-input" style="font-size:14px" disabled>
+                <option value="">Masukkan token terlebih dahulu</option>
             </select>
             <div class="field-error" id="errMapel"></div>
         </div>
         <button id="btnLogin" class="btn btn-primary" onclick="doLogin()"><i class="fas fa-sign-in-alt"></i> Mulai Ujian</button>
         <p style="text-align:center;font-size:11px;color:var(--muted);margin-top:12px">Pastikan data sudah benar sebelum memulai</p>
 
-        <!-- DEBUG BOX (sembunyikan di produksi) -->
         <div class="debug-box" id="debugBox"></div>
+        <div class="status-box" id="statusBox"></div>
     </div>
 </div>
 
@@ -207,18 +210,34 @@ var MAPEL_LIST=[
     {id:'pai',nama:'PAI',singkat:'PAI'},
     {id:'pjok',nama:'PJOK',singkat:'PJOK'}
 ];
+/* Mapel yang diampu guru kelas (bukan PAI/PJOK) */
+var MAPEL_KELAS=['ppkn','mat','bin','sbd','ipas','bsd','bing'];
 
 function getMN(id){var m=MAPEL_LIST.find(function(x){return x.id===id;});return m?m.nama:id;}
 function getMS(id){var m=MAPEL_LIST.find(function(x){return x.id===id;});return m?m.singkat:id;}
 function esc(s){if(!s)return'';var d=document.createElement('div');d.textContent=String(s);return d.innerHTML;}
 function getOL(k){var n=parseInt((k||'').replace('Kelas ',''))||0;return['a','b','c','d','e'].slice(0,n<=2?3:4);}
 
+/*
+ * ================================================================
+ * FUNGSI PARSING KR — SAMA DENGAN PANEL GURU
+ * Menangani KEDUA format: "Kelas 6 A" DAN "Kelas 6_A"
+ * ================================================================
+ */
+function parseKR(v){
+    if(!v)return{kelas:'',rombel:''};
+    if(v.indexOf('_')>=0){var p=v.split('_');return{kelas:p[0]||'',rombel:p[1]||''};}
+    var p2=v.trim().split(/\s+/);
+    return{kelas:(p2[0]||'')+' '+(p2[1]||''),rombel:p2[2]||''};
+}
+function formatKR(kelas,rombel){return(kelas||'')+' '+(rombel||'');}
+
 // ================================================================
 // STATE
 // ================================================================
 var studentData=null;
 var guruData=null;
-var allGuruWithToken=[];  // SEMUA guru yang pakai token ini
+var allGuruWithToken=[];
 var examQuestions=[];
 var examAnswers={};
 var examTimerSec=0;
@@ -226,7 +245,8 @@ var examTimerInterval=null;
 var examActive=false;
 var examSource='sat';
 var _modalCallback=null;
-var DEBUG_MODE=false; // Set true untuk troubleshooting, false di produksi
+var DEBUG_MODE=false;
+var _cachedTokenData=null; // Cache data token agar tidak fetch ulang
 
 // ================================================================
 // ANTI KELUAR HALAMAN
@@ -281,31 +301,138 @@ function debugLog(msg){
     box.scrollTop=box.scrollHeight;
 }
 function clearDebug(){document.getElementById('debugBox').innerHTML='';document.getElementById('debugBox').classList.remove('show');}
+function showStatus(msg){
+    var box=document.getElementById('statusBox');
+    box.innerHTML=msg;
+    box.classList.add('show');
+}
+function hideStatus(){document.getElementById('statusBox').classList.remove('show');}
 
 // ================================================================
-// LOGIN
+// VALIDASI TOKEN & ISI DROPMAPEL (DIPANGGIL OTOMATIS)
 // ================================================================
-function populateMapelDropdown(){
+var _tokenDebounce=null;
+function onTokenInput(){
+    clearTimeout(_tokenDebounce);
     var sel=document.getElementById('inputMapel');
-    sel.innerHTML='<option value="">-- Pilih Mapel --</option>';
-    MAPEL_LIST.forEach(function(m){sel.innerHTML+='<option value="'+m.id+'">'+m.nama+'</option>';});
+    var token=document.getElementById('inputToken').value.trim().toUpperCase();
+
+    /* Reset dropdown jika token kurang dari 4 karakter */
+    if(token.length<4){
+        sel.innerHTML='<option value="">Masukkan token terlebih dahulu</option>';
+        sel.disabled=true;
+        _cachedTokenData=null;
+        hideStatus();
+        return;
+    }
+
+    /* Debounce 600ms agar tidak spam Firestore */
+    sel.innerHTML='<option value="">Memverifikasi token...</option>';
+    sel.disabled=true;
+    _tokenDebounce=setTimeout(function(){validateTokenAndPopulateMapel(token);},600);
+}
+
+function validateTokenAndPopulateMapel(token){
+    debugLog('Validasi token: '+token);
+
+    db.collection('guru_accounts').where('token','==',token).get().then(function(snap){
+        if(snap.empty){
+            debugLog('Token tidak ditemukan');
+            var sel=document.getElementById('inputMapel');
+            sel.innerHTML='<option value="">Token tidak valid</option>';
+            sel.disabled=true;
+            _cachedTokenData=null;
+            showStatus('<i class="fas fa-times-circle" style="color:#dc2626"></i> Token tidak ditemukan di database');
+            return;
+        }
+
+        allGuruWithToken=snap.docs.map(function(d){return Object.assign({_id:d.id},d.data());});
+        _cachedTokenData={guruList:allGuruWithToken,token:token};
+
+        debugLog('Ditemukan '+allGuruWithToken.length+' guru:');
+        allGuruWithToken.forEach(function(g,i){
+            debugLog('  '+(i+1)+': '+g.nama+' role='+g.role+' npsn='+g.npsn
+                +' kelas='+(g.kelas||'-')+' rombel='+(g.rombel||'-')
+                +' rombels=['+(g.rombels?g.rombels.join(','):'-')+']');
+        });
+
+        /* Kumpulkan mapel yang tersedia berdasarkan data guru */
+        var mapelSet={};
+        allGuruWithToken.forEach(function(g){
+            var role=g.role||'';
+            if(role==='pai'){
+                mapelSet['pai']=true;
+            }else if(role==='pjok'){
+                mapelSet['pjok']=true;
+            }else{
+                /* Guru kelas: mapel kelas */
+                MAPEL_KELAS.forEach(function(mid){mapelSet[mid]=true;});
+            }
+        });
+
+        var mapelIds=Object.keys(mapelSet).sort(function(a,b){
+            return MAPEL_KELAS.indexOf(a)-MAPEL_KELAS.indexOf(b);
+        });
+
+        if(!mapelIds.length){
+            var sel=document.getElementById('inputMapel');
+            sel.innerHTML='<option value="">Tidak ada mapel tersedia</option>';
+            sel.disabled=true;
+            showStatus('<i class="fas fa-exclamation-triangle" style="color:#f59e0b"></i> Data guru tidak memiliki mapel');
+            return;
+        }
+
+        /* Isi dropdown mapel */
+        var sel=document.getElementById('inputMapel');
+        sel.innerHTML='<option value="">-- Pilih Mapel --</option>';
+        mapelIds.forEach(function(mid){
+            var opt=document.createElement('option');
+            opt.value=mid;
+            opt.textContent=getMN(mid);
+            sel.appendChild(opt);
+        });
+        sel.disabled=false;
+
+        /* Tampilkan info guru */
+        var guruNames=allGuruWithToken.map(function(g){return esc(g.nama)+' ('+getRoleLabel(g.role)+')';});
+        var npsnList=allGuruWithToken.map(function(g){return g.npsn;}).filter(function(v,i,a){return a.indexOf(v)===i;});
+        showStatus(
+            '<i class="fas fa-check-circle" style="color:#16a34a"></i> <b>Token valid</b><br>'
+            +'<span style="color:#64748b">Guru: '+guruNames.join(', ')+'</span><br>'
+            +'<span style="color:#64748b">Mapel tersedia: '+mapelIds.map(function(m){return getMS(m);}).join(', ')+'</span>'
+        );
+        clearFieldErr('errToken');
+
+    }).catch(function(e){
+        debugLog('Error validasi token: '+(e.message||''));
+        var sel=document.getElementById('inputMapel');
+        sel.innerHTML='<option value="">Error koneksi</option>';
+        sel.disabled=true;
+        _cachedTokenData=null;
+    });
+}
+
+function getRoleLabel(r){
+    if(r==='pai')return'Guru PAI';
+    if(r==='pjok')return'Guru PJOK';
+    return'Guru Kelas';
 }
 
 // ================================================================
 // CARI GURU YG MENGAMPU MAPEL INI UNTUK SISWA INI
 // ================================================================
 function findGuruForMapel(mapel, kelasSiswa, rombelSiswa){
-    // Loop semua guru dengan token ini, cari yang cocok
     for(var i=0;i<allGuruWithToken.length;i++){
         var g=allGuruWithToken[i];
         var role=g.role||'';
 
         if(mapel==='pai' && role==='pai'){
-            // Guru PAI: cek apakah rombel siswa ada di daftar rombels guru
+            /* Guru PAI: cek rombels — handle KEDUA format */
             var rombels=g.rombels||[];
             for(var j=0;j<rombels.length;j++){
-                if(rombels[j]===kelasSiswa+'_'+rombelSiswa){
-                    debugLog('✅ Ditemukan guru PAI: '+g.nama+' (rombels: '+rombels.join(', ')+')');
+                var p=parseKR(rombels[j]);
+                if(p.kelas===kelasSiswa && p.rombel===rombelSiswa){
+                    debugLog('PAI match via parseKR: "'+rombels[j]+'" → kelas='+p.kelas+' rombel='+p.rombel);
                     return g;
                 }
             }
@@ -313,25 +440,24 @@ function findGuruForMapel(mapel, kelasSiswa, rombelSiswa){
         else if(mapel==='pjok' && role==='pjok'){
             var rombels2=g.rombels||[];
             for(var j2=0;j2<rombels2.length;j2++){
-                if(rombels2[j2]===kelasSiswa+'_'+rombelSiswa){
-                    debugLog('✅ Ditemukan guru PJOK: '+g.nama+' (rombels: '+rombels2.join(', ')+')');
+                var p2=parseKR(rombels2[j2]);
+                if(p2.kelas===kelasSiswa && p2.rombel===rombelSiswa){
+                    debugLog('PJOK match via parseKR: "'+rombels2[j2]+'" → kelas='+p2.kelas+' rombel='+p2.rombel);
                     return g;
                 }
             }
         }
         else if(role==='kelas' || role==='kelas6'){
-            // Guru kelas: cek kelas + rombel cocok
+            /* Guru kelas: cocokkan kelas + rombel */
             if(g.kelas===kelasSiswa && g.rombel===rombelSiswa){
-                // Pastikan mapel ini sesuai (guru kelas mengampu mapel kelas)
-                var mapelKelas=['ppkn','mat','bin','sbd','ipas','bsd','bing'];
-                if(mapelKelas.indexOf(mapel)>=0){
-                    debugLog('✅ Ditemukan guru kelas: '+g.nama+' ('+g.kelas+' '+g.rombel+')');
+                if(MAPEL_KELAS.indexOf(mapel)>=0){
+                    debugLog('Kelas match: '+g.kelas+' '+g.rombel+' mapel='+mapel);
                     return g;
                 }
             }
         }
     }
-    return null; // Tidak ditemukan
+    return null;
 }
 
 // ================================================================
@@ -350,7 +476,7 @@ function checkExamTime(es){
 }
 
 // ================================================================
-// LOGIN UTAMA — ALUR DIPERBAIKI TOTAL
+// LOGIN UTAMA
 // ================================================================
 function doLogin(){
     clearFieldErr('errNisn');clearFieldErr('errToken');clearFieldErr('errMapel');
@@ -366,90 +492,88 @@ function doLogin(){
     if(!mapel){showFieldErr('errMapel','Pilih mata pelajaran');valid=false;}
     if(!valid)return;
 
+    /* Gunakan cache jika sudah ada, else fetch ulang */
+    var tokenPromise;
+    if(_cachedTokenData && _cachedTokenData.token===token){
+        tokenPromise=Promise.resolve();
+        allGuruWithToken=_cachedTokenData.guruList;
+        debugLog('Menggunakan cache token ('+allGuruWithToken.length+' guru)');
+    }else{
+        tokenPromise=db.collection('guru_accounts').where('token','==',token).get().then(function(snap){
+            if(snap.empty){
+                showFieldErr('errToken','Token tidak ditemukan');return false;
+            }
+            allGuruWithToken=snap.docs.map(function(d){return Object.assign({_id:d.id},d.data());});
+            _cachedTokenData={guruList:allGuruWithToken,token:token};
+            return true;
+        });
+    }
+
     var btn=document.getElementById('btnLogin');
     btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Memverifikasi...';
 
     debugLog('=== MULAI LOGIN ===');
     debugLog('NISN: '+nisn+' | Token: '+token+' | Mapel: '+mapel);
 
-    // LANGKAH 1: Cari SEMUA guru dengan token ini
-    db.collection('guru_accounts').where('token','==',token).get().then(function(tokenSnap){
-        debugLog('Langkah 1: Cari guru dengan token "'+token+'"');
-        if(tokenSnap.empty){
-            debugLog('❌ Token tidak ditemukan di database');
-            showFieldErr('errToken','Token tidak ditemukan');
-            resetBtn(btn);return null;
+    tokenPromise.then(function(result){
+        if(result===false){resetBtn(btn);return null;}
+        if(result===undefined){
+            /* Dari cache, lanjut */
         }
 
-        allGuruWithToken=tokenSnap.docs.map(function(d){return Object.assign({_id:d.id},d.data());});
-        debugLog('Ditemukan '+allGuruWithToken.length+' guru dengan token ini:');
-        allGuruWithToken.forEach(function(g,i){
-            debugLog('  Guru '+(i+1)+': '+g.nama+' | role='+g.role+' | npsn='+g.npsn+' | kelas='+(g.kelas||'-')+' | rombel='+(g.rombel||'-')+' | rombels='+(g.rombels?g.rombels.join(','):'-'));
-        });
-
-        // LANGKAH 2: Kumpulkan semua NPSN dari guru-guru tersebut
+        /* Kumpulkan NPSN unik */
         var npsnSet={};
         allGuruWithToken.forEach(function(g){npsnSet[g.npsn]=true;});
-        var npsnList=Object.keys(npsnSet);
-        debugLog('Langkah 2: NPSN unik = ['+npsnList.join(', ')+']');
 
-        // LANGKAH 3: Cari siswa berdasarkan NISN + salah satu NPSN
-        // Firestore 'in' max 30 item, cukup untuk jumlah sekolah
+        /* Cari siswa berdasarkan NISN */
         return db.collection('students').where('nisn','==',nisn).get();
     }).then(function(studentSnap){
+        if(!studentSnap && studentSnap!==undefined)return null;
         if(!studentSnap)return null;
 
-        debugLog('Langkah 3: Cari siswa NISN="'+nisn+'" → ditemukan '+studentSnap.size+' doc');
+        debugLog('Siswa ditemukan: '+studentSnap.size+' doc');
 
-        // Filter hanya siswa yang NPSN-nya cocok
         var npsnSet={};
         allGuruWithToken.forEach(function(g){npsnSet[g.npsn]=true;});
 
         var matched=null;
-        var semuaSiswa=[];
         studentSnap.docs.forEach(function(doc){
             var d=doc.data();
-            semuaSiswa.push({id:doc.id,npsn:d.npsn,nama:d.nama,kelas:d.kelas,rombel:d.rombel});
-            if(npsnSet[d.npsn] && !matched){
+            if(!matched && npsnSet[d.npsn]){
                 matched=Object.assign({_id:doc.id},d);
             }
-        });
-
-        debugLog('Semua siswa dengan NISN ini:');
-        semuaSiswa.forEach(function(s,i){
-            var cocok=npsnSet[s.npsn]?'✅ COCOK':'❌ beda NPSN';
-            debugLog('  Siswa '+(i+1)+': '+s.nama+' | npsn='+s.npsn+' | kelas='+s.kelas+' '+s.rombel+' '+cocok);
+            var cocok=npsnSet[d.npsn]?'OK':'BEDA NPSN';
+            debugLog('  '+d.nama+' npsn='+d.npsn+' '+d.kelas+' '+d.rombel+' ['+cocok+']');
         });
 
         if(!matched){
-            debugLog('❌ Tidak ada siswa yang NPSN-nya cocok dengan guru');
+            debugLog('NISN tidak cocok dengan NPSN guru');
             showFieldErr('errNisn','NISN tidak terdaftar di sekolah guru ini');
             resetBtn(btn);return null;
         }
 
         studentData=matched;
-        debugLog('✅ Siswa ditemukan: '+studentData.nama+' ('+studentData.kelas+' '+studentData.rombel+', NPSN: '+studentData.npsn+')');
+        debugLog('Siswa: '+studentData.nama+' ('+studentData.kelas+' '+studentData.rombel+', NPSN:'+studentData.npsn+')');
 
-        // LANGKAH 4: Cari guru yang mengampu mapel ini untuk kelas/rombel siswa
+        /* Cari guru pengampu */
         var foundGuru=findGuruForMapel(mapel, studentData.kelas, studentData.rombel);
         if(!foundGuru){
-            debugLog('❌ Tidak ada guru yang mengampu '+getMN(mapel)+' untuk '+studentData.kelas+' '+studentData.rombel);
-            showFieldErr('errMapel','Tidak ada guru yang mengampu '+getMN(mapel)+' untuk kelasmu');
+            debugLog('Tidak ada guru untuk '+getMN(mapel)+' '+studentData.kelas+' '+studentData.rombel);
+            showFieldErr('errMapel','Tidak ada guru yang mengampu '+getMN(mapel)+' untuk '+studentData.kelas+' '+studentData.rombel);
             resetBtn(btn);return null;
         }
         guruData=foundGuru;
-        debugLog('✅ Guru pengampu: '+guruData.nama+' ('+guruData.role+')');
+        debugLog('Guru: '+guruData.nama+' ('+guruData.role+', NPSN:'+guruData.npsn+')');
 
-        // LANGKAH 5: Cek waktu ujian dari guru pengampu
+        /* Cek waktu ujian */
         var es=guruData.examSettings||{};
         if(!checkExamTime(es)){
-            debugLog('❌ Di luar waktu ujian. Settings: '+JSON.stringify(es));
-            showFieldErr('errToken','Di luar waktu ujian');
+            debugLog('Di luar waktu ujian: '+JSON.stringify(es));
+            showFieldErr('errToken','Di luar waktu ujian yang ditentukan guru');
             resetBtn(btn);return null;
         }
-        debugLog('✅ Waktu ujian OK');
 
-        // LANGKAH 6: Cek apakah sudah pernah mengerjakan (cek SAT dulu)
+        /* Cek sudah pernah mengerjakan (SAT) */
         return db.collection('student_answers')
             .where('npsn','==',guruData.npsn)
             .where('studentId',studentData._id)
@@ -460,13 +584,13 @@ function doLogin(){
         if(!checkSnap)return null;
 
         if(!checkSnap.empty){
-            debugLog('⚠️ Sudah pernah mengerjakan (SAT)');
+            debugLog('Sudah mengerjakan (SAT)');
             showFieldErr('errMapel','Kamu sudah mengerjakan ujian ini');
             resetBtn(btn);return null;
         }
 
-        // LANGKAH 7: Ambil soal SAT
-        debugLog('Langkah 7: Cari soal SAT '+mapel+' '+studentData.kelas);
+        /* Ambil soal SAT */
+        debugLog('Cari soal SAT: '+mapel+' '+studentData.kelas);
         return db.collection('questions')
             .where('mapel','==',mapel)
             .where('kelas','==',studentData.kelas)
@@ -477,23 +601,23 @@ function doLogin(){
         if(!qSnap.empty){
             examQuestions=qSnap.docs.map(function(d){return Object.assign({id:d.id},d.data());});
             examSource='sat';
-            debugLog('✅ Ditemukan '+examQuestions.length+' soal SAT');
+            debugLog('Ditemukan '+examQuestions.length+' soal SAT');
             startExam(mapel);
             resetBtn(btn);
             return null;
         }
 
-        // LANGKAH 8: Tidak ada soal SAT, coba PAJ (kelas 6 saja)
+        /* Coba PAJ jika kelas 6 */
         if(studentData.kelas==='Kelas 6'){
-            debugLog('Langkah 8: Tidak ada soal SAT, coba PAJ...');
+            debugLog('Coba soal PAJ...');
             return db.collection('questions_paj')
                 .where('mapel','==',mapel)
                 .where('kelas','==','Kelas 6')
                 .orderBy('createdAt','asc').get();
         }
 
-        debugLog('❌ Tidak ada soal untuk '+mapel+' '+studentData.kelas);
-        showFieldErr('errMapel','Belum ada soal untuk mapel dan kelasmu');
+        debugLog('Tidak ada soal');
+        showFieldErr('errMapel','Belum ada soal untuk '+getMN(mapel)+' '+studentData.kelas);
         resetBtn(btn);return null;
     }).then(function(qSnap){
         if(!qSnap)return null;
@@ -501,9 +625,9 @@ function doLogin(){
         if(!qSnap.empty){
             examQuestions=qSnap.docs.map(function(d){return Object.assign({id:d.id},d.data());});
             examSource='paj';
-            debugLog('✅ Ditemukan '+examQuestions.length+' soal PAJ');
+            debugLog('Ditemukan '+examQuestions.length+' soal PAJ');
 
-            // Cek duplikasi PAJ
+            /* Cek duplikasi PAJ */
             return db.collection('student_answers')
                 .where('npsn','==',guruData.npsn)
                 .where('studentId',studentData._id)
@@ -512,23 +636,23 @@ function doLogin(){
                 .limit(1).get();
         }
 
-        debugLog('❌ Tidak ada soal PAJ juga');
-        showFieldErr('errMapel','Belum ada soal untuk mapel dan kelasmu');
+        debugLog('Tidak ada soal PAJ');
+        showFieldErr('errMapel','Belum ada soal untuk '+getMN(mapel)+' '+studentData.kelas);
         resetBtn(btn);return null;
     }).then(function(checkSnap){
         if(!checkSnap)return null;
 
         if(!checkSnap.empty){
-            debugLog('⚠️ Sudah pernah mengerjakan (PAJ)');
+            debugLog('Sudah mengerjakan (PAJ)');
             showFieldErr('errMapel','Kamu sudah mengerjakan ujian ini');
             resetBtn(btn);return null;
         }
 
-        debugLog('=== LANJUT START EXAM (PAJ) ===');
+        debugLog('=== START EXAM (PAJ) ===');
         startExam(mapel);
         resetBtn(btn);return null;
     }).catch(function(e){
-        debugLog('❌ ERROR: '+(e.message||e));
+        debugLog('ERROR: '+(e.message||e));
         resetBtn(btn);
         showToast('Error: '+(e.message||''),'error');
     });
@@ -619,7 +743,7 @@ function renderExamQuestions(mapel){
 }
 
 // ================================================================
-// OPSI CLICK
+// OPSI CLICK & URAIAN
 // ================================================================
 function selectOpsi(qIdx,letter){
     if(!examActive)return;
@@ -678,10 +802,14 @@ function doSubmitExam(){
 // INIT
 // ================================================================
 window.onload=function(){
-    populateMapelDropdown();
-    document.getElementById('inputToken').addEventListener('input',function(){this.value=this.value.toUpperCase();});
-    document.getElementById('inputNisn').addEventListener('input',function(){this.value=this.value.replace(/[^0-9]/g','');});
-    // Aktifkan debug dengan tambahkan ?debug di URL
+    /* Dropdown mapel awalnya DISABLED — baru aktif setelah token valid */
+    document.getElementById('inputToken').addEventListener('input',function(){
+        this.value=this.value.toUpperCase();
+        onTokenInput();
+    });
+    document.getElementById('inputNisn').addEventListener('input',function(){
+        this.value=this.value.replace(/[^0-9]/g,'');
+    });
     if(window.location.search.indexOf('debug')>=0)DEBUG_MODE=true;
 };
 </script>
