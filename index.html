@@ -100,7 +100,6 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
 .petunjuk-box ul{list-style:none;padding:0}
 .petunjuk-box li{font-size:12px;color:#78350f;padding:2px 0;padding-left:16px;position:relative;line-height:1.5}
 .petunjuk-box li::before{content:'\2022';position:absolute;left:0;color:#f59e0b;font-weight:bold}
-/* Debug box SELALU tampil saat ini untuk troubleshooting */
 .debug-box{background:#1e293b;border:2px solid #475569;border-radius:12px;padding:14px;margin-top:12px;font-size:10px;color:#94a3b8;line-height:1.7;display:none;max-height:200px;overflow-y:auto;font-family:'Courier New',monospace}
 .debug-box.show{display:block}
 .debug-box b{color:#22d3ee}
@@ -108,24 +107,18 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
 .debug-box .ok{color:#86efac}
 .status-box{background:#f0fdf4;border:2px solid #bbf7d0;border-radius:12px;padding:12px 14px;margin-top:12px;font-size:12px;color:#065f46;line-height:1.6;display:none}
 .status-box.show{display:block}
-@media(min-width:480px){
-.opsi-grid{grid-template-columns:1fr 1fr;gap:10px}
-.exam-body{padding:20px 24px;padding-bottom:110px}
-.soal-card{padding:20px}
-}
+@media(min-width:480px){.opsi-grid{grid-template-columns:1fr 1fr;gap:10px}.exam-body{padding:20px 24px;padding-bottom:110px}.soal-card{padding:20px}}
 </style>
 </head>
 <body class="no-select">
 
 <div id="toastWrap"></div>
-
 <div id="lockScreen" class="lock-screen" style="display:none">
     <div class="lock-icon"><i class="fas fa-lock"></i></div>
     <h2>Ujian Sedang Berlangsung</h2>
     <p>Kamu tidak bisa keluar halaman selama ujian.</p>
     <button onclick="dismissLock()" class="btn btn-primary" style="width:auto;margin-top:20px;padding:12px 32px"><i class="fas fa-arrow-left"></i> Kembali</button>
 </div>
-
 <div id="modalBg" class="modal-bg">
     <div class="modal-box">
         <div style="font-size:40px;margin-bottom:12px" id="modalIcon"><i class="fas fa-exclamation-triangle" style="color:var(--accent)"></i></div>
@@ -138,13 +131,11 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
     </div>
 </div>
 
-<!-- LOGIN -->
 <div id="loginPage" class="login-container">
     <div class="login-card">
         <div class="login-logo"><i class="fas fa-fire"></i></div>
         <div class="login-title">KOREK API</div>
         <div class="login-sub">Ujian Online — Kecamatan Majalengka</div>
-
         <div style="margin-bottom:14px">
             <div class="field-label">NISN</div>
             <input type="text" id="inputNisn" class="field-input" placeholder="Masukkan NISN" maxlength="10" inputmode="numeric" pattern="[0-9]*" autocomplete="off">
@@ -164,14 +155,11 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
         </div>
         <button id="btnLogin" class="btn btn-primary" onclick="doLogin()"><i class="fas fa-sign-in-alt"></i> Mulai Ujian</button>
         <p style="text-align:center;font-size:11px;color:var(--muted);margin-top:12px">Pastikan data sudah benar sebelum memulai</p>
-
-        <!-- DEBUG: Selalu tampil untuk troubleshooting -->
         <div class="debug-box" id="debugBox"></div>
         <div class="status-box" id="statusBox"></div>
     </div>
 </div>
 
-<!-- EXAM SCREEN -->
 <div id="examScreen" class="exam-container">
     <div class="exam-header">
         <div class="exam-timer" id="examTimer"><i class="fas fa-clock"></i><span id="timerText">--:--</span></div>
@@ -185,7 +173,6 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
     </div>
 </div>
 
-<!-- FINISH SCREEN -->
 <div id="finishScreen" class="finish-screen">
     <div class="finish-icon"><i class="fas fa-check-circle"></i></div>
     <div class="finish-title">Jawaban Terkirim</div>
@@ -214,37 +201,33 @@ function getMN(id){var m=MAPEL_LIST.find(function(x){return x.id===id;});return 
 function getMS(id){var m=MAPEL_LIST.find(function(x){return x.id===id;});return m?m.singkat:id;}
 function esc(s){if(!s)return'';var d=document.createElement('div');d.textContent=String(s);return d.innerHTML;}
 function getOL(k){var n=parseInt((k||'').replace('Kelas ',''))||0;return['a','b','c','d','e'].slice(0,n<=2?3:4);}
+function getRoleLabel(r){if(r==='pai')return'Guru PAI';if(r==='pjok')return'Guru PJOK';return'Guru Kelas';}
 
 /*
  * ================================================================
- * parseKR: Handle KEDUA format rombel
- * "Kelas 6_A" → {kelas:"Kelas 6", rombel:"A"}
- * "Kelas 6 A"  → {kelas:"Kelas 6", rombel:"A"}
+ * safeStr: MENCEGAH undefined/null masuk ke Firestore query
+ * Ini ROOT CAUSE error "Unsupported field value: undefined"
  * ================================================================
+ */
+function safeStr(v){
+    if(v===undefined||v===null)return'';
+    return String(v).trim();
+}
+
+/*
+ * parseKR: Handle "Kelas 6_A" dan "Kelas 6 A"
  */
 function parseKR(v){
     if(!v)return{kelas:'',rombel:''};
-    // Format underscore
+    v=String(v).trim();
     if(v.indexOf('_')>=0){
         var p=v.split('_');
         return{kelas:(p[0]||'').trim(),rombel:(p[1]||'').trim()};
     }
-    // Format space
-    var p2=v.trim().split(/\s+/);
-    if(p2.length>=3){
-        return{kelas:(p2[0]||'')+' '+(p2[1]||''),rombel:(p2[2]||'').trim()};
-    }
-    if(p2.length===2){
-        // Mungkin "Kelas6" tanpa spasi + rombel
-        return{kelas:p2[0],rombel:p2[1]};
-    }
-    return{kelas:p2[0]||'',rombel:''};
-}
-
-function getRoleLabel(r){
-    if(r==='pai')return'Guru PAI';
-    if(r==='pjok')return'Guru PJOK';
-    return'Guru Kelas';
+    var p2=v.split(/\s+/);
+    if(p2.length>=3)return{kelas:(p2[0]||'')+' '+(p2[1]||''),rombel:(p2[2]||'').trim()};
+    if(p2.length===2)return{kelas:p2[0]||'',rombel:p2[1]||''};
+    return{kelas:v,rombel:''};
 }
 
 // ================================================================
@@ -260,7 +243,7 @@ var examTimerInterval=null;
 var examActive=false;
 var examSource='sat';
 var _modalCallback=null;
-var DEBUG_MODE=true; // SELALU AKTIF untuk troubleshooting
+var DEBUG_MODE=true;
 var _cachedTokenData=null;
 
 // ================================================================
@@ -282,214 +265,141 @@ function clearFieldErr(id){var e=document.getElementById(id);e.textContent='';e.
 function openModal(icon,title,msg,confirmText,callback){document.getElementById('modalIcon').innerHTML=icon;document.getElementById('modalTitle').textContent=title;document.getElementById('modalMsg').textContent=msg;document.getElementById('modalConfirmBtn').textContent=confirmText;_modalCallback=callback;document.getElementById('modalBg').classList.add('active');}
 function closeModal(){document.getElementById('modalBg').classList.remove('active');_modalCallback=null;}
 function modalConfirmAction(){if(_modalCallback)_modalCallback();closeModal();}
-
-function debugLog(msg){
-    if(!DEBUG_MODE)return;
-    var box=document.getElementById('debugBox');
-    box.innerHTML+=msg+'<br>';
-    box.classList.add('show');
-    box.scrollTop=box.scrollHeight;
-}
+function debugLog(msg){if(!DEBUG_MODE)return;var box=document.getElementById('debugBox');box.innerHTML+=msg+'<br>';box.classList.add('show');box.scrollTop=box.scrollHeight;}
 function clearDebug(){document.getElementById('debugBox').innerHTML='';document.getElementById('debugBox').classList.remove('show');}
 function showStatus(msg){var box=document.getElementById('statusBox');box.innerHTML=msg;box.classList.add('show');}
 function hideStatus(){document.getElementById('statusBox').classList.remove('show');}
 
 // ================================================================
-// TOKEN INPUT → VALIDASI OTOMATIS → ISI DROPDOWN MAPEL
+// TOKEN INPUT → VALIDASI → DROPDOWN MAPEL
 // ================================================================
 var _tokenDebounce=null;
 function onTokenInput(){
     clearTimeout(_tokenDebounce);
     var sel=document.getElementById('inputMapel');
     var token=document.getElementById('inputToken').value.trim().toUpperCase();
-
     if(token.length<4){
         sel.innerHTML='<option value="">Masukkan token terlebih dahulu</option>';
-        sel.disabled=true;
-        _cachedTokenData=null;
-        hideStatus();clearDebug();
-        return;
+        sel.disabled=true;_cachedTokenData=null;hideStatus();clearDebug();return;
     }
-
     sel.innerHTML='<option value="">Memverifikasi token...</option>';
-    sel.disabled=true;
-    clearDebug();
+    sel.disabled=true;clearDebug();
     debugLog('Validasi token: "'+token+'"');
-
     _tokenDebounce=setTimeout(function(){validateTokenAndPopulateMapel(token);},600);
 }
 
 function validateTokenAndPopulateMapel(token){
     db.collection('guru_accounts').where('token','==',token).get().then(function(snap){
         if(snap.empty){
-            debugLog('<span class="err">Token TIDAK ditemukan di database</span>');
+            debugLog('<span class="err">Token TIDAK ditemukan</span>');
             var sel=document.getElementById('inputMapel');
             sel.innerHTML='<option value="">Token tidak valid</option>';
-            sel.disabled=true;
-            _cachedTokenData=null;
+            sel.disabled=true;_cachedTokenData=null;
             showStatus('<i class="fas fa-times-circle" style="color:#dc2626"></i> Token tidak ditemukan');
             return;
         }
-
         allGuruWithToken=snap.docs.map(function(d){return Object.assign({_id:d.id},d.data());});
         _cachedTokenData={guruList:allGuruWithToken,token:token};
+        debugLog('<span class="ok">Ditemukan '+allGuruWithToken.length+' guru</span>');
 
-        debugLog('<span class="ok">Ditemukan '+allGuruWithToken.length+' guru:</span>');
-        allGuruWithToken.forEach(function(g,i){
-            debugLog('  <b>Guru '+(i+1)+'</b>: '+g.nama
-                +' | role=<b>'+g.role+'</b>'
-                +' | npsn='+g.npsn
-                +' | kelas="'+(g.kelas||'-')+'"'
-                +' | rombel="'+(g.rombel||'-')+'"'
-                +' | rombels=['+(g.rombels?g.rombels.join(' | '):'-')+']');
-        });
-
-        /* Kumpulkan mapel berdasarkan role */
         var mapelSet={};
         allGuruWithToken.forEach(function(g){
-            var role=g.role||'';
-            if(role==='pai'){
-                mapelSet['pai']=true;
-            }else if(role==='pjok'){
-                mapelSet['pjok']=true;
-            }else if(role==='kelas'||role==='kelas6'){
+            var role=safeStr(g.role);
+            if(role==='pai')mapelSet['pai']=true;
+            else if(role==='pjok')mapelSet['pjok']=true;
+            else if(role==='kelas'||role==='kelas6'){
                 MAPEL_KELAS.forEach(function(mid){mapelSet[mid]=true;});
             }
         });
-
-        var mapelIds=Object.keys(mapelSet);
-        /* Urutkan: mapel kelas dulu, lalu PAI, lalu PJOK */
-        mapelIds.sort(function(a,b){
-            var aIdx=MAPEL_KELAS.indexOf(a),bIdx=MAPEL_KELAS.indexOf(b);
-            if(aIdx>=0&&bIdx>=0)return aIdx-bIdx;
-            if(aIdx>=0)return -1;
-            if(bIdx>=0)return 1;
-            return a.localeCompare(b);
+        var mapelIds=Object.keys(mapelSet).sort(function(a,b){
+            var aI=MAPEL_KELAS.indexOf(a),bI=MAPEL_KELAS.indexOf(b);
+            if(aI>=0&&bI>=0)return aI-bI;if(aI>=0)return-1;if(bI>=0)return 1;return a.localeCompare(b);
         });
-
-        debugLog('Mapel yang tersedia: <b>'+mapelIds.join(', ')+'</b>');
+        debugLog('Mapel: <b>'+mapelIds.join(', ')+'</b>');
 
         if(!mapelIds.length){
-            var sel=document.getElementById('inputMapel');
-            sel.innerHTML='<option value="">Tidak ada mapel</option>';
-            sel.disabled=true;
-            return;
+            document.getElementById('inputMapel').innerHTML='<option value="">Tidak ada mapel</option>';
+            document.getElementById('inputMapel').disabled=true;return;
         }
-
         var sel=document.getElementById('inputMapel');
         sel.innerHTML='<option value="">-- Pilih Mapel --</option>';
-        mapelIds.forEach(function(mid){
-            var opt=document.createElement('option');
-            opt.value=mid;
-            opt.textContent=getMN(mid);
-            sel.appendChild(opt);
-        });
+        mapelIds.forEach(function(mid){var o=document.createElement('option');o.value=mid;o.textContent=getMN(mid);sel.appendChild(o);});
         sel.disabled=false;
-
-        var guruNames=allGuruWithToken.map(function(g){return esc(g.nama)+' ('+getRoleLabel(g.role)+')';});
-        showStatus(
-            '<i class="fas fa-check-circle" style="color:#16a34a"></i> <b>Token valid</b><br>'
-            +'<span style="color:#64748b">Guru: '+guruNames.join(', ')+'</span><br>'
-            +'<span style="color:#64748b">Mapel: '+mapelIds.map(function(m){return getMS(m);}).join(', ')+'</span>'
-        );
+        var gn=allGuruWithToken.map(function(g){return esc(g.nama)+' ('+getRoleLabel(safeStr(g.role))+')';});
+        showStatus('<i class="fas fa-check-circle" style="color:#16a34a"></i> <b>Token valid</b><br><span style="color:#64748b">Guru: '+gn.join(', ')+'</span><br><span style="color:#64748b">Mapel: '+mapelIds.map(function(m){return getMS(m);}).join(', ')+'</span>');
         clearFieldErr('errToken');
-
     }).catch(function(e){
         debugLog('<span class="err">Error: '+(e.message||'')+'</span>');
-        var sel=document.getElementById('inputMapel');
-        sel.innerHTML='<option value="">Error koneksi</option>';
-        sel.disabled=true;
-        _cachedTokenData=null;
+        document.getElementById('inputMapel').innerHTML='<option value="">Error koneksi</option>';
+        document.getElementById('inputMapel').disabled=true;_cachedTokenData=null;
     });
 }
 
 // ================================================================
-// CARI GURU PENGAMPU — DENGAN DEBUG DETAIL
+// CARI GURU PENGAMPU — DENGAN safeStr DAN DEBUG DETAIL
 // ================================================================
 function findGuruForMapel(mapel, kelasSiswa, rombelSiswa){
     debugLog('');
     debugLog('=== findGuruForMapel ===');
-    debugLog('mapel=<b>'+mapel+'</b> kelasSiswa="<b>'+kelasSiswa+'</b>" rombelSiswa="<b>'+rombelSiswa+'</b>"');
+    debugLog('mapel=<b>'+mapel+'</b> kelas="<b>'+kelasSiswa+'</b>" rombel="<b>'+rombelSiswa+'</b>"');
 
     for(var i=0;i<allGuruWithToken.length;i++){
         var g=allGuruWithToken[i];
-        var role=g.role||'';
-        debugLog('');
-        debugLog('Cek guru: '+g.nama+' (role=<b>'+role+'</b>)');
+        var role=safeStr(g.role);
+        debugLog('Cek: '+g.nama+' role=<b>'+role+'</b>');
 
         if(mapel==='pai' && role==='pai'){
             var rombels=g.rombels||[];
-            debugLog('  rombels mentah: ['+rombels.join(', ')+']');
             for(var j=0;j<rombels.length;j++){
-                var raw=rombels[j];
-                var p=parseKR(raw);
-                var match=(p.kelas===kelasSiswa && p.rombel===rombelSiswa);
-                debugLog('  "'+raw+'" → parse→ kelas="'+p.kelas+'" rombel="'+p.krombel+'" <b>'+match?'COBA LIAT INI</b>':'');
-                /* FIX TYPO: p.krombel seharusnya p.rombel — INI BUG SEBENARNYA! */
-                if(p.kelas===kelasSiswa && p.rombel===rombelSiswa){
-                    debugLog('  <span class="ok">MATCH PAI!</span>');
-                    return g;
-                }
+                var p=parseKR(rombels[j]);
+                var m=(p.kelas===kelasSiswa && p.rombel===rombelSiswa);
+                debugLog('  rombels['+j+']="'+rombels[j]+'" → '+p.kelas+'|'+p.rombel+(m?' <span class="ok">MATCH</span>':''));
+                if(m)return g;
             }
         }
         else if(mapel==='pjok' && role==='pjok'){
             var rombels2=g.rombels||[];
-            debugLog('  rombels mentah: ['+rombels2.join(', ')+']');
             for(var j2=0;j2<rombels2.length;j2++){
-                var raw2=rombels2[j2];
-                var p2=parseKR(raw2);
-                debugLog('  "'+raw2+'" → parse→ kelas="'+p2.kelas+'" rombel="'+p2.rombel+'"'
-                    +(p2.kelas===kelasSiswa && p2.rombel===rombelSiswa ? ' <span class="ok">MATCH!</span>' : ''));
-                if(p2.kelas===kelasSiswa && p2.rombel===rombelSiswa){
-                    debugLog('  <span class="ok">MATCH PJOK!</span>');
-                    return g;
-                }
+                var p2=parseKR(rombels2[j2]);
+                var m2=(p2.kelas===kelasSiswa && p2.rombel===rombelSiswa);
+                debugLog('  rombels['+j2+']="'+rombels2[j2]+'" → '+p2.kelas+'|'+p2.rombel+(m2?' <span class="ok">MATCH</span>':''));
+                if(m2)return g;
             }
         }
         else if(role==='kelas' || role==='kelas6'){
-            debugLog('  guru.kelas="'+g.kelas+'" guru.rombel="'+g.rombel+'"'
-                +(g.kelas===kelasSiswa && g.rombel===rombelSiswa ? ' <span class="ok">MATCH!</span>' : ''));
-            if(g.kelas===kelasSiswa && g.rombel===rombelSiswa){
-                if(MAPEL_KELAS.indexOf(mapel)>=0){
-                    debugLog('  <span class="ok">MATCH KELAS!</span>');
-                    return g;
-                }
-            }
-        }else{
-            debugLog('  Role tidak cocok (mapel='+mapel+' vs role='+role+')');
+            var gKelas=safeStr(g.kelas), gRombel=safeStr(g.rombel);
+            var m3=(gKelas===kelasSiswa && gRombel===rombelSiswa);
+            debugLog('  kelas="'+g.kelas+'" rombel="'+g.rombel+'" → "'+gKelas+'"|"'+gRombel+'"'+(m3?' <span class="ok">MATCH</span>':''));
+            if(m3 && MAPEL_KELAS.indexOf(mapel)>=0)return g;
         }
     }
-
     debugLog('<span class="err">TIDAK ADA GURU YANG COCOK</span>');
     return null;
 }
 
 // ================================================================
-// CEK WAKTU UJIAN
+// CEK WAKTU
 // ================================================================
 function checkExamTime(es){
     if(!es)return true;
-    var now=new Date();
-    var today=now.toISOString().split('T')[0];
+    var now=new Date(),today=now.toISOString().split('T')[0];
     if(es.startDate&&today<es.startDate)return false;
     if(es.endDate&&today>es.endDate)return false;
-    var timeStr=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
-    if(es.startTime&&timeStr<es.startTime)return false;
-    if(es.endTime&&timeStr>es.endTime)return false;
+    var t=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
+    if(es.startTime&&t<es.startTime)return false;
+    if(es.endTime&&t>es.endTime)return false;
     return true;
 }
 
 // ================================================================
-// LOGIN UTAMA
+// LOGIN UTAMA — SEMUA VALUE DI-WRAP safeStr()
 // ================================================================
 function doLogin(){
     clearFieldErr('errNisn');clearFieldErr('errToken');clearFieldErr('errMapel');
-
     var nisn=document.getElementById('inputNisn').value.trim();
     var token=document.getElementById('inputToken').value.trim().toUpperCase();
     var mapel=document.getElementById('inputMapel').value;
     var valid=true;
-
     if(!nisn||nisn.length<4){showFieldErr('errNisn','NISN minimal 4 digit');valid=false;}
     if(!token||token.length<4){showFieldErr('errToken','Token tidak valid');valid=false;}
     if(!mapel){showFieldErr('errMapel','Pilih mata pelajaran');valid=false;}
@@ -497,93 +407,93 @@ function doLogin(){
 
     var btn=document.getElementById('btnLogin');
     btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Memverifikasi...';
-
     debugLog('');
-    debugLog('========================================');
-    debugLog('=== MULAI LOGIN ===');
-    debugLog('NISN="<b>'+nisn+'</b>" Token="<b>'+token+'</b>" Mapel="<b>'+mapel+'</b>"');
-    debugLog('========================================');
+    debugLog('==========================================');
+    debugLog('=== LOGIN: NISN='+nisn+' Mapel='+mapel+' ===');
+    debugLog('==========================================');
 
     var tokenPromise;
-    if(_cachedTokenData && _cachedTokenData.token===token){
+    if(_cachedTokenData&&_cachedTokenData.token===token){
         allGuruWithToken=_cachedTokenData.guruList;
-        debugLog('Menggunakan cache ('+allGuruWithToken.length+' guru)');
+        debugLog('Gunakan cache ('+allGuruWithToken.length+' guru)');
         tokenPromise=Promise.resolve(true);
     }else{
         tokenPromise=db.collection('guru_accounts').where('token','==',token).get().then(function(snap){
-            if(snap.empty){
-                showFieldErr('errToken','Token tidak ditemukan');
-                return false;
-            }
+            if(snap.empty){showFieldErr('errToken','Token tidak ditemukan');return false;}
             allGuruWithToken=snap.docs.map(function(d){return Object.assign({_id:d.id},d.data());});
             _cachedTokenData={guruList:allGuruWithToken,token:token};
-            debugLog('Fetch ulang: '+allGuruWithToken.length+' guru');
             return true;
         });
     }
 
     tokenPromise.then(function(ok){
         if(!ok){resetBtn(btn);return null;}
-
-        /* Cari siswa */
+        /* Cari siswa — HANYA where nisn, TIDAK ada where undefined */
         debugLog('Cari siswa NISN="'+nisn+'"...');
         return db.collection('students').where('nisn','==',nisn).get();
     }).then(function(studentSnap){
         if(!studentSnap)return null;
 
-        debugLog('Ditemukan <b>'+studentSnap.size+'</b> doc siswa:');
+        debugLog('Ditemukan <b>'+studentSnap.size+'</b> doc siswa');
 
         var npsnSet={};
-        allGuruWithToken.forEach(function(g){npsnSet[g.npsn]=true;});
-        var npsnList=Object.keys(npsnSet);
-        debugLog('NPSN guru: ['+npsnList.join(', ')+']');
+        allGuruWithToken.forEach(function(g){npsnSet[safeStr(g.npsn)]=true;});
+        debugLog('NPSN guru: ['+Object.keys(npsnSet).join(', ')+']');
 
         var matched=null;
         studentSnap.docs.forEach(function(doc){
             var d=doc.data();
-            var cocok=npsnSet[d.npsn]?'OK':'BEDA_NPSN';
-            debugLog('  '+d.nama+' | npsn='+d.npsn+' ['+cocok+']'
-                +' | kelas="'+d.kelas+'" rombel="'+d.rombel+'"'
-                +' | raw data: '+JSON.stringify({kelas:d.kelas,rombel:d.rombel}));
-            if(!matched && npsnSet[d.npsn]){
-                matched=Object.assign({_id:doc.id},d);
+            var dNpsn=safeStr(d.npsn);
+            var dKelas=safeStr(d.kelas);
+            var dRombel=safeStr(d.rombel);
+            var cocok=npsnSet[dNpsn]?'OK':'BEDA';
+            debugLog('  '+esc(d.nama)+' npsn='+dNpsn+'['+cocok+'] kelas="'+d.kelas+'" rombel="'+d.rombel+'"');
+
+            if(!matched && npsnSet[dNpsn]){
+                matched={_id:doc.id, npsn:dNpsn, nama:safeStr(d.nama), kelas:dKelas, rombel:dRombel, nisn:safeStr(d.nisn)};
             }
         });
 
         if(!matched){
-            debugLog('<span class="err">NISN tidak cocok dengan NPSN guru</span>');
+            debugLog('<span class="err">NISN tidak cocok NPSN guru</span>');
             showFieldErr('errNisn','NISN tidak terdaftar di sekolah guru ini');
             resetBtn(btn);return null;
         }
 
         studentData=matched;
-        debugLog('<span class="ok">Siswa dipilih: '+studentData.nama
-            +' | kelas="'+studentData.kelas+'" rombel="'+studentData.rombel+'"</span>');
+        debugLog('<span class="ok">Siswa: '+studentData.nama+' kelas="'+studentData.kelas+'" rombel="'+studentData.rombel+'"</span>');
+
+        /* Validasi kelas/rombel siswa harus ada isinya */
+        if(!studentData.kelas||!studentData.rombel){
+            debugLog('<span class="err">Data siswa TIDAK LENGKAP: kelas atau rombel kosong</span>');
+            showFieldErr('errNisn','Data siswa tidak lengkap (kelas/rombel kosong). Hubungi guru.');
+            resetBtn(btn);return null;
+        }
 
         /* Cari guru pengampu */
         var foundGuru=findGuruForMapel(mapel, studentData.kelas, studentData.rombel);
         if(!foundGuru){
-            debugLog('<span class="err">TIDAK ADA GURU PENGAMPU</span>');
             showFieldErr('errMapel','Tidak ada guru yang mengampu '+getMN(mapel)+' untuk '+studentData.kelas+' '+studentData.rombel);
             resetBtn(btn);return null;
         }
         guruData=foundGuru;
-        debugLog('<span class="ok">Guru pengampu: '+guruData.nama+' (NPSN:'+guruData.npsn+')</span>');
+        debugLog('<span class="ok">Guru: '+guruData.nama+' NPSN='+safeStr(guruData.npsn)+'</span>');
 
         /* Cek waktu */
-        var es=guruData.examSettings||{};
-        if(!checkExamTime(es)){
-            debugLog('<span class="err">Di luar waktu ujian</span>');
+        if(!checkExamTime(guruData.examSettings||{})){
             showFieldErr('errToken','Di luar waktu ujian');
             resetBtn(btn);return null;
         }
 
-        /* Cek duplikat SAT */
+        /* Cek duplikat SAT — PAKAI safeStr pada SEMUA field */
+        var qNpsn=safeStr(guruData.npsn);
+        var qSid=studentData._id;
+        debugLog('Cek duplikat SAT: npsn="'+qNpsn+'" sid="'+qSid+'" mapel="'+mapel+'"');
         return db.collection('student_answers')
-            .where('npsn','==',guruData.npsn)
-            .where('studentId',studentData._id)
-            .where('mapel',mapel)
-            .where('source','sat')
+            .where('npsn','==',qNpsn)
+            .where('studentId','==',qSid)
+            .where('mapel','==',mapel)
+            .where('source','==','sat')
             .limit(1).get();
     }).then(function(checkSnap){
         if(!checkSnap)return null;
@@ -594,7 +504,7 @@ function doLogin(){
         }
 
         /* Ambil soal SAT */
-        debugLog('Cari soal SAT: '+mapel+' '+studentData.kelas);
+        debugLog('Cari soal SAT: mapel='+mapel+' kelas="'+studentData.kelas+'"');
         return db.collection('questions')
             .where('mapel','==',mapel)
             .where('kelas','==',studentData.kelas)
@@ -605,14 +515,12 @@ function doLogin(){
         if(!qSnap.empty){
             examQuestions=qSnap.docs.map(function(d){return Object.assign({id:d.id},d.data());});
             examSource='sat';
-            debugLog('<span class="ok">Ditemukan '+examQuestions.length+' soal SAT</span>');
-            startExam(mapel);
-            resetBtn(btn);return null;
+            debugLog('<span class="ok">'+examQuestions.length+' soal SAT</span>');
+            startExam(mapel);resetBtn(btn);return null;
         }
 
-        /* Coba PAJ jika kelas 6 */
         if(studentData.kelas==='Kelas 6'){
-            debugLog('Tidak ada soal SAT, coba PAJ...');
+            debugLog('Coba PAJ...');
             return db.collection('questions_paj')
                 .where('mapel','==',mapel)
                 .where('kelas','==','Kelas 6')
@@ -628,17 +536,18 @@ function doLogin(){
         if(!qSnap.empty){
             examQuestions=qSnap.docs.map(function(d){return Object.assign({id:d.id},d.data());});
             examSource='paj';
-            debugLog('<span class="ok">Ditemukan '+examQuestions.length+' soal PAJ</span>');
+            debugLog('<span class="ok">'+examQuestions.length+' soal PAJ</span>');
 
+            /* Cek duplikat PAJ */
             return db.collection('student_answers')
-                .where('npsn','==',guruData.npsn)
-                .where('studentId',studentData._id)
-                .where('mapel',mapel)
-                .where('source','paj')
+                .where('npsn','==',safeStr(guruData.npsn))
+                .where('studentId','==',studentData._id)
+                .where('mapel','==',mapel)
+                .where('source','==','paj')
                 .limit(1).get();
         }
 
-        debugLog('<span class="err">Tidak ada soal PAJ juga</span>');
+        debugLog('<span class="err">Tidak ada soal PAJ</span>');
         showFieldErr('errMapel','Belum ada soal untuk '+getMN(mapel)+' '+studentData.kelas);
         resetBtn(btn);return null;
     }).then(function(checkSnap){
@@ -648,21 +557,16 @@ function doLogin(){
             showFieldErr('errMapel','Kamu sudah mengerjakan ujian ini');
             resetBtn(btn);return null;
         }
-
         debugLog('<span class="ok">=== START EXAM (PAJ) ===</span>');
-        startExam(mapel);
-        resetBtn(btn);return null;
+        startExam(mapel);resetBtn(btn);return null;
     }).catch(function(e){
-        debugLog('<span class="err">ERROR: '+(e.message||e)+'</span>');
+        debugLog('<span class="err">ERROR: '+(e.message||'')+'</span>');
         resetBtn(btn);
         showToast('Error: '+(e.message||''),'error');
     });
 }
 
-function resetBtn(btn){
-    btn.disabled=false;
-    btn.innerHTML='<i class="fas fa-sign-in-alt"></i> Mulai Ujian';
-}
+function resetBtn(btn){btn.disabled=false;btn.innerHTML='<i class="fas fa-sign-in-alt"></i> Mulai Ujian';}
 
 // ================================================================
 // START EXAM
@@ -674,21 +578,13 @@ function startExam(mapel){
     document.getElementById('examScreen').classList.add('active');
     document.getElementById('examHeaderTitle').textContent=getMS(mapel)+' — '+studentData.kelas+' '+studentData.rombel+(examSource==='paj'?' (PAJ)':'');
     examAnswers={};
-    examQuestions.forEach(function(q,i){
-        if(q.type==='pg')examAnswers[i]=null;
-        else examAnswers[i]='';
-    });
-    renderExamQuestions(mapel);
-    renderNavDots();
-    var es=guruData.examSettings||{};
-    var durKey=mapel+'_time';
-    var dur=es[durKey]?parseInt(es[durKey]):60;
+    examQuestions.forEach(function(q,i){examAnswers[i]=q.type==='pg'?null:'';});
+    renderExamQuestions(mapel);renderNavDots();
+    var es=guruData.examSettings||{},dur=parseInt(es[mapel+'_time'])||60;
     if(isNaN(dur)||dur<5)dur=60;
-    examTimerSec=dur*60;
-    updateTimerDisplay();
+    examTimerSec=dur*60;updateTimerDisplay();
     examTimerInterval=setInterval(function(){
-        examTimerSec--;
-        updateTimerDisplay();
+        examTimerSec--;updateTimerDisplay();
         if(examTimerSec<=0){clearInterval(examTimerInterval);showToast('Waktu habis!','error');doSubmitExam();}
     },1000);
     document.getElementById('examBody').scrollTop=0;
@@ -697,8 +593,7 @@ function startExam(mapel){
 function updateTimerDisplay(){
     var m=Math.floor(examTimerSec/60),s=examTimerSec%60;
     document.getElementById('timerText').textContent=m.toString().padStart(2,'0')+':'+s.toString().padStart(2,'0');
-    var el=document.getElementById('examTimer');
-    el.classList.remove('warning','danger');
+    var el=document.getElementById('examTimer');el.classList.remove('warning','danger');
     if(examTimerSec<=60)el.classList.add('danger');
     else if(examTimerSec<=300)el.classList.add('warning');
 }
@@ -711,19 +606,18 @@ function renderExamQuestions(mapel){
     var pgQ=examQuestions.filter(function(q){return q.type==='pg';});
     var urQ=examQuestions.filter(function(q){return q.type==='uraian';});
     var kelas=studentData.kelas;
-    var html='';
-    html+='<div class="exam-info"><div class="nama">'+esc(studentData.nama)+'</div><div class="kelas">'+studentData.kelas+' '+studentData.rombel+' — '+esc(guruData.sekolah)+'</div><div class="mapel">'+getMN(mapel)+(examSource==='paj'?' (PAJ)':'')+'</div></div>';
+    var html='<div class="exam-info"><div class="nama">'+esc(studentData.nama)+'</div><div class="kelas">'+studentData.kelas+' '+studentData.rombel+' — '+esc(guruData.sekolah)+'</div><div class="mapel">'+getMN(mapel)+(examSource==='paj'?' (PAJ)':'')+'</div></div>';
     if(pgQ.length){
         html+='<div class="petunjuk-box"><div class="petunjuk-title"><i class="fas fa-info-circle" style="color:#f59e0b"></i> Petunjuk Pilihan Ganda</div><ul><li>Pilih satu jawaban yang paling tepat</li><li>Soal yang sudah dijawab ditandai hijau</li></ul></div>';
         pgQ.forEach(function(q,i){
             var qIdx=examQuestions.indexOf(q);
             html+='<div class="soal-card" id="soalCard_'+qIdx+'"><div class="soal-text"><span class="soal-num">'+(i+1)+'</span><span>'+esc(q.text)+'</span></div>';
-            if(q.image)html+='<img src="'+q.image+'" class="soal-img" alt="gambar soal" draggable="false">';
+            if(q.image)html+='<img src="'+q.image+'" class="soal-img" draggable="false">';
             var letters=getOL(kelas);
             html+='<div class="opsi-grid">';
             letters.forEach(function(l,li){
-                var L=l.toUpperCase(),optText=(q.options&&q.options[li])?q.options[li]:'',optImg=(q.optionImages&&q.optionImages[li])?q.optionImages[li]:'';
-                html+='<div class="opsi-btn" id="opsi_'+qIdx+'_'+L+'" onclick="selectOpsi('+qIdx+',\''+L+'\')"><span class="opsi-letter">'+L+'</span><span class="opsi-text">'+esc(optText)+'</span>'+(optImg?'<img src="'+optImg+'" class="opsi-img" alt="opsi" draggable="false">':'')+'</div>';
+                var L=l.toUpperCase(),ot=(q.options&&q.options[li])?q.options[li]:'',oi=(q.optionImages&&q.optionImages[li])?q.optionImages[li]:'';
+                html+='<div class="opsi-btn" id="opsi_'+qIdx+'_'+L+'" onclick="selectOpsi('+qIdx+',\''+L+'\')"><span class="opsi-letter">'+L+'</span><span class="opsi-text">'+esc(ot)+'</span>'+(oi?'<img src="'+oi+'" class="opsi-img" draggable="false">':'')+'</div>';
             });
             html+='</div></div>';
         });
@@ -733,7 +627,7 @@ function renderExamQuestions(mapel){
         urQ.forEach(function(q,i){
             var qIdx=examQuestions.indexOf(q);
             html+='<div class="soal-card" id="soalCard_'+qIdx+'"><div class="soal-text"><span class="soal-num">'+(pgQ.length+i+1)+'</span><span>'+esc(q.text)+'</span></div>';
-            if(q.image)html+='<img src="'+q.image+'" class="soal-img" alt="gambar soal" draggable="false">';
+            if(q.image)html+='<img src="'+q.image+'" class="soal-img" draggable="false">';
             html+='<textarea class="uraian-area" id="uraian_'+qIdx+'" placeholder="Tulis jawaban di sini..." oninput="onUraianInput('+qIdx+')"></textarea></div>';
         });
     }
@@ -741,66 +635,88 @@ function renderExamQuestions(mapel){
 }
 
 function selectOpsi(qIdx,letter){
-    if(!examActive)return;
-    examAnswers[qIdx]=letter;
-    var kelas=studentData.kelas,letters=getOL(kelas);
+    if(!examActive)return;examAnswers[qIdx]=letter;
+    var letters=getOL(studentData.kelas);
     letters.forEach(function(l){var L=l.toUpperCase(),el=document.getElementById('opsi_'+qIdx+'_'+L);if(el)el.classList.toggle('selected',L===letter);});
     var card=document.getElementById('soalCard_'+qIdx);if(card)card.classList.add('answered');
     updateNavDot(qIdx,true);
 }
 function onUraianInput(qIdx){
-    if(!examActive)return;
-    var el=document.getElementById('uraian_'+qIdx);examAnswers[qIdx]=el?el.value:'';
-    var card=document.getElementById('soalCard_'+qIdx),hasText=el&&el.value.trim().length>0;
-    if(card)card.classList.toggle('answered',hasText);updateNavDot(qIdx,hasText);
+    if(!examActive)return;var el=document.getElementById('uraian_'+qIdx);examAnswers[qIdx]=el?el.value:'';
+    var card=document.getElementById('soalCard_'+qIdx),ht=el&&el.value.trim().length>0;
+    if(card)card.classList.toggle('answered',ht);updateNavDot(qIdx,ht);
 }
 
 function renderNavDots(){
-    var wrap=document.getElementById('navDots'),html='';
-    examQuestions.forEach(function(q,i){html+='<div class="nav-dot" id="navDot_'+i+'" onclick="scrollToSoal('+i+')">'+(i+1)+'</div>';});
-    wrap.innerHTML=html;
+    var w=document.getElementById('navDots'),h='';
+    examQuestions.forEach(function(q,i){h+='<div class="nav-dot" id="navDot_'+i+'" onclick="scrollToSoal('+i+')">'+(i+1)+'</div>';});
+    w.innerHTML=h;
 }
-function updateNavDot(idx,done){var dot=document.getElementById('navDot_'+idx);if(!dot)return;dot.classList.toggle('done',done);}
+function updateNavDot(idx,done){var d=document.getElementById('navDot_'+idx);if(d)d.classList.toggle('done',done);}
 function scrollToSoal(idx){
-    var card=document.getElementById('soalCard_'+idx);if(card)card.scrollIntoView({behavior:'smooth',block:'center'});
+    var c=document.getElementById('soalCard_'+idx);if(c)c.scrollIntoView({behavior:'smooth',block:'center'});
     document.querySelectorAll('.nav-dot').forEach(function(d){d.classList.remove('current');});
-    var dot=document.getElementById('navDot_'+idx);if(dot)dot.classList.add('current');
-    setTimeout(function(){if(dot)dot.classList.remove('current');},1500);
+    var d=document.getElementById('navDot_'+idx);if(d)d.classList.add('current');
+    setTimeout(function(){if(d)d.classList.remove('current');},1500);
 }
 
 // ================================================================
-// SUBMIT
+// SUBMIT — PAKAI safeStr PADA SEMUA FIELD YANG DISIMPAN
 // ================================================================
 function confirmSubmit(){
     if(!examActive)return;
-    var unanswered=0;
-    examQuestions.forEach(function(q,i){if(q.type==='pg'&&examAnswers[i]===null)unanswered++;if(q.type==='uraian'&&(!examAnswers[i]||examAnswers[i].trim()===''))unanswered++;});
-    var msg='Pastikan semua soal sudah dijawab.';
-    if(unanswered>0)msg='Ada '+unanswered+' soal belum dijawab. Yakin kirim?';
+    var u=0;
+    examQuestions.forEach(function(q,i){if(q.type==='pg'&&examAnswers[i]===null)u++;if(q.type==='uraian'&&(!examAnswers[i]||examAnswers[i].trim()===''))u++;});
+    var msg=u>0?'Ada '+u+' soal belum dijawab. Yakin kirim?':'Pastikan semua soal sudah dijawab.';
     openModal('<i class="fas fa-paper-plane" style="color:var(--primary)"></i>','Kirim Jawaban?',msg,'Ya, Kirim',doSubmitExam);
 }
 function doSubmitExam(){
     if(!examActive)return;examActive=false;clearInterval(examTimerInterval);
     var btn=document.querySelector('.btn-submit');if(btn){btn.disabled=true;btn.innerHTML='<span class="spinner"></span>';btn.style.opacity='0.5';}
-    var mapel=examQuestions.length?examQuestions[0].mapel:'',batch=db.batch();
+    var mapel=examQuestions.length?safeStr(examQuestions[0].mapel):'';
+    var batch=db.batch();
     examQuestions.forEach(function(q,i){
         var ref=db.collection('student_answers').doc();
-        batch.set(ref,{npsn:guruData.npsn,studentId:studentData._id,studentName:studentData.nama,studentNisn:studentData.nisn,mapel:mapel,kelas:studentData.kelas,rombel:studentData.rombel,questionId:q.id,questionIndex:i,questionText:q.text,answer:examAnswers[i]||'',type:q.type,source:examSource,correctAnswer:q.answer||'',maxScore:q.score||1,scoreGiven:0,corrected:false,finalScore:0,lulus:false,submittedAt:firebase.firestore.FieldValue.serverTimestamp()});
+        batch.set(ref,{
+            npsn:safeStr(guruData.npsn),
+            studentId:studentData._id,
+            studentName:safeStr(studentData.nama),
+            studentNisn:safeStr(studentData.nisn),
+            mapel:mapel,
+            kelas:safeStr(studentData.kelas),
+            rombel:safeStr(studentData.rombel),
+            questionId:q.id||'',
+            questionIndex:i,
+            questionText:safeStr(q.text),
+            answer:examAnswers[i]||'',
+            type:safeStr(q.type),
+            source:examSource,
+            correctAnswer:safeStr(q.answer),
+            maxScore:parseInt(q.score)||1,
+            scoreGiven:0,
+            corrected:false,
+            finalScore:0,
+            lulus:false,
+            submittedAt:firebase.firestore.FieldValue.serverTimestamp()
+        });
     });
-    batch.commit().then(function(){showToast('Jawaban berhasil dikirim!');document.getElementById('examScreen').classList.remove('active');document.getElementById('finishScreen').classList.add('active');}).catch(function(e){showToast('Gagal: '+(e.message||''),'error');examActive=true;if(btn){btn.disabled=false;btn.innerHTML='<i class="fas fa-paper-plane" style="margin-right:4px"></i>Selesai';btn.style.opacity='1';}});
+    batch.commit().then(function(){
+        showToast('Jawaban berhasil dikirim!');
+        document.getElementById('examScreen').classList.remove('active');
+        document.getElementById('finishScreen').classList.add('active');
+    }).catch(function(e){
+        showToast('Gagal: '+(e.message||''),'error');
+        examActive=true;
+        if(btn){btn.disabled=false;btn.innerHTML='<i class="fas fa-paper-plane" style="margin-right:4px"></i>Selesai';btn.style.opacity='1';}
+    });
 }
 
 // ================================================================
 // INIT
 // ================================================================
 window.onload=function(){
-    document.getElementById('inputToken').addEventListener('input',function(){
-        this.value=this.value.toUpperCase();
-        onTokenInput();
-    });
-    document.getElementById('inputNisn').addEventListener('input',function(){
-        this.value=this.value.replace(/[^0-9]/g,'');
-    });
+    document.getElementById('inputToken').addEventListener('input',function(){this.value=this.value.toUpperCase();onTokenInput();});
+    document.getElementById('inputNisn').addEventListener('input',function(){this.value=this.value.replace(/[^0-9]/g,'');});
 };
 </script>
 </body>
