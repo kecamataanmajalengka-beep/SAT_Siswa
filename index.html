@@ -13,18 +13,15 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
 html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text)}
 
-/* ANTI COPAS */
 .no-select{-webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important}
 .no-select img,.no-select p,.no-select span,.no-select div,.no-select td,.no-select li{-webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important}
 
-/* ANTI KELUAR HALAMAN */
 .lock-screen{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.95);display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;text-align:center;padding:20px}
 .lock-screen .lock-icon{font-size:48px;margin-bottom:16px;color:var(--accent);animation:pulse 2s infinite}
 .lock-screen h2{font-size:18px;margin-bottom:8px}
 .lock-screen p{font-size:13px;color:#94a3b8;max-width:280px;line-height:1.5}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
 
-/* LOGIN */
 .login-container{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#065f46 0%,#0d6e3f 40%,#10b981 100%);position:relative;overflow:hidden}
 .login-container::before{content:'';position:absolute;width:300px;height:300px;background:radial-gradient(circle,rgba(245,158,11,0.15) 0%,transparent 70%);top:-80px;right:-80px;border-radius:50%;animation:drift 8s ease-in-out infinite}
 .login-container::after{content:'';position:absolute;width:200px;height:200px;background:radial-gradient(circle,rgba(255,255,255,0.05) 0%,transparent 70%);bottom:-40px;left:-40px;border-radius:50%;animation:drift 10s ease-in-out infinite reverse}
@@ -47,11 +44,9 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
 .btn-danger{background:linear-gradient(135deg,#dc2626,#ef4444);color:white}
 .btn-danger:active{transform:scale(0.98)}
 
-/* EXAM CONTAINER */
 .exam-container{position:fixed;inset:0;background:white;display:none;flex-direction:column;overflow:hidden}
 .exam-container.active{display:flex}
 
-/* EXAM HEADER */
 .exam-header{background:linear-gradient(135deg,#065f46,#0d6e3f);color:white;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;min-height:52px;z-index:10}
 .exam-header-title{font-size:13px;font-weight:700;flex:1;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .exam-timer{font-size:14px;font-weight:800;background:rgba(0,0,0,0.2);padding:6px 12px;border-radius:8px;display:flex;align-items:center;gap:6px;min-width:fit-content}
@@ -59,7 +54,6 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
 .exam-timer.danger{background:rgba(220,38,38,0.4);color:#fca5a5;animation:blink 0.5s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0.5}}
 
-/* EXAM BODY */
 .exam-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px;padding-bottom:100px}
 .exam-info{text-align:center;margin-bottom:16px;padding:12px;background:#f0fdf4;border-radius:12px;border:1px solid #bbf7d0}
 .exam-info .nama{font-size:15px;font-weight:800;color:#065f46}
@@ -72,7 +66,6 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
 .soal-text{font-size:14px;line-height:1.6;color:var(--text);font-weight:600;display:flex;align-items:flex-start}
 .soal-img{width:100%;max-height:180px;object-fit:contain;border-radius:8px;margin:8px 0;border:1px solid var(--border);background:#f8fafc}
 
-/* OPSI */
 .opsi-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
 .opsi-btn{display:flex;align-items:flex-start;gap:8px;padding:10px 12px;border:2px solid var(--border);border-radius:12px;background:white;cursor:pointer;transition:all 0.15s;min-height:44px}
 .opsi-btn:active{transform:scale(0.97)}
@@ -82,11 +75,9 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
 .opsi-text{font-size:13px;line-height:1.4;color:var(--text);font-weight:600;flex:1;word-break:break-word}
 .opsi-img{max-width:48px;max-height:40px;object-fit:contain;border-radius:4px;margin-top:2px}
 
-/* URAIAN */
 .uraian-area{margin-top:10px;width:100%;padding:12px;border:2px solid var(--border);border-radius:12px;font-size:14px;font-family:'Nunito',sans-serif;font-weight:600;color:var(--text);resize:none;min-height:100px;-webkit-user-select:text!important;user-select:text!important;outline:none;line-height:1.6;background:#f8fafc}
 .uraian-area:focus{border-color:var(--primary);background:white;box-shadow:0 0 0 3px rgba(13,110,63,0.1)}
 
-/* NAV DOT */
 .exam-nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:2px solid var(--border);padding:10px 16px;padding-bottom:max(10px,env(safe-area-inset-bottom));display:flex;align-items:center;gap:10px;z-index:20}
 .nav-dots{flex:1;display:flex;gap:4px;overflow-x:auto;padding:4px 0;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .nav-dots::-webkit-scrollbar{display:none}
@@ -97,7 +88,6 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
 .btn-submit{padding:10px 18px;border:none;border-radius:10px;font-size:13px;font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer;background:var(--primary);color:white;white-space:nowrap;flex-shrink:0}
 .btn-submit:active{transform:scale(0.97)}
 
-/* FINISH SCREEN */
 .finish-screen{position:fixed;inset:0;background:linear-gradient(135deg,#065f46,#10b981);display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:white;padding:20px;z-index:100}
 .finish-screen.active{display:flex}
 .finish-icon{font-size:64px;margin-bottom:16px;animation:pop 0.5s ease}
@@ -105,7 +95,6 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
 .finish-title{font-size:22px;font-weight:800;margin-bottom:8px}
 .finish-sub{font-size:14px;color:#bbf7d0;max-width:280px;line-height:1.5}
 
-/* MODAL */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
 .modal-bg.active{display:flex}
 .modal-box{background:white;border-radius:20px;padding:28px 24px;width:100%;max-width:360px;text-align:center}
@@ -114,7 +103,6 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
 .modal-btns{display:flex;gap:10px}
 .modal-btns .btn{flex:1;padding:12px;font-size:14px}
 
-/* TOAST */
 .toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:300;padding:12px 20px;border-radius:12px;font-size:13px;font-weight:700;color:white;box-shadow:0 8px 24px rgba(0,0,0,0.2);animation:slideDown 0.3s ease;max-width:90vw;text-align:center}
 .toast-success{background:#16a34a}
 .toast-error{background:#dc2626}
@@ -122,12 +110,20 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
 .spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,0.3);border-radius:50%;border-top-color:white;animation:spin 0.8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* PETUNJUK */
 .petunjuk-box{background:#fffbeb;border:2px solid #fde68a;border-radius:12px;padding:12px 14px;margin-bottom:14px}
 .petunjuk-box .petunjuk-title{font-size:13px;font-weight:800;color:#92400e;margin-bottom:4px;display:flex;align-items:center;gap:6px}
 .petunjuk-box ul{list-style:none;padding:0}
 .petunjuk-box li{font-size:12px;color:#78350f;padding:2px 0;padding-left:16px;position:relative;line-height:1.5}
 .petunjuk-box li::before{content:'\2022';position:absolute;left:0;color:#f59e0b;font-weight:bold}
+
+/* Rombel chips di login */
+.rombel-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.rombel-chip{padding:8px 18px;border:2px solid var(--border);border-radius:10px;font-size:14px;font-weight:700;color:var(--muted);cursor:pointer;transition:all 0.15s;background:#f8fafc;min-width:44px;text-align:center}
+.rombel-chip:active{transform:scale(0.95)}
+.rombel-chip.selected{border-color:var(--primary);background:#ecfdf5;color:var(--primary)}
+.rombel-chip.disabled{opacity:0.35;pointer-events:none;background:#f1f5f9}
+
+.rombel-hidden{display:none}
 
 @media(min-width:480px){
 .opsi-grid{grid-template-columns:1fr 1fr;gap:10px}
@@ -138,10 +134,8 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
 </head>
 <body class="no-select">
 
-<!-- TOAST -->
 <div id="toastWrap"></div>
 
-<!-- LOCK SCREEN (muncul saat ujian berlangsung & siswa coba keluar) -->
 <div id="lockScreen" class="lock-screen" style="display:none">
     <div class="lock-icon"><i class="fas fa-lock"></i></div>
     <h2>Ujian Sedang Berlangsung</h2>
@@ -149,12 +143,11 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
     <button onclick="dismissLock()" class="btn btn-primary" style="width:auto;margin-top:20px;padding:12px 32px"><i class="fas fa-arrow-left"></i> Kembali ke Ujian</button>
 </div>
 
-<!-- MODAL KONFIRMASI -->
 <div id="modalBg" class="modal-bg">
     <div class="modal-box">
         <div style="font-size:40px;margin-bottom:12px" id="modalIcon"><i class="fas fa-exclamation-triangle" style="color:var(--accent)"></i></div>
         <h3 id="modalTitle">Kirim Jawaban?</h3>
-        <p id="modalMsg">Pastikan semua soal sudah dijawab. Jawaban yang sudah dikirim tidak bisa diubah.</p>
+        <p id="modalMsg">Pastikan semua soal sudah dijawab.</p>
         <div class="modal-btns">
             <button onclick="closeModal()" class="btn" style="background:#f1f5f9;color:var(--text)">Batal</button>
             <button onclick="modalConfirmAction()" class="btn btn-primary" id="modalConfirmBtn">Ya, Kirim</button>
@@ -171,7 +164,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
 
         <div style="margin-bottom:14px">
             <div class="field-label">NISN</div>
-            <input type="text" id="inputNisn" class="field-input" placeholder="Masukkan 10 digit NISN" maxlength="10" inputmode="numeric" pattern="[0-9]*" autocomplete="off">
+            <input type="text" id="inputNisn" class="field-input" placeholder="Masukkan NISN" maxlength="10" inputmode="numeric" pattern="[0-9]*" autocomplete="off">
             <div class="field-error" id="errNisn"></div>
         </div>
         <div style="margin-bottom:14px">
@@ -179,12 +172,18 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
             <input type="text" id="inputToken" class="field-input" placeholder="Masukkan token dari guru" maxlength="6" style="text-transform:uppercase;letter-spacing:4px;font-size:20px;text-align:center" autocomplete="off">
             <div class="field-error" id="errToken"></div>
         </div>
-        <div style="margin-bottom:20px">
+        <div style="margin-bottom:14px">
             <div class="field-label">Mata Pelajaran</div>
             <select id="inputMapel" class="field-input" style="font-size:14px">
                 <option value="">-- Pilih Mapel --</option>
             </select>
             <div class="field-error" id="errMapel"></div>
+        </div>
+        <div style="margin-bottom:20px" id="rombelWrap" class="rombel-hidden">
+            <div class="field-label">Rombel</div>
+            <div class="rombel-chips" id="rombelChips"></div>
+            <input type="hidden" id="inputRombel" value="">
+            <div class="field-error" id="errRombel"></div>
         </div>
         <button id="btnLogin" class="btn btn-primary" onclick="doLogin()"><i class="fas fa-sign-in-alt"></i> Mulai Ujian</button>
         <p style="text-align:center;font-size:11px;color:var(--muted);margin-top:12px">Pastikan data sudah benar sebelum memulai</p>
@@ -221,7 +220,7 @@ firebase.initializeApp(firebaseConfig);
 var db=firebase.firestore();
 
 // ================================================================
-// MASTER DATA
+// MASTER DATA — Semua 9 mapel selalu tersedia
 // ================================================================
 var MAPEL_LIST=[
     {id:'ppkn',nama:'Pendidikan Pancasila',singkat:'PPKn'},
@@ -234,6 +233,15 @@ var MAPEL_LIST=[
     {id:'pai',nama:'PAI',singkat:'PAI'},
     {id:'pjok',nama:'PJOK',singkat:'PJOK'}
 ];
+
+// Rombel berdasarkan kelas: 1-2 → 3 rombel (A/B/C), 3-6 → 5 rombel (A/B/C/D/E)
+function getRombelOptions(kelas){
+    var n=parseInt((kelas||'').replace('Kelas ',''))||0;
+    if(n<=2) return ['A','B','C'];
+    if(n<=6) return ['A','B','C','D','E'];
+    return ['A','B','C'];
+}
+
 function getMN(id){var m=MAPEL_LIST.find(function(x){return x.id===id;});return m?m.nama:id;}
 function getMS(id){var m=MAPEL_LIST.find(function(x){return x.id===id;});return m?m.singkat:id;}
 function esc(s){if(!s)return'';var d=document.createElement('div');d.textContent=String(s);return d.innerHTML;}
@@ -244,12 +252,14 @@ function getOL(k){var n=parseInt((k||'').replace('Kelas ',''))||0;return['a','b'
 // ================================================================
 var studentData=null;
 var guruData=null;
+var guruAccounts=[];  // Semua akun guru dengan token yang sama (bisa multi guru)
 var examQuestions=[];
 var examAnswers={};
 var examTimerSec=0;
 var examTimerInterval=null;
 var examActive=false;
 var examSource='sat';
+var selectedRombel='';
 var _modalCallback=null;
 
 // ================================================================
@@ -263,30 +273,20 @@ window.addEventListener('visibilitychange',function(){
         document.getElementById('lockScreen').style.display='flex';
     }
 });
-window.addEventListener('pagehide',function(e){
-    if(examActive){e.preventDefault();}
-});
-// Back button pada mobile
+window.addEventListener('pagehide',function(e){if(examActive)e.preventDefault();});
 window.addEventListener('popstate',function(e){
-    if(examActive){
-        history.pushState(null,null,location.href);
-        document.getElementById('lockScreen').style.display='flex';
-    }
+    if(examActive){history.pushState(null,null,location.href);document.getElementById('lockScreen').style.display='flex';}
 });
-// Key shortcut
 document.addEventListener('keydown',function(e){
     if(examActive){
-        if(e.key==='Tab'){e.preventDefault();}
-        if((e.ctrlKey||e.metaKey)&&(e.key==='c'||e.key==='x'||e.key==='v'||e.key==='a'||e.key==='p'||e.key==='s')){e.preventDefault();}
-        if(e.altKey&&e.key==='F4'){e.preventDefault();}
+        if(e.key==='Tab')e.preventDefault();
+        if((e.ctrlKey||e.metaKey)&&(e.key==='c'||e.key==='x'||e.key==='v'||e.key==='a'||e.key==='p'||e.key==='s'))e.preventDefault();
+        if(e.altKey&&e.key==='F4')e.preventDefault();
     }
 });
-// Block context menu saat ujian
 document.addEventListener('contextmenu',function(e){if(examActive)e.preventDefault();});
 
-function dismissLock(){
-    document.getElementById('lockScreen').style.display='none';
-}
+function dismissLock(){document.getElementById('lockScreen').style.display='none';}
 
 // ================================================================
 // UI HELPERS
@@ -311,16 +311,82 @@ function closeModal(){document.getElementById('modalBg').classList.remove('activ
 function modalConfirmAction(){if(_modalCallback)_modalCallback();closeModal();}
 
 // ================================================================
-// LOGIN
+// LOGIN — Populate dropdown
 // ================================================================
 function populateMapelDropdown(){
     var sel=document.getElementById('inputMapel');
     sel.innerHTML='<option value="">-- Pilih Mapel --</option>';
+    // Semua 9 mapel selalu tampil
     MAPEL_LIST.forEach(function(m){sel.innerHTML+='<option value="'+m.id+'">'+m.nama+'</option>';});
 }
 
+// Saat mapel dipilih → tentukan source soal
+document.addEventListener('DOMContentLoaded',function(){
+    populateMapelDropdown();
+    document.getElementById('inputToken').addEventListener('input',function(){this.value=this.value.toUpperCase();});
+    document.getElementById('inputNisn').addEventListener('input',function(){this.value=this.value.replace(/[^0-9]/g,'');});
+
+    // Saat mapel berubah, tidak perlu ubah apa-apa karena source ditentukan saat submit
+    // Rombel chips ditampilkan setelah siswa ditemukan
+});
+
+// ================================================================
+// ROMBEL CHIPS
+// ================================================================
+function renderRombelChips(kelas,existingRombels){
+    // existingRombels: array rombel yang ada di data siswa untuk kelas ini
+    var wrap=document.getElementById('rombelWrap');
+    var container=document.getElementById('rombelChips');
+    var options=getRombelOptions(kelas);
+
+    container.innerHTML='';
+    selectedRombel='';
+
+    options.forEach(function(r){
+        var chip=document.createElement('div');
+        chip.className='rombel-chip';
+        chip.textContent=r;
+        chip.setAttribute('data-rombel',r);
+
+        // Cek apakah rombel ini ada di data siswa
+        if(existingRombels && existingRombels.indexOf(r)<0){
+            chip.classList.add('disabled');
+        } else {
+            chip.addEventListener('click',function(){
+                document.querySelectorAll('.rombel-chip').forEach(function(c){c.classList.remove('selected');});
+                chip.classList.add('selected');
+                selectedRombel=r;
+                document.getElementById('inputRombel').value=r;
+                clearFieldErr('errRombel');
+            });
+        }
+        container.appendChild(chip);
+    });
+
+    // Jika hanya 1 rombel yang available, auto-select
+    var available=options.filter(function(r){return existingRombels&&existingRombels.indexOf(r)>=0;});
+    if(available.length===1){
+        selectedRombel=available[0];
+        document.getElementById('inputRombel').value=available[0];
+        var autoChip=container.querySelector('[data-rombel="'+available[0]+'"]');
+        if(autoChip)autoChip.classList.add('selected');
+    }
+
+    wrap.classList.remove('rombel-hidden');
+}
+
+function hideRombelChips(){
+    document.getElementById('rombelWrap').classList.add('rombel-hidden');
+    document.getElementById('rombelChips').innerHTML='';
+    selectedRombel='';
+    document.getElementById('inputRombel').value='';
+}
+
+// ================================================================
+// LOGIN LOGIC
+// ================================================================
 function doLogin(){
-    clearFieldErr('errNisn');clearFieldErr('errToken');clearFieldErr('errMapel');
+    clearFieldErr('errNisn');clearFieldErr('errToken');clearFieldErr('errMapel');clearFieldErr('errRombel');
     var nisn=document.getElementById('inputNisn').value.trim();
     var token=document.getElementById('inputToken').value.trim().toUpperCase();
     var mapel=document.getElementById('inputMapel').value;
@@ -333,46 +399,134 @@ function doLogin(){
 
     var btn=document.getElementById('btnLogin');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Memverifikasi...';
 
-    // 1. Cari guru berdasarkan token
-    db.collection('guru_accounts').where('token','==',token).limit(1).get().then(function(snap){
+    // 1. Cari guru berdasarkan token (bisa banyak guru dengan token sama)
+    db.collection('guru_accounts').where('token','==',token).get().then(function(snap){
         if(snap.empty){showFieldErr('errToken','Token tidak ditemukan');btn.disabled=false;btn.innerHTML='<i class="fas fa-sign-in-alt"></i> Mulai Ujian';return null;}
-        guruData=snap.docs[0].data();
-        guruData._id=snap.docs[0].id;
+        guruAccounts=snap.docs.map(function(d){return Object.assign({_id:d.id},d.data());});
 
-        // 2. Cek apakah guru mengampu mapel ini
-        var myMapels=getGuruMapels(guruData);
-        if(myMapels.indexOf(mapel)<0){showFieldErr('errMapel','Guru tidak mengampu mapel ini');btn.disabled=false;btn.innerHTML='<i class="fas fa-sign-in-alt"></i> Mulai Ujian';return null;}
+        // 2. Cari siswa berdasarkan NISN di semua NPSN guru dengan token ini
+        var npsnList=guruAccounts.map(function(g){return g.npsn;});
+        // Karena Firestore 'in' max 30 item, dan biasanya hanya beberapa sekolah
+        return db.collection('students').where('nisn','==',nisn).get();
+    }).then(function(snap){
+        if(!snap)return null;
+        // Filter siswa yang NPSN-nya cocok dengan salah satu guru
+        var npsnSet={};
+        guruAccounts.forEach(function(g){npsnSet[g.npsn]=true;});
+        var matched=null;
+        snap.docs.forEach(function(doc){
+            var d=doc.data();
+            if(npsnSet[d.npsn] && !matched){
+                matched=Object.assign({_id:doc.id},d);
+            }
+        });
+        if(!matched){showFieldErr('errNisn','NISN tidak terdaftar di sekolah guru ini');btn.disabled=false;btn.innerHTML='<i class="fas fa-sign-in-alt"></i> Mulai Ujian';return null;}
+        studentData=matched;
 
-        // 3. Cek waktu ujian
+        // 3. Tentukan guru mana yang mengampu mapel ini
+        // Untuk mapel kelas (PPKn, Mat, dll): cari guru kelas yang kelasnya cocok
+        // Untuk PAI/PJOK: cari guru PAI/PJOK yang rombel-nya cocok
+        var foundGuru=null;
+        var kelasSiswa=studentData.kelas;
+        var rombelSiswa=studentData.rombel;
+
+        if(mapel==='pai'){
+            // Cari guru PAI yang mengampu rombel siswa
+            guruAccounts.forEach(function(g){
+                if(g.role==='pai' && !foundGuru){
+                    var rombels=g.rombels||[];
+                    rombels.forEach(function(r){
+                        if(r===kelasSiswa+'_'+rombelSiswa && !foundGuru){
+                            foundGuru=g;
+                        }
+                    });
+                }
+            });
+        } else if(mapel==='pjok'){
+            // Cari guru PJOK yang mengampu rombel siswa
+            guruAccounts.forEach(function(g){
+                if(g.role==='pjok' && !foundGuru){
+                    var rombels=g.rombels||[];
+                    rombels.forEach(function(r){
+                        if(r===kelasSiswa+'_'+rombelSiswa && !foundGuru){
+                            foundGuru=g;
+                        }
+                    });
+                }
+            });
+        } else {
+            // Mapel kelas: cari guru kelas yang kelas+rombel-nya cocok
+            guruAccounts.forEach(function(g){
+                if((g.role==='kelas'||g.role==='kelas6') && !foundGuru){
+                    if(g.kelas===kelasSiswa && g.rombel===rombelSiswa){
+                        foundGuru=g;
+                    }
+                }
+            });
+        }
+
+        if(!foundGuru){
+            showFieldErr('errMapel','Tidak ada guru yang mengampu '+getMN(mapel)+' untuk kelasmu');
+            btn.disabled=false;btn.innerHTML='<i class="fas fa-sign-in-alt"></i> Mulai Ujian';
+            return null;
+        }
+        guruData=foundGuru;
+
+        // 4. Cek waktu ujian
         var es=guruData.examSettings||{};
         if(!checkExamTime(es)){showFieldErr('errToken','Di luar waktu ujian');btn.disabled=false;btn.innerHTML='<i class="fas fa-sign-in-alt"></i> Mulai Ujian';return null;}
 
-        // 4. Cari siswa berdasarkan NISN + NPSN guru
-        return db.collection('students').where('npsn','==',guruData.npsn).where('nisn','==',nisn).limit(1).get();
-    }).then(function(snap){
-        if(!snap)return null;
-        if(snap.empty){showFieldErr('errNisn','NISN tidak terdaftar di sekolah guru ini');btn.disabled=false;btn.innerHTML='<i class="fas fa-sign-in-alt"></i> Mulai Ujian';return null;}
-        studentData=snap.docs[0].data();
-        studentData._id=snap.docs[0].id;
+        // 5. Tentukan source soal
+        // Kelas 6 semua mapel bisa ambil dari PAJ jika ada soalnya
+        // Untuk non-kelas-6, selalu SAT
+        if(kelasSiswa==='Kelas 6'){
+            examSource='sat'; // default, bisa diubah jika PAJ ada
+        } else {
+            examSource='sat';
+        }
 
-        // 5. Cek apakah siswa sudah pernah mengerjakan mapel+source ini
-        var src=mapel==='pai'&&guruData.role!=='kelas6'?'sat':(mapel==='pjok'&&guruData.role!=='kelas6'?'sat':'sat');
-        examSource=src;
-        return db.collection('student_answers').where('npsn','==',guruData.npsn).where('studentId',studentData._id).where('mapel',mapel).where('source',src).limit(1).get();
+        // 6. Cek apakah siswa sudah pernah mengerjakan
+        return db.collection('student_answers').where('npsn','==',guruData.npsn).where('studentId',studentData._id).where('mapel',mapel).where('source',examSource).limit(1).get();
     }).then(function(snap){
         if(!snap)return null;
         if(!snap.empty){showFieldErr('errMapel','Kamu sudah mengerjakan ujian ini');btn.disabled=false;btn.innerHTML='<i class="fas fa-sign-in-alt"></i> Mulai Ujian';return null;}
 
-        // 6. Ambil soal
+        // 7. Coba ambil soal dari SAT dulu
         var kelas=studentData.kelas;
-        var col=examSource==='paj'?'questions_paj':'questions';
-        return db.collection(col).where('mapel','==',mapel).where('kelas','==',kelas).orderBy('createdAt','asc').get();
+        return db.collection('questions').where('mapel','==',mapel).where('kelas','==',kelas).orderBy('createdAt','asc').get();
     }).then(function(snap){
         if(!snap)return null;
-        if(snap.empty){showFieldErr('errMapel','Belum ada soal untuk mapel dan kelasmu');btn.disabled=false;btn.innerHTML='<i class="fas fa-sign-in-alt"></i> Mulai Ujian';return null;}
-        examQuestions=snap.docs.map(function(d){return Object.assign({id:d.id},d.data());});
+        if(!snap.empty){
+            // Ada soal SAT, pakai SAT
+            examQuestions=snap.docs.map(function(d){return Object.assign({id:d.id},d.data());});
+            examSource='sat';
+            startExam(mapel);
+            btn.disabled=false;btn.innerHTML='<i class="fas fa-sign-in-alt"></i> Mulai Ujian';
+            return null;
+        }
+        // Tidak ada soal SAT, coba PAJ (khusus kelas 6)
+        if(studentData.kelas==='Kelas 6'){
+            return db.collection('questions_paj').where('mapel','==',mapel).where('kelas','==','Kelas 6').orderBy('createdAt','asc').get();
+        }
+        // Bukan kelas 6 dan tidak ada soal SAT
+        showFieldErr('errMapel','Belum ada soal untuk mapel dan kelasmu');
+        btn.disabled=false;btn.innerHTML='<i class="fas fa-sign-in-alt"></i> Mulai Ujian';
+        return null;
+    }).then(function(snap){
+        if(!snap)return null;
+        if(!snap.empty){
+            examQuestions=snap.docs.map(function(d){return Object.assign({id:d.id},d.data());});
+            examSource='paj';
 
-        // 7. Mulai ujian!
+            // Cek lagi apakah sudah pernah mengerjakan di PAJ
+            return db.collection('student_answers').where('npsn','==',guruData.npsn).where('studentId',studentData._id).where('mapel',mapel).where('source','paj').limit(1).get();
+        }
+        showFieldErr('errMapel','Belum ada soal untuk mapel dan kelasmu');
+        btn.disabled=false;btn.innerHTML='<i class="fas fa-sign-in-alt"></i> Mulai Ujian';
+        return null;
+    }).then(function(snap){
+        if(!snap)return null;
+        if(!snap.empty){showFieldErr('errMapel','Kamu sudah mengerjakan ujian ini');btn.disabled=false;btn.innerHTML='<i class="fas fa-sign-in-alt"></i> Mulai Ujian';return null;}
         startExam(mapel);
         btn.disabled=false;btn.innerHTML='<i class="fas fa-sign-in-alt"></i> Mulai Ujian';
         return null;
@@ -382,25 +536,12 @@ function doLogin(){
     });
 }
 
-function getGuruMapels(g){
-    if(!g)return[];
-    if(g.role==='pai')return['pai'];
-    if(g.role==='pjok')return['pjok'];
-    return['ppkn','mat','bin','sbd','ipas','bsd','bing'];
-}
-
 function checkExamTime(es){
-    if(!es)return true; // Jika guru belum setting waktu, izinkan
+    if(!es)return true;
     var now=new Date();
-    var startDate=es.startDate?new Date(es.startDate+'T00:00:00'):null;
-    var endDate=es.endDate?new Date(es.endDate+'T23:59:59'):null;
-    if(startDate&&now<startDate)return false;
-    if(endDate&&now>endDate)return false;
-    // Cek jam harian
     var today=now.toISOString().split('T')[0];
-    if(es.startDate&&es.endDate){
-        if(today<es.startDate||today>es.endDate)return false;
-    }
+    if(es.startDate&&today<es.startDate)return false;
+    if(es.endDate&&today>es.endDate)return false;
     var timeStr=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
     if(es.startTime&&timeStr<es.startTime)return false;
     if(es.endTime&&timeStr>es.endTime)return false;
@@ -412,30 +553,23 @@ function checkExamTime(es){
 // ================================================================
 function startExam(mapel){
     examActive=true;
-    history.pushState(null,null,location.href); // Block back button
+    history.pushState(null,null,location.href);
 
-    // Sembunyikan login
     document.getElementById('loginPage').style.display='none';
-    // Tampilkan exam
     document.getElementById('examScreen').classList.add('active');
 
-    // Header
-    document.getElementById('examHeaderTitle').textContent=getMS(mapel)+' — '+studentData.kelas+' '+studentData.rombel;
+    document.getElementById('examHeaderTitle').textContent=getMS(mapel)+' — '+studentData.kelas+' '+studentData.rombel+(examSource==='paj'?' (PAJ)':'');
 
-    // Inisialisasi jawaban
     examAnswers={};
     examQuestions.forEach(function(q,i){
         if(q.type==='pg') examAnswers[i]=null;
         else examAnswers[i]='';
     });
 
-    // Render soal
     renderExamQuestions(mapel);
-
-    // Render nav dots
     renderNavDots();
 
-    // Timer
+    // Timer: ambil dari guru yang mengampu
     var es=guruData.examSettings||{};
     var durKey=mapel+'_time';
     var dur=es[durKey]?parseInt(es[durKey]):60;
@@ -452,7 +586,6 @@ function startExam(mapel){
         }
     },1000);
 
-    // Scroll ke atas
     document.getElementById('examBody').scrollTop=0;
 }
 
@@ -477,8 +610,7 @@ function renderExamQuestions(mapel){
     var kelas=studentData.kelas;
     var html='';
 
-    // Info siswa
-    html+='<div class="exam-info"><div class="nama">'+esc(studentData.nama)+'</div><div class="kelas">'+studentData.kelas+' '+studentData.rombel+' — '+esc(guruData.sekolah)+'</div><div class="mapel">'+getMN(mapel)+'</div></div>';
+    html+='<div class="exam-info"><div class="nama">'+esc(studentData.nama)+'</div><div class="kelas">'+studentData.kelas+' '+studentData.rombel+' — '+esc(guruData.sekolah)+'</div><div class="mapel">'+getMN(mapel)+(examSource==='paj'?' (PAJ)':'')+'</div></div>';
 
     if(pgQ.length){
         html+='<div class="petunjuk-box"><div class="petunjuk-title"><i class="fas fa-info-circle" style="color:#f59e0b"></i> Petunjuk Pilihan Ganda</div><ul><li>Pilih satu jawaban yang paling tepat</li><li>Klik pada pilihan untuk memilih/mengubah jawaban</li><li>Soal yang sudah dijawab ditandai hijau</li></ul></div>';
@@ -524,8 +656,6 @@ function renderExamQuestions(mapel){
 function selectOpsi(qIdx,letter){
     if(!examActive)return;
     examAnswers[qIdx]=letter;
-
-    // Update visual
     var kelas=studentData.kelas;
     var letters=getOL(kelas);
     letters.forEach(function(l){
@@ -533,12 +663,8 @@ function selectOpsi(qIdx,letter){
         var el=document.getElementById('opsi_'+qIdx+'_'+L);
         if(el)el.classList.toggle('selected',L===letter);
     });
-
-    // Update card style
     var card=document.getElementById('soalCard_'+qIdx);
     if(card)card.classList.add('answered');
-
-    // Update nav dot
     updateNavDot(qIdx,true);
 }
 
@@ -573,7 +699,6 @@ function updateNavDot(idx,done){
 function scrollToSoal(idx){
     var card=document.getElementById('soalCard_'+idx);
     if(card)card.scrollIntoView({behavior:'smooth',block:'center'});
-    // Highlight current
     document.querySelectorAll('.nav-dot').forEach(function(d){d.classList.remove('current');});
     var dot=document.getElementById('navDot_'+idx);
     if(dot)dot.classList.add('current');
@@ -585,16 +710,13 @@ function scrollToSoal(idx){
 // ================================================================
 function confirmSubmit(){
     if(!examActive)return;
-    // Hitung belum dijawab
     var unanswered=0;
     examQuestions.forEach(function(q,i){
         if(q.type==='pg'&&examAnswers[i]===null)unanswered++;
         if(q.type==='uraian'&&(!examAnswers[i]||examAnswers[i].trim()===''))unanswered++;
     });
-
     var msg='Pastikan semua soal sudah dijawab. Jawaban yang sudah dikirim tidak bisa diubah.';
     if(unanswered>0)msg='Ada '+unanswered+' soal yang belum dijawab. Yakin ingin mengirim sekarang?';
-
     openModal(
         '<i class="fas fa-paper-plane" style="color:var(--primary)"></i>',
         'Kirim Jawaban?',
@@ -651,21 +773,10 @@ function doSubmitExam(){
         document.getElementById('finishScreen').classList.add('active');
     }).catch(function(e){
         showToast('Gagal mengirim: '+(e.message||''),'error');
-        examActive=true; // Allow retry
+        examActive=true;
         if(btn){btn.disabled=false;btn.innerHTML='<i class="fas fa-paper-plane" style="margin-right:4px"></i>Selesai';btn.style.opacity='1';}
     });
 }
-
-// ================================================================
-// INIT
-// ================================================================
-window.onload=function(){
-    populateMapelDropdown();
-    // Auto-uppercase token input
-    document.getElementById('inputToken').addEventListener('input',function(){this.value=this.value.toUpperCase();});
-    // NISN hanya angka
-    document.getElementById('inputNisn').addEventListener('input',function(){this.value=this.value.replace(/[^0-9]/g,'');});
-};
 </script>
 </body>
 </html>
